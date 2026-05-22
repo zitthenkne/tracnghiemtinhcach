@@ -1,0 +1,11 @@
+# Temporary and system files
+.DS_Store
+Thumbs.db
+*.log
+
+# Project specific ignores
+scratch/
+.gemini/
+.idea/
+.vscode/
+node_modules/

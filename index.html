@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trắc nghiệm DNA Tình Nguyện - Câu Lạc Bộ TNTY</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Trắc nghiệm tính cách định dạng DNA Tình Nguyện của bạn tại Câu lạc bộ TNTY. Khám phá xem bạn thuộc hệ tư tưởng nào: Xương sống quyền lực (HCNS), Tư bản thực dụng (Tài chính), Trái tim xê dịch (Nội dung) hay Kẻ mộng mơ bứt phá (PR-IT)!">
+  <meta name="keywords" content="trac nghiem tinh cach, dna tinh nguyen, clb tnty, nha do tnty, tuyen thanh vien, y khoa, tarot">
+  <meta name="author" content="Nhà Đỏ TNTY">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Trắc nghiệm DNA Tình Nguyện - Câu Lạc Bộ TNTY">
+  <meta property="og:description" content="Khám phá bản thể tình nguyện bên trong bạn để tìm ra ban hoạt động phù hợp nhất tại Nhà Đỏ TNTY.">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Canvas nền tinh vân động 3D tương tác -->
+  <canvas id="nebula-canvas"></canvas>
+
+  <!-- Luồng sáng vũ trụ chiếu từ đỉnh đầu xuống -->
+  <div class="cosmic-light-rays"></div>
+
+  <!-- Hạt ánh sáng trôi lơ lửng tạo chiều sâu không gian -->
+  <div class="bg-particles">
+    <div class="particle-logo" style="width: 45px; height: 45px; left: 8%; animation-delay: 0s; animation-duration: 22s;"></div>
+    <div class="particle-logo" style="width: 30px; height: 30px; left: 28%; animation-delay: 2s; animation-duration: 18s;"></div>
+    <div class="particle-logo" style="width: 40px; height: 40px; left: 52%; animation-delay: 1s; animation-duration: 25s;"></div>
+    <div class="particle-logo" style="width: 50px; height: 50px; left: 78%; animation-delay: 5s; animation-duration: 28s;"></div>
+    <div class="particle-logo" style="width: 35px; height: 35px; left: 92%; animation-delay: 3s; animation-duration: 16s;"></div>
+  </div>
+
+  <!-- Canvas tạo hiệu ứng pháo hoa giấy khi hoàn thành -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <main class="app-container" id="app-wrapper">
+    
+    <!-- 1. MÀN HÌNH WELCOME -->
+    <section id="welcome-screen" class="welcome-screen">
+      <div class="welcome-center-layout">
+        <h1 class="welcome-title">DNA TÌNH NGUYỆN</h1>
+        <p class="welcome-subtitle">Khám phá bản thể tình nguyện</p>
+        
+        <p class="welcome-desc">
+          Mỗi con người mang một tần số năng lượng riêng biệt. Hãy để những lá bài số mệnh định dạng "hệ tư tưởng" của bạn tại CLB Nhà Đỏ TNTY qua 10 tình huống thực tế! Bạn đã sẵn sàng kết nối năng lượng vũ trụ chưa?
+        </p>
+
+        <!-- Lá bài Tarot nghệ thuật lơ lửng kèm Logo CLB lồng ở viền trên -->
+        <div class="welcome-art-card">
+          <div class="logo-overlay">
+            <img src="logo_clb.png" alt="Logo CLB Tình Nguyện Trường Y" class="logo-img-overlay">
+          </div>
+          <div class="welcome-art-card-inner">
+            <img src="tarot_welcome_art.png" alt="Lá bài Tarot số mệnh">
+          </div>
+        </div>
+
+        <!-- Nút Bắt đầu Giải mã phong cách Magic Glow -->
+        <button class="btn-primary-magic" id="btn-start" aria-label="Bắt đầu trắc nghiệm">
+          <span>Bắt đầu giải mã</span>
+          <span class="btn-icon">🔮</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 2. MÀN HÌNH LÀM BÀI TRẮC NGHIỆM -->
+    <section id="quiz-screen" class="quiz-screen hidden">
+      <!-- Thanh tiến độ -->
+      <header class="progress-container">
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-bar-fill"></div>
+        </div>
+        <span class="progress-text" id="progress-text">1/10</span>
+      </header>
+
+      <!-- Hộp câu hỏi -->
+      <div class="question-box">
+        <span class="question-number" id="question-number">Câu 1:</span>
+        <h2 class="question-text" id="question-text">Loading question...</h2>
+      </div>
+
+      <!-- Container danh sách câu trả lời -->
+      <div class="answers-container" id="answers-container">
+        <!-- Được sinh động từ JS -->
+      </div>
+
+      <!-- Điều hướng và chỉ số câu hỏi -->
+      <footer class="quiz-footer">
+        <button class="btn-secondary invisible" id="btn-prev" aria-label="Quay lại câu trước">
+          <span>&larr;</span> Quay lại
+        </button>
+        
+        <div class="question-indicators" id="question-indicators">
+          <!-- Các chấm tròn do JS tạo ra -->
+        </div>
+      </footer>
+    </section>
+
+    <!-- 3. MÀN HÌNH CHUYỂN TIẾP NGHI THỨC LẬT BÀI TAROT -->
+    <section id="tarot-loading-screen" class="tarot-loading-screen hidden">
+      <!-- Vòng tròn hình học thiêng liêng ở nền -->
+      <div class="sacred-geometry-circle"></div>
+      
+      <div class="tarot-ceremony">
+        <div class="tarot-celestial-symbol">✵</div>
+        <h2 class="tarot-status" id="tarot-status">Hãy tập trung tâm trí và chạm tay chọn một lá bài định mệnh...</h2>
+        
+        <!-- Bố cục 4 lá bài úp mặt xếp hình quạt/hàng ngang -->
+        <div class="tarot-cards-spread" id="tarot-cards-spread">
+          <!-- Lá bài 0 -->
+          <div class="tarot-card-option" data-card-index="0">
+            <div class="tarot-card-inner">
+              <div class="tarot-card-back">
+                <img src="tarot_card_back.png" alt="Mặt sau lá bài số mệnh">
+              </div>
+              <div class="tarot-card-front">
+                <img class="tarot-front-img-option" src="" alt="Lá bài số mệnh">
+              </div>
+            </div>
+          </div>
+          <!-- Lá bài 1 -->
+          <div class="tarot-card-option" data-card-index="1">
+            <div class="tarot-card-inner">
+              <div class="tarot-card-back">
+                <img src="tarot_card_back.png" alt="Mặt sau lá bài số mệnh">
+              </div>
+              <div class="tarot-card-front">
+                <img class="tarot-front-img-option" src="" alt="Lá bài số mệnh">
+              </div>
+            </div>
+          </div>
+          <!-- Lá bài 2 -->
+          <div class="tarot-card-option" data-card-index="2">
+            <div class="tarot-card-inner">
+              <div class="tarot-card-back">
+                <img src="tarot_card_back.png" alt="Mặt sau lá bài số mệnh">
+              </div>
+              <div class="tarot-card-front">
+                <img class="tarot-front-img-option" src="" alt="Lá bài số mệnh">
+              </div>
+            </div>
+          </div>
+          <!-- Lá bài 3 -->
+          <div class="tarot-card-option" data-card-index="3">
+            <div class="tarot-card-inner">
+              <div class="tarot-card-back">
+                <img src="tarot_card_back.png" alt="Mặt sau lá bài số mệnh">
+              </div>
+              <div class="tarot-card-front">
+                <img class="tarot-front-img-option" src="" alt="Lá bài số mệnh">
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <button class="btn-reveal-destiny hidden" id="btn-reveal-result">
+          <span>🔮 Giải Mã Lời Tiên Tri 🔮</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 4. MÀN HÌNH KẾT QUẢ -->
+    <section id="result-screen" class="result-screen hidden">
+      
+      <header class="result-header">
+        <h2 class="result-title-small">LÁ BÀI SỐ MỆNH CỦA BẠN</h2>
+        <h1 class="result-title-main">🧬 DNA TÌNH NGUYỆN ĐÃ ĐỊNH DẠNG</h1>
+      </header>
+
+      <!-- Hiển thị bức hình Tarot kết quả -->
+      <div class="result-tarot-display">
+        <div class="tarot-frame-container">
+          <img id="result-tarot-image" src="" alt="Lá bài định mệnh">
+        </div>
+      </div>
+
+      <!-- Bảng xếp hạng % các ban -->
+      <div class="rankings-box">
+        <h2 class="rankings-box-title">
+          <span>📊</span> Bảng xếp hạng độ tương thích
+        </h2>
+        <div id="rankings-container">
+          <!-- Các thanh tiến trình % được sinh ra từ JS -->
+        </div>
+      </div>
+
+      <!-- Diễn giải chi tiết kết quả -->
+      <div class="result-details">
+        
+        <!-- Module 1: Top 1 -->
+        <article class="detail-card" id="module1-card">
+          <div class="card-icon">👑</div>
+          <div id="module1-text">
+            <!-- Text Module 1 -->
+          </div>
+        </article>
+
+        <!-- Module 2: Top 2 -->
+        <article class="detail-card secondary-card" id="module2-card">
+          <div class="card-icon">✨</div>
+          <div id="module2-text">
+            <!-- Text Module 2 -->
+          </div>
+        </article>
+
+        <!-- Thông điệp kết hợp -->
+        <article class="detail-card message-card" id="message-card">
+          <h3 class="card-icon">💌 THÔNG ĐIỆP TỪ NHÀ ĐỎ TNTY</h3>
+          <p id="message-text">
+            <!-- Thông điệp kết hợp từ CLB -->
+          </p>
+        </article>
+
+      </div>
+
+      <!-- Hành động kêu gọi & Chơi lại -->
+      <footer class="result-actions">
+        <a href="https://docs.google.com/forms/" target="_blank" class="cta-button" id="btn-cta" aria-label="Điền form đăng ký tuyển thành viên ngay">
+          <span>👉 CLICK VÀO ĐÂY ĐỂ ĐĂNG KÝ TRỞ THÀNH MẢNH GHÉP NGAY!</span>
+        </a>
+        
+        <div class="result-footer-links">
+          <button class="btn-secondary" id="btn-restart" aria-label="Làm lại trắc nghiệm">
+            <span>🔄</span> Làm lại
+          </button>
+        </div>
+      </footer>
+
+    </section>
+
+  </main>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>

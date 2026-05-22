@@ -1,0 +1,1603 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  /* Bảng màu chính (Theme Đỏ - Xanh dương của CLB lồng ghép Vàng Gold Tarot) */
+  --bg-color: hsl(230, 25%, 4%);
+  --card-bg: hsla(230, 20%, 9%, 0.75);
+  --card-border: hsla(230, 20%, 22%, 0.5);
+  
+  --primary: hsl(355, 85%, 52%); /* Đỏ ruby tình nguyện */
+  --primary-glow: hsla(355, 85%, 52%, 0.4);
+  --primary-hover: hsl(355, 95%, 60%);
+  
+  --secondary: hsl(215, 90%, 50%); /* Xanh dương CLB */
+  --secondary-glow: hsla(215, 90%, 50%, 0.35);
+  --secondary-hover: hsl(215, 95%, 58%);
+  
+  --gold: hsl(45, 100%, 50%); /* Màu vàng ánh kim của Tarot */
+  --gold-glow: hsla(45, 100%, 50%, 0.35);
+  --gold-dark: hsl(45, 75%, 35%);
+  
+  --text-main: hsl(0, 0%, 100%);
+  --text-muted: hsl(220, 14%, 80%);
+  
+  --success: hsl(145, 85%, 45%);
+  --success-glow: hsla(145, 85%, 45%, 0.3);
+  
+  --font-family: 'Cormorant Garamond', serif;
+  --font-title: 'Playfair Display', serif;
+  --font-sans: 'Be Vietnam Pro', sans-serif;
+  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --border-radius: 24px;
+}
+
+/* Reset CSS */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.6;
+}
+
+/* Background tinh vân và các hạt phát sáng mờ ảo */
+body::before, body::after {
+  content: '';
+  position: absolute;
+  width: 55vw;
+  height: 55vw;
+  max-width: 600px;
+  max-height: 600px;
+  border-radius: 50%;
+  filter: blur(150px);
+  z-index: -4; /* Đẩy xuống dưới canvas nền tinh vân động */
+  opacity: 0.32;
+}
+
+body::before {
+  background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+  top: -15%;
+  left: -15%;
+  animation: float-nebula 25s infinite alternate ease-in-out;
+}
+
+body::after {
+  background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
+  bottom: -15%;
+  right: -15%;
+  animation: float-nebula 30s infinite alternate-reverse ease-in-out;
+}
+
+/* Canvas nền tinh vân động 3D tương tác */
+#nebula-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -3;
+  pointer-events: none;
+  background-color: hsl(230, 25%, 4%);
+}
+
+/* Luồng ánh sáng vũ trụ chiếu từ trên đỉnh đầu xuống */
+.cosmic-light-rays {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: 
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.12) 0%, transparent 60%),
+    linear-gradient(170deg, transparent 35%, rgba(230, 57, 70, 0.04) 48%, rgba(0, 180, 216, 0.04) 55%, transparent 68%);
+  z-index: -2;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* Tạo hạt trôi lơ lửng đa sắc */
+.bg-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle-logo {
+  position: absolute;
+  background-image: url('logo_clb.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0;
+  pointer-events: none;
+  animation-name: float-particle-logos;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes float-nebula {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(80px, 50px) scale(1.15); }
+  100% { transform: translate(-40px, 80px) scale(0.9); }
+}
+
+@keyframes float-particle-logos {
+  0% { transform: translateY(105vh) rotate(0deg) rotateX(0deg) rotateY(0deg); opacity: 0; }
+  10% { opacity: 0.15; }
+  90% { opacity: 0.15; }
+  100% { transform: translateY(-15vh) rotate(360deg) rotateX(180deg) rotateY(360deg); opacity: 0; }
+}
+
+/* Hộp bọc chính với hiệu ứng Glassmorphism */
+.app-container {
+  width: 100%;
+  max-width: 680px;
+  margin: 20px;
+  padding: 45px 35px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 2px var(--gold-dark),
+    inset 0 0 0 3.5px rgba(255, 215, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 40px rgba(255, 215, 0, 0.03); /* Viền mạ vàng kép tinh xảo và ánh sáng gold */
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+}
+
+@media (min-width: 769px) {
+  .app-container {
+    max-width: 920px;
+    padding: 55px 50px;
+  }
+}
+
+.app-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    90deg, 
+    transparent 0%, 
+    rgba(255, 215, 0, 0.02) 50%, 
+    transparent 100%
+  );
+  transform: rotate(25deg);
+  pointer-events: none;
+  animation: sweep 12s infinite linear;
+}
+
+@keyframes sweep {
+  0% { transform: translate(-30%, -30%) rotate(25deg); }
+  100% { transform: translate(30%, 30%) rotate(25deg); }
+}
+
+/* Canvas pháo hoa giấy */
+#confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+/* MÀN HÌNH WELCOME */
+.welcome-screen {
+  animation: scaleUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  z-index: 5;
+}
+
+/* Bố cục căn giữa trang chủ (1 cột) */
+.welcome-center-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Lá bài Tarot nghệ thuật lơ lửng trang Welcome */
+.welcome-art-card {
+  margin: 25px auto 35px auto;
+  width: 220px;
+  height: 352px;
+  perspective: 1200px;
+  animation: float-welcome-art 5s infinite ease-in-out;
+  transform: rotate(-2deg);
+  transition: var(--transition);
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.welcome-art-card::after {
+  content: '';
+  position: absolute;
+  bottom: -25px;
+  left: 10%;
+  width: 80%;
+  height: 12px;
+  background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.35) 0%, transparent 70%);
+  filter: blur(5px);
+  border-radius: 50%;
+  z-index: -1;
+  opacity: 0.8;
+  transition: var(--transition);
+  animation: welcome-card-shadow-pulse 5s infinite ease-in-out;
+}
+
+.welcome-art-card:hover {
+  transform: rotateY(12deg) rotateX(8deg) scale(1.05) translateY(-8px);
+}
+
+.welcome-art-card:hover::after {
+  transform: scale(0.8) translateY(4px);
+  opacity: 0.4;
+  filter: blur(7px);
+}
+
+.welcome-art-card-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  border: 2px solid var(--gold);
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.6), 
+    0 0 25px var(--gold-glow);
+  overflow: hidden;
+  background: var(--card-bg);
+  transition: var(--transition);
+  position: relative;
+  z-index: 10;
+}
+
+.welcome-art-card-inner::after {
+  content: '';
+  position: absolute;
+  top: -150%;
+  left: -150%;
+  width: 300%;
+  height: 300%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.08) 45%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.08) 55%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  transform: rotate(-25deg);
+  pointer-events: none;
+  animation: welcome-card-shimmer 6s infinite ease-in-out;
+}
+
+.welcome-art-card-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.logo-overlay {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 44px;
+  background: #ffffff;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  box-shadow: 
+    0 4px 12px rgba(0,0,0,0.5), 
+    0 0 12px var(--gold-glow);
+  z-index: 15;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.welcome-art-card:hover .logo-overlay {
+  transform: translateX(-50%) translateY(-2px) scale(1.05);
+  box-shadow: 
+    0 6px 15px rgba(0,0,0,0.6), 
+    0 0 18px var(--gold-glow);
+}
+
+.logo-img-overlay {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+}
+
+@keyframes float-welcome-art {
+  0% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-12px) rotate(-0.5deg); }
+  100% { transform: translateY(0) rotate(-2deg); }
+}
+
+@keyframes welcome-card-shadow-pulse {
+  0% { transform: scale(1); opacity: 0.8; filter: blur(5px); }
+  50% { transform: scale(0.8); opacity: 0.35; filter: blur(7px); }
+  100% { transform: scale(1); opacity: 0.8; filter: blur(5px); }
+}
+
+@keyframes welcome-card-shimmer {
+  0% { transform: translate(-30%, -30%) rotate(-25deg); }
+  35% { transform: translate(30%, 30%) rotate(-25deg); }
+  100% { transform: translate(30%, 30%) rotate(-25deg); }
+}
+
+.welcome-title {
+  font-family: var(--font-title);
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  line-height: 1.2;
+  background: linear-gradient(to bottom, #ffe893 0%, #d4af37 50%, #9a7b1c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+}
+
+.welcome-subtitle {
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  color: #ffffff;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 25px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.welcome-desc {
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-bottom: 30px;
+  padding: 0 10px;
+  line-height: 1.7;
+}
+
+/* Button bắt đầu (Magic Dual Glow & Glassmorphism) */
+.btn-primary-magic {
+  font-family: var(--font-title);
+  background-image: linear-gradient(rgba(15, 22, 42, 0.75), rgba(15, 22, 42, 0.75)), linear-gradient(90deg, var(--primary), var(--secondary));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  color: #ffffff;
+  border: 2px solid transparent;
+  padding: 16px 42px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  border-radius: 40px;
+  cursor: pointer;
+  box-shadow: 
+    -18px 0 35px hsla(355, 85%, 52%, 0.45), 
+    18px 0 35px hsla(215, 90%, 50%, 0.45);
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 1.5px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.btn-primary-magic::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.4),
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transform: skewX(-30deg);
+  animation: button-shimmer 3.5s infinite ease-in-out;
+}
+
+.btn-primary-magic:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 
+    -22px 0 45px hsla(355, 85%, 52%, 0.6), 
+    22px 0 45px hsla(215, 90%, 50%, 0.6),
+    0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.btn-primary-magic:hover .btn-icon {
+  animation: rotate-crystal 1.5s infinite linear;
+}
+
+.btn-primary-magic:active {
+  transform: translateY(-1px);
+}
+
+@keyframes button-shimmer {
+  0% { left: -150%; }
+  35% { left: 150%; }
+  100% { left: 150%; }
+}
+
+@keyframes rotate-crystal {
+  0% { transform: rotate(0deg) scale(1.2); }
+  100% { transform: rotate(360deg) scale(1.2); }
+}
+
+/* MÀN HÌNH CÂU HỎI */
+.quiz-screen {
+  animation: slideInRight 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Progress bar */
+.progress-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 35px;
+}
+
+.progress-bar-bg {
+  flex-grow: 1;
+  height: 10px;
+  background-color: hsla(230, 20%, 20%, 0.8);
+  border-radius: 6px;
+  margin-right: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+  border-radius: 6px;
+  transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 10px var(--secondary-glow);
+}
+
+.progress-text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-shadow: 0 0 8px var(--gold-glow);
+  min-width: 50px;
+  text-align: right;
+}
+
+.question-box {
+  margin-bottom: 35px;
+}
+
+.question-number {
+  font-family: var(--font-title);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.question-text {
+  font-size: 1.55rem;
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--text-main);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Thẻ đáp án */
+.answers-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.answer-card {
+  background: hsla(230, 20%, 14%, 0.45);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 18px 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.answer-card:hover {
+  background: hsla(230, 20%, 18%, 0.85);
+  border-color: hsla(46, 100%, 50%, 0.55);
+  transform: translateY(-2px) translateX(4px);
+  box-shadow: 
+    0 8px 20px rgba(0,0,0,0.3),
+    0 0 15px rgba(255, 215, 0, 0.1);
+}
+
+.answer-card.selected {
+  background: hsla(46, 100%, 50%, 0.12);
+  border-color: var(--gold);
+  box-shadow: 
+    0 0 20px var(--gold-glow),
+    inset 0 0 8px rgba(255, 215, 0, 0.05);
+}
+
+.answer-key {
+  font-family: var(--font-title);
+  width: 36px;
+  height: 36px;
+  background: hsla(230, 20%, 22%, 0.6);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: var(--transition);
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+.answer-card:hover .answer-key {
+  background: var(--gold);
+  color: var(--bg-color);
+  border-color: var(--gold);
+  transform: scale(1.1);
+  box-shadow: 0 0 10px var(--gold-glow);
+}
+
+.answer-card.selected .answer-key {
+  background: var(--gold);
+  color: var(--bg-color);
+  border-color: var(--gold);
+  box-shadow: 0 0 12px var(--gold-glow);
+}
+
+.answer-text {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+
+.answer-card:hover .answer-text,
+.answer-card.selected .answer-text {
+  color: var(--text-main);
+}
+
+/* Footer điều hướng */
+.quiz-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--card-border);
+  padding-top: 30px;
+}
+
+.btn-secondary {
+  font-family: var(--font-title);
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--card-border);
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: 1px;
+}
+
+.btn-secondary:hover {
+  background: hsla(230, 20%, 22%, 0.5);
+  color: var(--text-main);
+  border-color: var(--text-muted);
+  transform: translateY(-2px);
+}
+
+.question-indicators {
+  display: flex;
+  gap: 8px;
+}
+
+.indicator-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: hsla(230, 20%, 22%, 0.8);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.indicator-dot.active {
+  background-color: var(--gold);
+  transform: scale(1.5);
+  box-shadow: 0 0 10px var(--gold-glow);
+}
+
+.indicator-dot.completed {
+  background-color: var(--primary);
+  box-shadow: 0 0 6px var(--primary-glow);
+}
+
+/* Hiệu ứng tan biến và xuất hiện huyền bí (Mystic Transition) cho câu hỏi & đáp án */
+.quiz-screen .question-box,
+.quiz-screen .answer-card {
+  transition: all 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* 1. Trạng thái tan biến (Exit) */
+.question-box.mystic-exit-question {
+  opacity: 0 !important;
+  transform: translateY(-20px) !important;
+  filter: blur(6px) !important;
+  pointer-events: none;
+}
+
+.answer-card.mystic-exit-unselected {
+  opacity: 0 !important;
+  transform: translateX(-30px) !important;
+  filter: blur(6px) !important;
+  pointer-events: none;
+}
+
+.answer-card.mystic-exit-selected {
+  border-color: var(--gold) !important;
+  box-shadow: 
+    0 0 35px var(--gold-glow),
+    inset 0 0 15px rgba(255, 215, 0, 0.15) !important;
+  transform: scale(1.04) !important;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.answer-card.mystic-exit-selected-fade {
+  opacity: 0 !important;
+  transform: translateY(20px) !important;
+  filter: blur(8px) !important;
+  transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+/* 2. Trạng thái xuất hiện (Enter) */
+.question-box.mystic-enter,
+.answer-card.mystic-enter {
+  opacity: 0 !important;
+  filter: blur(8px) !important;
+  pointer-events: none;
+}
+
+.question-box.mystic-enter {
+  transform: translateY(15px) !important;
+}
+
+.answer-card.mystic-enter {
+  transform: translateY(20px) !important;
+}
+
+.question-box.mystic-enter-active,
+.answer-card.mystic-enter-active {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  filter: blur(0) !important;
+  transition: all 0.55s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+
+/* MÀN HÌNH CHUYỂN TIẾP NGHI THỨC LẬT BÀI TAROT */
+.tarot-loading-screen {
+  text-align: center;
+  animation: fadeIn 0.6s ease-out;
+  padding: 20px 0;
+  position: relative;
+}
+
+/* Vòng tròn hình học thiêng liêng ở nền */
+.sacred-geometry-circle {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  width: 480px;
+  height: 480px;
+  transform: translate(-50%, -50%) rotate(0deg);
+  border: 1px dashed rgba(255, 215, 0, 0.12);
+  border-radius: 50%;
+  z-index: 1;
+  pointer-events: none;
+  animation: rotate-sacred 50s infinite linear;
+}
+
+.sacred-geometry-circle::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  border: 1.5px solid rgba(255, 215, 0, 0.06);
+  border-radius: 50%;
+}
+
+.sacred-geometry-circle::after {
+  content: '';
+  position: absolute;
+  top: -25px;
+  left: -25px;
+  right: -25px;
+  bottom: -25px;
+  border: 1px double rgba(255, 215, 0, 0.04);
+  border-radius: 50%;
+}
+
+@keyframes rotate-sacred {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.tarot-ceremony {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  position: relative;
+  z-index: 5;
+}
+
+.tarot-celestial-symbol {
+  font-size: 2.2rem;
+  color: var(--gold);
+  animation: rotate-celestial 15s infinite linear;
+  text-shadow: 0 0 15px var(--gold-glow);
+}
+
+@keyframes rotate-celestial {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+.tarot-status {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--gold);
+  min-height: 48px;
+  text-shadow: 0 0 10px var(--gold-glow);
+  letter-spacing: 0.5px;
+  max-width: 500px;
+  line-height: 1.5;
+  transition: all 0.5s ease;
+}
+
+/* Bố cục 4 lá bài úp mặt xếp hình quạt/hàng ngang */
+.tarot-cards-spread {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  perspective: 1000px;
+  margin: 25px auto;
+  min-height: 340px;
+  width: 100%;
+  transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.tarot-card-option {
+  width: 110px;
+  height: 176px;
+  transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+  cursor: pointer;
+  perspective: 1000px;
+  position: relative;
+  border-radius: 12px;
+}
+
+.tarot-card-option:hover {
+  transform: translateY(-16px) scale(1.08) rotate(1.5deg);
+  z-index: 15;
+}
+
+.tarot-card-option:hover .tarot-card-inner {
+  box-shadow: 
+    0 15px 30px rgba(0, 0, 0, 0.6),
+    0 0 25px var(--gold-glow);
+}
+
+.tarot-card-option .tarot-card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1.3s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+}
+
+.tarot-card-option .tarot-card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+/* Thiết kế mặt sau và mặt trước */
+.tarot-card-option .tarot-card-back, 
+.tarot-card-option .tarot-card-front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 3.5px double var(--gold);
+}
+
+.tarot-card-option .tarot-card-back {
+  background: var(--bg-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tarot-card-option .tarot-card-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.tarot-card-option .tarot-card-front {
+  transform: rotateY(180deg);
+  background: var(--bg-color);
+}
+
+.tarot-card-option .tarot-card-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Khi một lá bài được chọn */
+.tarot-card-option.selected {
+  width: 200px;
+  height: 320px;
+  z-index: 100;
+  cursor: default;
+  pointer-events: none;
+  transform: translateY(-5px);
+  animation: energy-vibrate-mild 1.5s infinite linear;
+}
+
+.tarot-card-option.selected.stage-2 {
+  animation: energy-vibrate-medium 1s infinite linear;
+}
+
+.tarot-card-option.selected.stage-3 {
+  animation: energy-vibrate-intense 0.8s infinite linear;
+}
+
+.tarot-card-option.selected .tarot-card-inner {
+  box-shadow: 
+    0 20px 45px rgba(0, 0, 0, 0.75),
+    0 0 40px var(--gold-glow);
+  animation: energy-glow-pulse 3s infinite ease-in-out;
+}
+
+.tarot-card-option.selected.stage-2 .tarot-card-inner {
+  animation: energy-glow-pulse-fast 1.5s infinite ease-in-out;
+}
+
+.tarot-card-option.selected.stage-3 .tarot-card-inner {
+  animation: energy-glow-pulse-super 0.8s infinite ease-in-out;
+}
+
+/* Hiệu ứng chớp sáng trắng */
+.magic-flash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  border-radius: 8px;
+}
+
+.magic-flash.flash-trigger {
+  animation: magic-flash-anim 0.6s ease-out forwards;
+}
+
+/* Vòng tròn ma thuật hoạt động mạnh */
+.sacred-geometry-circle.magic-active {
+  animation: rotate-sacred-active 10s infinite linear, circle-pulse 3s infinite ease-in-out;
+  border-color: var(--secondary) !important;
+  box-shadow: 
+    0 0 35px var(--secondary-glow),
+    inset 0 0 35px var(--primary-glow);
+}
+
+.sacred-geometry-circle.magic-active::before {
+  border-color: rgba(230, 57, 70, 0.3) !important;
+}
+
+.sacred-geometry-circle.magic-active::after {
+  border-color: rgba(255, 215, 0, 0.15) !important;
+}
+
+@keyframes rotate-sacred-active {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes circle-pulse {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.05); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes energy-vibrate-mild {
+  0% { transform: translateY(-5px) rotate(0deg); }
+  25% { transform: translateY(-5px) rotate(0.5deg); }
+  75% { transform: translateY(-5px) rotate(-0.5deg); }
+  100% { transform: translateY(-5px) rotate(0deg); }
+}
+
+@keyframes energy-vibrate-medium {
+  0% { transform: translateY(-5px) rotate(0deg) scale(1.02); }
+  20% { transform: translateY(-7px) rotate(1deg) scale(1.02); }
+  40% { transform: translateY(-3px) rotate(-1deg) scale(1.02); }
+  60% { transform: translateY(-6px) rotate(0.5deg) scale(1.02); }
+  80% { transform: translateY(-4px) rotate(-0.5deg) scale(1.02); }
+  100% { transform: translateY(-5px) rotate(0deg) scale(1.02); }
+}
+
+@keyframes energy-vibrate-intense {
+  0% { transform: translateY(-5px) rotate(0deg) scale(1.05); }
+  10% { transform: translateY(-8px) rotate(1.5deg) scale(1.05); }
+  20% { transform: translateY(-3px) rotate(-1.5deg) scale(1.05); }
+  30% { transform: translateY(-7px) rotate(1deg) scale(1.05); }
+  40% { transform: translateY(-4px) rotate(-1deg) scale(1.05); }
+  50% { transform: translateY(-8px) rotate(2deg) scale(1.05); }
+  60% { transform: translateY(-2px) rotate(-2deg) scale(1.05); }
+  70% { transform: translateY(-7px) rotate(1deg) scale(1.05); }
+  80% { transform: translateY(-3px) rotate(-1deg) scale(1.05); }
+  90% { transform: translateY(-6px) rotate(1.5deg) scale(1.05); }
+  100% { transform: translateY(-5px) rotate(0deg) scale(1.05); }
+}
+
+@keyframes energy-glow-pulse {
+  0% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.75), 0 0 30px var(--gold-glow); }
+  50% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.75), 0 0 50px var(--primary-glow); }
+  100% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.75), 0 0 30px var(--gold-glow); }
+}
+
+@keyframes energy-glow-pulse-fast {
+  0% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 40px var(--primary-glow); }
+  50% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 60px var(--secondary-glow); }
+  100% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 40px var(--primary-glow); }
+}
+
+@keyframes energy-glow-pulse-super {
+  0% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 50px var(--secondary-glow); }
+  25% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 70px var(--gold-glow); }
+  50% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 80px var(--primary-glow); }
+  75% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 70px var(--secondary-glow); }
+  100% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 50px var(--secondary-glow); }
+}
+
+@keyframes magic-flash-anim {
+  0% { opacity: 0; }
+  30% { opacity: 0.95; }
+  100% { opacity: 0; }
+}
+
+/* Các lá bài khác biến mất */
+.tarot-card-option.fade-out {
+  width: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  transform: scale(0.6) translateY(30px);
+  pointer-events: none;
+  gap: 0;
+  border-width: 0;
+}
+
+/* Nút Giải Mã Lời Tiên Tri */
+.btn-reveal-destiny {
+  font-family: var(--font-title);
+  background: linear-gradient(135deg, var(--gold) 0%, var(--primary) 100%);
+  color: #ffffff;
+  border: 2px solid var(--gold);
+  padding: 16px 42px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  border-radius: 35px;
+  cursor: pointer;
+  box-shadow: 
+    0 8px 25px var(--gold-glow),
+    0 0 15px rgba(255, 215, 0, 0.2);
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+  z-index: 20;
+  animation: pulse-gold-glow 2.5s infinite;
+  letter-spacing: 1.5px;
+}
+
+.btn-reveal-destiny:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 
+    0 15px 35px rgba(255, 215, 0, 0.45),
+    0 0 25px var(--gold-glow);
+}
+
+.btn-reveal-destiny:active {
+  transform: translateY(-1px);
+}
+
+@keyframes pulse-gold-glow {
+  0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.6); }
+  70% { box-shadow: 0 0 0 18px rgba(255, 215, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+}
+
+/* MÀN HÌNH KẾT QUẢ */
+.result-screen {
+  animation: scaleUp 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.result-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.result-title-small {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 3.5px;
+  margin-bottom: 8px;
+  text-shadow: 0 0 10px var(--gold-glow);
+}
+
+.result-title-main {
+  font-family: var(--font-title);
+  font-size: 2.1rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #ffffff 40%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Khung trưng bày lá bài kết quả */
+.result-tarot-display {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 35px;
+}
+
+.tarot-frame-container {
+  width: 190px;
+  height: 304px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 4px double var(--gold);
+  box-shadow: 
+    0 15px 40px rgba(0,0,0,0.6),
+    0 0 30px var(--gold-glow);
+  transform: rotate(-1deg);
+  transition: var(--transition);
+}
+
+.tarot-frame-container:hover {
+  transform: rotate(0deg) scale(1.05);
+  box-shadow: 
+    0 20px 45px rgba(0,0,0,0.7),
+    0 0 40px var(--gold-glow);
+}
+
+.tarot-frame-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Bảng xếp hạng % các ban */
+.rankings-box {
+  background: hsla(230, 20%, 7%, 0.85);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  padding: 28px;
+  margin-bottom: 35px;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
+}
+
+.rankings-box-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rank-row {
+  margin-bottom: 20px;
+}
+
+.rank-row:last-child {
+  margin-bottom: 0;
+}
+
+.rank-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.rank-badge {
+  width: 24px;
+  height: 24px;
+  background: hsla(230, 20%, 25%, 0.8);
+  border-radius: 8px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  font-size: 0.85rem;
+  margin-right: 12px;
+  color: var(--text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.top-1-row .rank-badge {
+  background: linear-gradient(135deg, var(--gold), var(--primary));
+  color: #ffffff;
+  box-shadow: 0 0 10px var(--gold-glow);
+  border: none;
+}
+
+.rank-name {
+  font-weight: 600;
+  color: var(--text-muted);
+  flex-grow: 1;
+}
+
+.top-1-row .rank-name {
+  color: var(--text-main);
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.rank-percentage {
+  font-weight: 800;
+  color: var(--gold);
+  font-size: 1.05rem;
+}
+
+.top-1-row .rank-percentage {
+  color: var(--gold);
+  text-shadow: 0 0 8px var(--gold-glow);
+  font-size: 1.15rem;
+}
+
+.rank-bar-bg {
+  width: 100%;
+  height: 12px;
+  background-color: hsla(230, 20%, 20%, 0.5);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.rank-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, hsla(230, 20%, 40%, 0.8), hsla(230, 20%, 55%, 0.8));
+  border-radius: 6px;
+  transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.top-1-row .rank-bar-fill {
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+  box-shadow: 0 0 12px var(--secondary-glow);
+}
+
+/* Các box diễn giải văn bản */
+.result-details {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.detail-card {
+  background: hsla(230, 20%, 14%, 0.5);
+  border-left: 5px solid var(--gold);
+  border-radius: 0 16px 16px 0;
+  padding: 25px;
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: var(--transition);
+  animation: slideInUp 0.5s ease-out;
+}
+
+.detail-card:hover {
+  transform: translateX(4px);
+  background: hsla(230, 20%, 17%, 0.7);
+}
+
+.detail-card.secondary-card {
+  border-left-color: var(--secondary);
+  background: hsla(230, 20%, 12%, 0.4);
+}
+
+.detail-card.message-card {
+  border-left-color: var(--success);
+  background: hsla(145, 85%, 45%, 0.03);
+  box-shadow: 
+    0 10px 30px rgba(0,0,0,0.25),
+    0 0 20px rgba(142, 230, 150, 0.05);
+  border: 1px solid hsla(145, 85%, 45%, 0.25);
+  border-left-width: 5px;
+  border-radius: 16px;
+}
+
+.card-icon {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+  display: inline-block;
+  animation: float-icon 3s infinite ease-in-out;
+}
+
+@keyframes float-icon {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}
+
+.detail-card h3 {
+  font-family: var(--font-title);
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-main);
+  letter-spacing: 0.5px;
+}
+
+.detail-card p {
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+
+.detail-card p strong {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+/* Nút CTA và Chơi lại */
+.result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  border-top: 1px solid var(--card-border);
+  padding-top: 35px;
+}
+
+.cta-button {
+  width: 100%;
+  text-align: center;
+  font-family: var(--font-title);
+  background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
+  color: #ffffff;
+  border: none;
+  padding: 20px 30px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 35px;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 180, 216, 0.4);
+  transition: var(--transition);
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  animation: pulse-glow-blue 2.5s infinite;
+  letter-spacing: 0.5px;
+}
+
+.cta-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 15px 35px rgba(0, 180, 216, 0.65),
+    0 0 20px rgba(0, 180, 216, 0.3);
+  background: linear-gradient(135deg, #00c4ec 0%, #0096d6 100%);
+}
+
+@keyframes pulse-glow-blue {
+  0% { box-shadow: 0 0 0 0 rgba(0, 180, 216, 0.6); }
+  70% { box-shadow: 0 0 0 15px rgba(0, 180, 216, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 180, 216, 0); }
+}
+
+.result-footer-links {
+  display: flex;
+  gap: 20px;
+  margin-top: 5px;
+}
+
+/* Các hoạt ảnh mượt mà */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Responsive cho máy tính bảng và thiết bị tầm trung */
+@media (max-width: 768px) {
+  .welcome-title {
+    font-size: 2.4rem;
+  }
+  .welcome-subtitle {
+    font-size: 1.1rem;
+    letter-spacing: 2.5px;
+    margin-bottom: 20px;
+  }
+  .welcome-desc {
+    font-size: 1.1rem;
+    line-height: 1.65;
+    margin-bottom: 25px;
+  }
+  .welcome-art-card {
+    width: 190px;
+    height: 304px;
+    margin: 20px auto 30px auto;
+  }
+  .logo-overlay {
+    width: 40px;
+    height: 40px;
+    top: -18px;
+  }
+}
+
+/* Responsive di động */
+@media (max-width: 580px) {
+  .app-container {
+    padding: 28px 16px;
+    margin: 12px;
+    border-radius: 20px;
+  }
+
+  .welcome-title {
+    font-size: 1.95rem;
+    margin-bottom: 8px;
+  }
+  
+  .welcome-subtitle {
+    font-size: 0.95rem;
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+  }
+
+  .welcome-desc {
+    font-size: 1rem;
+    padding: 0 5px;
+    line-height: 1.55;
+    margin-bottom: 22px;
+  }
+
+  .welcome-art-card {
+    width: 170px;
+    height: 272px;
+    margin: 15px auto 25px auto;
+  }
+  
+  .logo-overlay {
+    width: 36px;
+    height: 36px;
+    top: -16px;
+  }
+
+  .btn-primary-magic {
+    padding: 14px 36px;
+    font-size: 1.05rem;
+  }
+  
+  .question-text {
+    font-size: 1.4rem;
+    line-height: 1.45;
+  }
+  
+  .answer-card {
+    padding: 14px 16px;
+    gap: 12px;
+    border-radius: 12px;
+  }
+  
+  .answer-key {
+    width: 28px;
+    height: 28px;
+    font-size: 0.85rem;
+    border-radius: 8px;
+  }
+  
+  .answer-text {
+    font-size: 1.1rem;
+    line-height: 1.4;
+  }
+  
+  .result-title-main {
+    font-size: 1.7rem;
+  }
+  
+  .tarot-loading-screen {
+    padding: 10px 0;
+  }
+
+  .sacred-geometry-circle {
+    width: 310px;
+    height: 310px;
+  }
+
+  .tarot-cards-spread {
+    gap: 6px;
+    min-height: 240px;
+    margin: 10px auto;
+  }
+  
+  .tarot-card-option {
+    width: 70px;
+    height: 112px;
+  }
+  
+  .tarot-card-option.selected {
+    width: 140px;
+    height: 224px;
+  }
+  
+  .tarot-card-option .tarot-card-back,
+  .tarot-card-option .tarot-card-front {
+    border-width: 2px;
+  }
+  
+  .btn-reveal-destiny {
+    padding: 14px 30px;
+    font-size: 1rem;
+  }
+  
+  .tarot-frame-container {
+    width: 160px;
+    height: 256px;
+  }
+  
+  .rankings-box {
+    padding: 20px;
+  }
+  
+  .detail-card {
+    padding: 18px;
+  }
+
+  .detail-card h3 {
+    font-size: 1.05rem;
+  }
+
+  .detail-card p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+  
+  .cta-button {
+    font-size: 0.95rem;
+    padding: 16px 18px;
+  }
+
+  .particle-logo {
+    opacity: 0.05 !important; /* Giảm độ đậm hạt nền để chữ serif dễ đọc hơn */
+  }
+
+  .quiz-footer {
+    padding-top: 20px;
+    flex-direction: column-reverse;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .question-indicators {
+    width: 100%;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .btn-secondary {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
+}
