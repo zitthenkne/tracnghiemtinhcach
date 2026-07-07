@@ -113,7 +113,7 @@ let finalTop2 = null;
 // Tên đầy đủ của các ban
 const departmentNames = {
   HCNS: "Ban Hành Chính Nhân Sự",
-  TC: "Ban Tài Chỉ",
+  TC: "Ban Tài Chính",
   ND: "Ban Nội Dung",
   PR: "Ban PR - IT"
 };
@@ -467,16 +467,14 @@ function calculateAndShowTarotCeremony() {
   
   const cardOptions = document.querySelectorAll(".tarot-card-option");
   cardOptions.forEach(card => {
-    card.classList.remove("selected", "fade-out", "stage-2", "stage-3");
+    card.classList.remove("selected", "fade-out", "stage-2", "stage-3", "revealed");
     const inner = card.querySelector(".tarot-card-inner");
     inner.classList.remove("flipped");
     const img = card.querySelector(".tarot-front-img-option");
     img.src = "";
-    // Xóa flash element nếu có
-    const flashEl = card.querySelector(".magic-flash");
-    if (flashEl) {
-      flashEl.remove();
-    }
+    // Xóa các phần tử hiệu ứng ma thuật của lượt chơi trước
+    card.querySelectorAll(".magic-flash, .rune-ring, .energy-aura, .energy-particles, .star-burst")
+      .forEach(el => el.remove());
   });
 
   setupTarotCeremonyInteractivity();
@@ -515,11 +513,40 @@ function selectTarotCard(selectedCardElement) {
   
   // Chọn lá bài này
   selectedCardElement.classList.add("selected");
-  
+
   // Tạo phần tử flash lóe sáng trắng
   const flash = document.createElement("div");
   flash.className = "magic-flash";
   selectedCardElement.appendChild(flash);
+
+  // Vòng ấn ma pháp xoay quanh lá bài
+  const runeRing = document.createElement("div");
+  runeRing.className = "rune-ring";
+  runeRing.innerHTML = '<div class="rune-ring-inner"></div>';
+  selectedCardElement.appendChild(runeRing);
+
+  // Hào quang năng lượng tỏa phía sau lá bài
+  const aura = document.createElement("div");
+  aura.className = "energy-aura";
+  selectedCardElement.appendChild(aura);
+
+  // Dòng hạt năng lượng từ vũ trụ hội tụ liên tục vào lá bài
+  const particleField = document.createElement("div");
+  particleField.className = "energy-particles";
+  const particleColors = ["#ffd700", "#ff6b7a", "#6bb7ff", "#ffffff"];
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement("span");
+    p.className = "energy-particle";
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 130 + Math.random() * 140;
+    p.style.setProperty("--sx", `${Math.round(Math.cos(angle) * dist)}px`);
+    p.style.setProperty("--sy", `${Math.round(Math.sin(angle) * dist)}px`);
+    p.style.setProperty("--pc", particleColors[i % particleColors.length]);
+    p.style.animationDelay = `${(Math.random() * 1.6).toFixed(2)}s`;
+    p.style.animationDuration = `${(1.2 + Math.random() * 0.9).toFixed(2)}s`;
+    particleField.appendChild(p);
+  }
+  selectedCardElement.appendChild(particleField);
   
   const statusEl = document.getElementById("tarot-status");
   const cardInner = selectedCardElement.querySelector(".tarot-card-inner");
@@ -546,16 +573,42 @@ function selectTarotCard(selectedCardElement) {
   setTimeout(() => {
     statusEl.textContent = "⚡ Luồng năng lượng tối thượng đang hội tụ! Lật mở lá bài...";
     flash.classList.add("flash-trigger"); // Kích hoạt hiệu ứng lóe sáng trắng
+    // Rung chấn màn hình khi năng lượng bùng nổ
+    const appWrapper = document.getElementById("app-wrapper");
+    appWrapper.classList.add("screen-shake");
+    setTimeout(() => appWrapper.classList.remove("screen-shake"), 700);
   }, 4800);
-  
+
   setTimeout(() => {
     cardInner.classList.add("flipped");
+    selectedCardElement.classList.add("revealed"); // Ngừng rung lắc, dịu hào quang
+    spawnStarBurst(selectedCardElement); // Vụ nổ sao vàng tỏa ra từ lá bài
   }, 5000); // Lật bài ngay sau khi lóe sáng 200ms
   
   setTimeout(() => {
     statusEl.textContent = "👁️ Định mệnh đã an bài! Hãy giải mã lời tiên tri...";
     document.getElementById("btn-reveal-result").classList.remove("hidden");
   }, 6200);
+}
+
+// Vụ nổ sao vàng tỏa tròn từ tâm lá bài khi lật mở
+function spawnStarBurst(cardElement) {
+  const burst = document.createElement("div");
+  burst.className = "star-burst";
+  const starCount = 16;
+  for (let i = 0; i < starCount; i++) {
+    const s = document.createElement("span");
+    s.className = "burst-star";
+    const angle = (i / starCount) * Math.PI * 2 + Math.random() * 0.4;
+    const dist = 95 + Math.random() * 115;
+    s.style.setProperty("--bx", `${Math.round(Math.cos(angle) * dist)}px`);
+    s.style.setProperty("--by", `${Math.round(Math.sin(angle) * dist)}px`);
+    s.style.animationDelay = `${(Math.random() * 0.15).toFixed(2)}s`;
+    s.textContent = "✦";
+    burst.appendChild(s);
+  }
+  cardElement.appendChild(burst);
+  setTimeout(() => burst.remove(), 2000);
 }
 
 // Chuyển sang màn hình Kết quả cuối cùng
@@ -587,8 +640,14 @@ function revealFinalResultScreen() {
   
   messageContainer.innerHTML = comboMessage;
 
-  // Kích hoạt pháo hoa chúc mừng
-  triggerConfetti();
+  // Vụ nổ sao vàng trên lá bài + pháo hoa, canh đúng lúc lá bài vừa đáp xuống
+  setTimeout(() => {
+    const cardStage = document.querySelector(".result-card-stage");
+    if (cardStage) {
+      spawnStarBurst(cardStage);
+    }
+    triggerConfetti();
+  }, 550);
 }
 
 // Vẽ bảng xếp hạng trực quan
@@ -606,7 +665,7 @@ function renderRankings(rankedDepts) {
       <div class="rank-info">
         <span class="rank-badge">${index + 1}</span>
         <span class="rank-name">${dept.name}</span>
-        <span class="rank-percentage">${dept.percentage}%</span>
+        <span class="rank-percentage" data-target="${dept.percentage}">0%</span>
       </div>
       <div class="rank-bar-bg">
         <div class="rank-bar-fill" style="width: 0%;" data-percent="${dept.percentage}"></div>
@@ -621,6 +680,21 @@ function renderRankings(rankedDepts) {
     fills.forEach(fill => {
       const pct = fill.getAttribute("data-percent");
       fill.style.width = `${pct}%`;
+    });
+
+    // Số % đếm chạy từ 0 lên giá trị thật, cùng nhịp với thanh bar
+    const counters = document.querySelectorAll(".rank-percentage");
+    counters.forEach(counter => {
+      const target = parseInt(counter.getAttribute("data-target"), 10) || 0;
+      const duration = 1500;
+      const startTime = performance.now();
+      const tick = (now) => {
+        const progress = Math.min((now - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic khớp nhịp thanh bar
+        counter.textContent = `${Math.round(target * eased)}%`;
+        if (progress < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
     });
   }, 100);
 }

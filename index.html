@@ -26,6 +26,13 @@
   <!-- Luồng sáng vũ trụ chiếu từ đỉnh đầu xuống -->
   <div class="cosmic-light-rays"></div>
 
+  <!-- Bầu trời sao lấp lánh 2 lớp tạo chiều sâu -->
+  <div class="star-field" aria-hidden="true"></div>
+  <div class="star-field layer-2" aria-hidden="true"></div>
+
+  <!-- Lớp vignette tối dần ở rìa màn hình tạo cảm giác ánh nến huyền bí -->
+  <div class="cosmic-vignette" aria-hidden="true"></div>
+
   <!-- Hạt ánh sáng trôi lơ lửng tạo chiều sâu không gian -->
   <div class="bg-particles">
     <div class="particle-logo" style="width: 45px; height: 45px; left: 8%; animation-delay: 0s; animation-duration: 22s;"></div>
@@ -39,13 +46,27 @@
   <canvas id="confetti-canvas"></canvas>
 
   <main class="app-container" id="app-wrapper">
-    
+
+    <!-- Hoa văn 4 góc khung mạ vàng phong cách lá bài Tarot -->
+    <span class="frame-corner corner-tl" aria-hidden="true"></span>
+    <span class="frame-corner corner-tr" aria-hidden="true"></span>
+    <span class="frame-corner corner-bl" aria-hidden="true"></span>
+    <span class="frame-corner corner-br" aria-hidden="true"></span>
+
     <!-- 1. MÀN HÌNH WELCOME -->
     <section id="welcome-screen" class="welcome-screen">
       <div class="welcome-center-layout">
+        <p class="mystic-eyebrow">☽ &nbsp;Nghi thức khai mở&nbsp; ☾</p>
         <h1 class="welcome-title">DNA TÌNH NGUYỆN</h1>
         <p class="welcome-subtitle">Khám phá bản thể tình nguyện</p>
-        
+
+        <!-- Đường kẻ trang trí thiên thể -->
+        <div class="celestial-divider" aria-hidden="true">
+          <span class="divider-line"></span>
+          <span class="divider-symbol">✦&ensp;☾&ensp;✦</span>
+          <span class="divider-line"></span>
+        </div>
+
         <p class="welcome-desc">
           Mỗi con người mang một tần số năng lượng riêng biệt. Hãy để những lá bài số mệnh định dạng "hệ tư tưởng" của bạn tại CLB Nhà Đỏ TNTY qua 10 tình huống thực tế! Bạn đã sẵn sàng kết nối năng lượng vũ trụ chưa?
         </p>
@@ -78,8 +99,9 @@
         <span class="progress-text" id="progress-text">1/10</span>
       </header>
 
-      <!-- Hộp câu hỏi -->
+      <!-- Hộp câu hỏi dạng tấm bùa cổ với triện sao ở đỉnh -->
       <div class="question-box">
+        <span class="question-ornament" aria-hidden="true">✦</span>
         <span class="question-number" id="question-number">Câu 1:</span>
         <h2 class="question-text" id="question-text">Loading question...</h2>
       </div>
@@ -168,21 +190,36 @@
     <section id="result-screen" class="result-screen hidden">
       
       <header class="result-header">
-        <h2 class="result-title-small">LÁ BÀI SỐ MỆNH CỦA BẠN</h2>
+        <h2 class="result-title-small">✦ LÁ BÀI SỐ MỆNH CỦA BẠN ✦</h2>
         <h1 class="result-title-main">🧬 DNA TÌNH NGUYỆN ĐÃ ĐỊNH DẠNG</h1>
+        <div class="celestial-divider result-divider" aria-hidden="true">
+          <span class="divider-line"></span>
+          <span class="divider-symbol">✦&ensp;☾&ensp;✦</span>
+          <span class="divider-line"></span>
+        </div>
       </header>
 
-      <!-- Hiển thị bức hình Tarot kết quả -->
+      <!-- Sân khấu trưng bày lá bài: hào quang tia sáng xoay + sao bay quanh quỹ đạo -->
       <div class="result-tarot-display">
-        <div class="tarot-frame-container">
-          <img id="result-tarot-image" src="" alt="Lá bài định mệnh">
+        <div class="result-card-stage">
+          <div class="result-halo" aria-hidden="true"></div>
+          <div class="orbit-sparkles" aria-hidden="true">
+            <span>✦</span><span>✧</span><span>✦</span>
+          </div>
+          <div class="tarot-frame-container">
+            <span class="tarot-corner tc-tl" aria-hidden="true">✦</span>
+            <span class="tarot-corner tc-tr" aria-hidden="true">✦</span>
+            <span class="tarot-corner tc-bl" aria-hidden="true">✦</span>
+            <span class="tarot-corner tc-br" aria-hidden="true">✦</span>
+            <img id="result-tarot-image" src="" alt="Lá bài định mệnh">
+          </div>
         </div>
       </div>
 
       <!-- Bảng xếp hạng % các ban -->
       <div class="rankings-box">
         <h2 class="rankings-box-title">
-          <span>📊</span> Bảng xếp hạng độ tương thích
+          <span class="rankings-icon" aria-hidden="true">🔮</span> Bảng xếp hạng độ tương thích
         </h2>
         <div id="rankings-container">
           <!-- Các thanh tiến trình % được sinh ra từ JS -->
