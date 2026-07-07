@@ -1798,31 +1798,37 @@ body::after {
   border-bottom-right-radius: 8px;
 }
 
-/* Triện sao xoay chậm lồng trên viền hộp câu hỏi */
+/* Triện logo CLB lồng trên viền hộp câu hỏi */
 .question-ornament {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translate(-50%, -52%);
-  width: 30px;
-  height: 30px;
-  background: hsl(230, 25%, 7%);
-  border: 1px solid hsla(45, 85%, 55%, 0.5);
+  width: 34px;
+  height: 34px;
+  background: #ffffff;
+  border: 1.5px solid var(--gold);
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--gold);
-  font-size: 0.78rem;
+  overflow: hidden;
   box-shadow:
     0 0 14px var(--gold-glow),
-    inset 0 0 8px rgba(255, 215, 0, 0.15);
-  animation: ornament-spin 14s linear infinite;
+    0 3px 8px rgba(0, 0, 0, 0.45);
+  animation: ornament-glow 3.2s ease-in-out infinite;
 }
 
-@keyframes ornament-spin {
-  from { transform: translate(-50%, -52%) rotate(0deg); }
-  to { transform: translate(-50%, -52%) rotate(360deg); }
+.question-ornament img {
+  width: 88%;
+  height: 88%;
+  object-fit: contain;
+  display: block;
+}
+
+@keyframes ornament-glow {
+  0%, 100% { box-shadow: 0 0 10px var(--gold-glow), 0 3px 8px rgba(0, 0, 0, 0.45); }
+  50% { box-shadow: 0 0 22px var(--gold-glow), 0 3px 8px rgba(0, 0, 0, 0.45); }
 }
 
 /* --- Chữ cái đáp án thành con dấu tròn mạ vàng --- */
@@ -1960,9 +1966,8 @@ body::after {
   }
 
   .question-ornament {
-    width: 26px;
-    height: 26px;
-    font-size: 0.68rem;
+    width: 30px;
+    height: 30px;
   }
 }
 

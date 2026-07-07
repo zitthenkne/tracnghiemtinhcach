@@ -6,7 +6,7 @@ const questions = [
     answers: [
       { key: "A", text: "Lọc lấy những ý \"ăn điểm\" nhất để học, dứt khoát bỏ qua phần râu ria.", scores: { TC: 3, HCNS: 1, PR: -1 } },
       { key: "B", text: "Phân loại, đánh số và sắp xếp tài liệu theo đúng trật tự logic để học dần.", scores: { HCNS: 3, TC: 1, ND: -1 } },
-      { key: "C", text: "Liên tưởng, sáng tạo ra những câu chuyện hoặc ví dụ độc lạ để gắn kết các luồng thông tin khô khan.", scores: { PR: 3, ND: 1, HCNS: -1 } },
+      { key: "C", text: "Tự chế mẹo nhớ, biến mớ kiến thức khô khan thành mấy câu chuyện hài hước để học tới đâu nhớ tới đó.", scores: { PR: 3, ND: 1, HCNS: -1 } },
       { key: "D", text: "Đọc lướt tổng thể để hiểu bức tranh chung và quy luật trước khi đi sâu.", scores: { ND: 3, PR: 1, TC: -1 } }
     ]
   },
@@ -14,7 +14,7 @@ const questions = [
     id: 2,
     question: "Đang làm bài nhóm thì một thành viên rút lui, để lại lỗ hổng lớn. Phản ứng đầu tiên của bạn:",
     answers: [
-      { key: "A", text: "Xem đây là cơ hội để \"đập đi xây lại\", thử nghiệm một góc tiếp cận mới lạ và đột phá hơn.", scores: { PR: 3, ND: 1, TC: -1 } },
+      { key: "A", text: "Coi đây là cớ để \"đập đi xây lại\", làm theo cái hướng mà lúc trước cả nhóm còn chưa dám thử.", scores: { PR: 3, ND: 1, TC: -1 } },
       { key: "B", text: "Đánh giá xem phần đó có thực sự đáng giá để tốn sức làm bù không.", scores: { TC: 3, HCNS: 1, PR: -1 } },
       { key: "C", text: "Rà soát lại quy định nhóm và chia lại phần việc công bằng cho người còn lại.", scores: { HCNS: 3, TC: 1, ND: -1 } },
       { key: "D", text: "Tùy cơ ứng biến, nắn lại hướng đi của cả bài cho hợp với hiện tại.", scores: { ND: 3, PR: 1, HCNS: -1 } }
@@ -24,10 +24,10 @@ const questions = [
     id: 3,
     question: "Sống chung với một người hay vứt đồ lộn xộn, bạn sẽ giải quyết bằng cách:",
     answers: [
-      { key: "A", text: "Bày ra một \"chiến dịch\" nhắc nhở siêu lầy lội và sáng tạo khiến đối phương tự thấy nhột mà thay đổi.", scores: { PR: 3, ND: 1, HCNS: -1 } },
+      { key: "A", text: "Bày một \"chiến dịch\" nhắc khéo siêu lầy như dán meme, treo bảng cảnh báo vui để đối phương tự nhột mà thay đổi.", scores: { PR: 3, ND: 1, HCNS: -1 } },
       { key: "B", text: "Ngồi lại chốt ngay một bộ quy tắc chung và hình phạt cụ thể nếu vi phạm.", scores: { HCNS: 3, TC: 1, ND: -1 } },
       { key: "C", text: "Tìm cách lách qua lách lại, thỉnh thoảng nhắc khéo chứ không làm to chuyện.", scores: { ND: 3, PR: 1, TC: -1 } },
-      { key: "D", text: "Ra điều kiện trao đổi lợi ích rõ ràng để bù đắp sự phiền phức mình phải chịu.", scores: { TC: 3, HCNS: 1, PR: -1 } }
+      { key: "D", text: "Deal thẳng: muốn mình dọn giùm thì bao trà sữa, sòng phẳng thì đôi bên cùng vui vẻ.", scores: { TC: 3, HCNS: 1, PR: -1 } }
     ]
   },
   {
@@ -37,17 +37,17 @@ const questions = [
       { key: "A", text: "Ghi lại toàn bộ bối cảnh và câu chuyện dẫn đến tình trạng hiện tại của bệnh nhân.", scores: { ND: 3, PR: 1, TC: -1 } },
       { key: "B", text: "Bám sát quy trình chuẩn, tuần tự từng bước thăm khám, không bỏ sót chi tiết.", scores: { HCNS: 3, TC: 1, ND: -1 } },
       { key: "C", text: "Tưởng tượng và mô hình hóa căn bệnh trong đầu, biến các triệu chứng phức tạp thành những khái niệm quen thuộc.", scores: { PR: 3, ND: 1, HCNS: -1 } },
-      { key: "D", text: "Chỉ chắt lọc đúng những \"key\" chẩn đoán có giá trị thực tiễn và ứng dụng cao nhất.", scores: { TC: 3, HCNS: 1, PR: -1 } }
+      { key: "D", text: "Chỉ ghi đúng mấy cái \"key\" chẩn đoán mà đi thi với đi trực kiểu gì cũng dùng tới.", scores: { TC: 3, HCNS: 1, PR: -1 } }
     ]
   },
   {
     id: 5,
     question: "Nhìn lướt qua không gian sống/góc học tập của bạn, người ta sẽ nhận thấy:",
     answers: [
-      { key: "A", text: "Đơn giản, thực dụng, chỉ giữ lại những thứ sinh ra giá trị.", scores: { TC: 3, HCNS: 1, PR: -1 } },
-      { key: "B", text: "Thoải mái, linh hoạt, luôn trong trạng thái sẵn sàng để xê dịch.", scores: { ND: 3, PR: 1, HCNS: -1 } },
-      { key: "C", text: "Ngăn nắp, trật tự, mọi thứ đều được phân loại về đúng vị trí.", scores: { HCNS: 3, TC: 1, ND: -1 } },
-      { key: "D", text: "Đầy tính ngẫu hứng với những thứ độc lạ, không theo quy chuẩn nào, cốt để khơi gợi ý tưởng.", scores: { PR: 3, ND: 1, TC: -1 } }
+      { key: "A", text: "Chẳng có gì thừa, món nào lâu rồi không đụng tới là bị đem thanh lý hoặc cho đi ngay.", scores: { TC: 3, HCNS: 1, PR: -1 } },
+      { key: "B", text: "Chiếc balo với vài món gọn nhẹ luôn trong tư thế sẵn sàng, ai rủ đi đâu là xách lên đi được liền.", scores: { ND: 3, PR: 1, HCNS: -1 } },
+      { key: "C", text: "Sách vở chia ngăn theo môn, dây sạc cuộn gọn, nhắm mắt cũng biết món nào đang nằm ở đâu.", scores: { HCNS: 3, TC: 1, ND: -1 } },
+      { key: "D", text: "Hơi bừa một cách \"nghệ thuật\": giấy note ý tưởng dán khắp nơi, đồ trang trí tự chế mỗi thứ một kiểu.", scores: { PR: 3, ND: 1, TC: -1 } }
     ]
   },
   {
@@ -56,7 +56,7 @@ const questions = [
     answers: [
       { key: "A", text: "Chọn một quán mới toanh ở xa xa để cả đám cùng có cớ lượn lờ đổi gió.", scores: { ND: 3, PR: 1, HCNS: -1 } },
       { key: "B", text: "Ra deadline giờ chốt đơn và yêu cầu ghi đúng cú pháp rõ ràng để dễ tổng hợp.", scores: { HCNS: 3, TC: 1, ND: -1 } },
-      { key: "C", text: "Đề xuất một món ăn phá cách hoặc combo \"độc lạ\" chưa ai từng thử để kích thích sự tò mò.", scores: { PR: 3, ND: 1, TC: -1 } },
+      { key: "C", text: "Rủ cả đám gọi cái món nghe tên đã thấy \"sai sai\" chưa ai dám thử, dở thì ít nhất cũng có chuyện để kể.", scores: { PR: 3, ND: 1, TC: -1 } },
       { key: "D", text: "Tìm quán nào đang áp được nhiều mã giảm giá nhất rồi mới cho chọn.", scores: { TC: 3, HCNS: 1, PR: -1 } }
     ]
   },
@@ -64,9 +64,9 @@ const questions = [
     id: 7,
     question: "Cuối tuần trống lịch, cách bạn \"chữa lành\" hiệu quả nhất là:",
     answers: [
-      { key: "A", text: "Lên danh sách việc cần làm để dọn dẹp lại toàn bộ nếp sống sau những ngày bận rộn.", scores: { HCNS: 3, TC: 1, PR: -1 } },
+      { key: "A", text: "Tổng vệ sinh phòng ốc, giặt giũ, xếp lại lịch tuần sau, dọn xong thấy người nhẹ hẳn.", scores: { HCNS: 3, TC: 1, PR: -1 } },
       { key: "B", text: "Dành thời gian mày mò một sở thích mới, hoặc bắt tay vào thực hiện một ý tưởng hay ho đang ấp ủ.", scores: { PR: 3, ND: 1, TC: -1 } },
-      { key: "C", text: "Chế độ \"ngủ đông\" để bảo toàn năng lượng và tránh mọi khoản chi tiêu phát sinh.", scores: { TC: 3, HCNS: 1, ND: -1 } },
+      { key: "C", text: "Bật chế độ \"ngủ đông\": nằm nhà ngủ nướng, xem phim, vừa hồi sức vừa chẳng tốn đồng nào.", scores: { TC: 3, HCNS: 1, ND: -1 } },
       { key: "D", text: "Xách xe đi dạo không mục đích hoặc đến một nơi chưa từng đặt chân tới.", scores: { ND: 3, PR: 1, HCNS: -1 } }
     ]
   },
@@ -75,7 +75,7 @@ const questions = [
     question: "Đối mặt với những môn học nặng về cơ chế (như Dược lý, Sinh lý), bạn thường:",
     answers: [
       { key: "A", text: "Lập bảng chia cột rành mạch để học đối chiếu theo chiều dọc, chiều ngang.", scores: { HCNS: 3, TC: 1, ND: -1 } },
-      { key: "B", text: "Nhân hóa các cơ chế thành các nhân vật và đạo diễn ra một kịch bản tưởng tượng để não dễ hấp thụ.", scores: { PR: 3, ND: 1, TC: -1 } },
+      { key: "B", text: "Tưởng tượng các cơ chế thành tuyến nhân vật rồi tự dựng một bộ phim trong đầu, học mà như đang xem drama.", scores: { PR: 3, ND: 1, TC: -1 } },
       { key: "C", text: "Phân loại theo tần suất xuất hiện, nhồi phần trọng tâm nhất.", scores: { TC: 3, HCNS: 1, PR: -1 } },
       { key: "D", text: "Hình dung con đường đi của cơ chế như một chuỗi hành trình có tính liên kết.", scores: { ND: 3, PR: 1, HCNS: -1 } }
     ]
@@ -85,9 +85,9 @@ const questions = [
     question: "Bất ngờ! Sự kiện sắp diễn ra thì xảy ra sự cố ngoài ý muốn. Phản xạ của bạn:",
     answers: [
       { key: "A", text: "Tính toán ngay xem nguồn lực dự phòng có đủ gánh vác rủi ro hay không.", scores: { TC: 6, HCNS: 2, PR: -2 } },
-      { key: "B", text: "Lập tức \"brainstorm\" một hình thức tổ chức phá cách hơn, biến cái rủi thành một concept hoàn toàn mới.", scores: { PR: 6, ND: 2, TC: -2 } },
-      { key: "C", text: "Trực tiếp đi khảo sát tình hình thực tế để tự mình mở ra hướng đi mới.", scores: { ND: 6, PR: 2, HCNS: -2 } },
-      { key: "D", text: "Lật lại kịch bản dự phòng để thực hiện từng bước theo đúng quy trình xử lý sự cố.", scores: { HCNS: 6, TC: 2, ND: -2 } }
+      { key: "B", text: "Nghĩ ngay một phương án chữa cháy chưa ai làm bao giờ, biết đâu chính sự cố này lại làm chương trình đáng nhớ hơn.", scores: { PR: 6, ND: 2, TC: -2 } },
+      { key: "C", text: "Chạy thẳng ra hiện trường xem tận mắt tình hình rồi xoay phương án ngay tại chỗ.", scores: { ND: 6, PR: 2, HCNS: -2 } },
+      { key: "D", text: "Mở ngay kịch bản dự phòng đã soạn sẵn từ trước, bình tĩnh xử lý từng đầu việc một, không để cuống.", scores: { HCNS: 6, TC: 2, ND: -2 } }
     ]
   },
   {
@@ -96,8 +96,8 @@ const questions = [
     answers: [
       { key: "A", text: "Thấy mọi thứ được vận hành đúng kế hoạch, chuẩn mực và lưu trữ gọn gàng.", scores: { HCNS: 3, TC: 1, PR: -1 } },
       { key: "B", text: "Tự hào vì bản thân dám thử nghiệm, biến một ý tưởng tưởng chừng \"điên rồ\" thành hiện thực.", scores: { PR: 3, ND: 1, TC: -1 } },
-      { key: "C", text: "Thu nạp được thêm nhiều trải nghiệm sống và nâng cấp khả năng sinh tồn.", scores: { ND: 3, PR: 1, HCNS: -1 } },
-      { key: "D", text: "Đạt được mục tiêu cốt lõi của chương trình mà không làm lãng phí tài nguyên.", scores: { TC: 3, HCNS: 1, ND: -1 } }
+      { key: "C", text: "Thấy mình dày dạn hẳn lên, gom thêm một mớ chuyện \"thực chiến\" mà không giáo trình nào dạy.", scores: { ND: 3, PR: 1, HCNS: -1 } },
+      { key: "D", text: "Nhìn lại thấy mục tiêu chính đạt đủ, mà tiền bạc lẫn công sức không hao một chút nào vô ích.", scores: { TC: 3, HCNS: 1, ND: -1 } }
     ]
   }
 ];
@@ -687,9 +687,10 @@ function renderRankings(rankedDepts) {
     counters.forEach(counter => {
       const target = parseInt(counter.getAttribute("data-target"), 10) || 0;
       const duration = 1500;
-      const startTime = performance.now();
+      let startTime = null; // Lấy mốc từ chính timestamp của rAF để không lệch gốc thời gian
       const tick = (now) => {
-        const progress = Math.min((now - startTime) / duration, 1);
+        if (startTime === null) startTime = now;
+        const progress = Math.min(Math.max((now - startTime) / duration, 0), 1);
         const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic khớp nhịp thanh bar
         counter.textContent = `${Math.round(target * eased)}%`;
         if (progress < 1) requestAnimationFrame(tick);
