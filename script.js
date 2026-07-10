@@ -126,6 +126,69 @@ const tarotImages = {
   PR: "tarot_pr.png"
 };
 
+// Hồ sơ chi tiết từng ban (trích từ website chính thức của CLB Nhà Đỏ TNTY)
+// Dùng để dựng "thẻ hồ sơ ban" trực quan trên màn hình kết quả.
+const departmentInfo = {
+  HCNS: {
+    accent: "45, 100%, 50%", // Vàng gold
+    metaphor: "HỆ XƯƠNG SỐNG",
+    slogan: "Việc gì ra việc nấy, chơi gì ra chơi nấy",
+    desc: "Những \"kiến trúc sư\" đứng sau cánh gà, thiết kế và xây dựng quy trình để cỗ máy CLB vận hành trơn tru.",
+    tasks: [
+      { icon: "📋", text: "Quản lý tài liệu & Drive từng chương trình" },
+      { icon: "✍️", text: "Ghi biên bản, tóm tắt nội dung cuộc họp" },
+      { icon: "🎖️", text: "Merge & đóng mộc giấy chứng nhận cho chiến sĩ" },
+      { icon: "🧩", text: "Tuyển thành viên CLB & chiến sĩ tình nguyện" },
+      { icon: "🎁", text: "Tổ chức \"Send Wish\", \"Nước Chảy Về Nguồn\"" }
+    ],
+    skills: ["Tổ chức & quản lý", "Kỷ luật, tỉ mỉ", "Tin học văn phòng", "Tinh thần đoàn kết"],
+    url: "https://sites.google.com/view/tinhnguyentruongy/tuy%E1%BB%83n-th%C3%A0nh-vi%C3%AAn/h%C3%A0nh-ch%C3%ADnh-nh%C3%A2n-s%E1%BB%B1"
+  },
+  TC: {
+    accent: "145, 85%, 45%", // Xanh lá tài lộc
+    metaphor: "NGUỒN NHIÊN LIỆU",
+    slogan: "Làm hết sức, chơi hết mình — không ai bị bỏ lại phía sau",
+    desc: "Nguồn nhiên liệu và tấm bản đồ chiến lược cho mọi chương trình: gây quỹ, quản lý và tiếp sức tài chính cho CLB.",
+    tasks: [
+      { icon: "💰", text: "Duyệt dự trù, tổng thu chi & nguồn tài trợ" },
+      { icon: "🧾", text: "Quản lý quỹ, cấp chi phí cho hoạt động" },
+      { icon: "👕", text: "Gây quỹ: bán áo Blouse" },
+      { icon: "🌸", text: "Gây quỹ: bán hoa dịp 8/3" }
+    ],
+    skills: ["Excel, Word, phần mềm chuyên dụng", "Quản lý chi tiêu & tài chính", "Kỹ năng sống từ anh chị", "Gắn bó đồng đội"],
+    url: "https://sites.google.com/view/tinhnguyentruongy/tuy%E1%BB%83n-th%C3%A0nh-vi%C3%AAn/ban-t%C3%A0i-ch%C3%ADnh"
+  },
+  ND: {
+    accent: "355, 85%, 52%", // Đỏ ruby trái tim
+    metaphor: "TRÁI TIM",
+    slogan: "Nếu PR-IT là BỘ MẶT thì Nội Dung chính là TRÁI TIM",
+    desc: "Người đặt những viên gạch đầu tiên, đi đến những vùng đất mới để tìm ra lý do cho mỗi chuyến xe tình nguyện.",
+    tasks: [
+      { icon: "🔎", text: "Tìm địa điểm & soạn câu hỏi khảo sát" },
+      { icon: "🧭", text: "Tiền trạm: đi thực tế đến các tỉnh" },
+      { icon: "📊", text: "Phân tích nhu cầu & điều kiện tổ chức" },
+      { icon: "📝", text: "Tổng hợp & trình bày báo cáo tiền trạm" }
+    ],
+    skills: ["\"Đặc sản\" những chuyến tiền trạm", "Thuyết trình & báo cáo", "Dò đường, điều hướng", "Giao tiếp với đối tác"],
+    url: "https://sites.google.com/view/tinhnguyentruongy/tuy%E1%BB%83n-th%C3%A0nh-vi%C3%AAn/ban-n%E1%BB%99i-dung"
+  },
+  PR: {
+    accent: "215, 90%, 50%", // Xanh dương sáng tạo
+    metaphor: "BỘ MẶT",
+    slogan: "Nơi chữa lành, trau dồi kỹ năng & thể hiện cá tính — một gia đình nhỏ trong gia đình to",
+    desc: "Bộ mặt của CLB, biến mọi câu chuyện trở nên sống động và lan tỏa qua hình ảnh, truyền thông và công nghệ.",
+    tasks: [
+      { icon: "🎨", text: "Sáng tạo ấn phẩm truyền thông" },
+      { icon: "📷", text: "Chụp ảnh, lưu lại kỷ niệm hoạt động" },
+      { icon: "💻", text: "Quản lý & chỉnh sửa website CLB" },
+      { icon: "✏️", text: "Viết bài & quản lý Fanpage" },
+      { icon: "🎤", text: "Làm MC, \"PR giảng đường\", hoạt náo xe" }
+    ],
+    skills: ["Tự tin trước đám đông", "Chụp ảnh, dựng bố cục", "Thiết kế & chỉnh sửa ảnh", "Xây dựng mối quan hệ"],
+    url: "https://sites.google.com/view/tinhnguyentruongy/tuy%E1%BB%83n-th%C3%A0nh-vi%C3%AAn/ban-pr-it"
+  }
+};
+
 // Module 1: Lời tiên tri cho TOP 1 (Ban cao % nhất)
 const module1Texts = {
   HCNS: `🥇 HỆ TƯ TƯỞNG CHỦ ĐẠO: XƯƠNG SỐNG QUYỀN LỰC (BAN HCNS)<br><br>Xét nghiệm DNA tâm lý cho thấy bạn sở hữu một bộ não cực kỳ ngăn nắp, chỉn chu và kỷ luật. Vũ trụ "khẳng định" bạn sinh ra để thuộc về Ban Hành Chính Nhân Sự. Bạn là người ghét sự mơ hồ, thích làm việc có quy trình rõ ràng và có khả năng cứu vớt một tập thể khỏi sự lộn xộn. Bạn chính là bộ khung xương sống vững chắc để Câu lạc bộ dựa vào mỗi mùa chạy sự kiện!`,
@@ -161,6 +224,43 @@ const combinationMessages = {
   "PR-ND": "Sự kết hợp giữa Tư duy đột phá (PR-IT) và Trái tim xê dịch (Nội Dung) tạo nên một ngọn lửa truyền cảm hứng mãnh liệt. Bạn biến những chuyến đi thiện nguyện thành những thước phim, câu chuyện đầy nghệ thuật!"
 };
 
+// -------------------------------------------------------------
+// TIỆN ÍCH TRẢI NGHIỆM DI ĐỘNG
+// -------------------------------------------------------------
+
+// Người dùng có bật chế độ giảm chuyển động không (tôn trọng cả rung lẫn cuộn mượt)
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Rung phản hồi haptic trên điện thoại hỗ trợ (bỏ qua nếu người dùng muốn giảm chuyển động)
+function haptic(pattern) {
+  if (prefersReducedMotion) return;
+  if (typeof navigator !== "undefined" && typeof navigator.vibrate === "function") {
+    try { navigator.vibrate(pattern); } catch (e) { /* Bỏ qua nếu trình duyệt chặn */ }
+  }
+}
+
+// Cuộn lên đầu khi chuyển màn hình để người dùng di động luôn thấy nội dung mới từ trên xuống
+function scrollToTop() {
+  const behavior = prefersReducedMotion ? "auto" : "smooth";
+  try {
+    window.scrollTo({ top: 0, left: 0, behavior });
+  } catch (e) {
+    window.scrollTo(0, 0);
+  }
+}
+
+// Tải trước các ảnh Tarot nặng để khi lật bài không bị trắng ảnh trên mạng yếu
+let tarotImagesPreloaded = false;
+function preloadTarotImages() {
+  if (tarotImagesPreloaded) return;
+  tarotImagesPreloaded = true;
+  const files = [...Object.values(tarotImages), "tarot_card_back.png"];
+  files.forEach(src => {
+    const img = new Image();
+    img.src = src;
+  });
+}
+
 // Đợi DOM load xong để khởi tạo
 document.addEventListener("DOMContentLoaded", () => {
   initApp();
@@ -183,9 +283,14 @@ function initApp() {
 
 // Bắt đầu trắc nghiệm
 function startQuiz() {
+  haptic(15);
   document.getElementById("welcome-screen").classList.add("hidden");
   document.getElementById("quiz-screen").classList.remove("hidden");
-  
+  scrollToTop();
+
+  // Tải trước ảnh Tarot ngay khi người dùng cam kết làm bài
+  preloadTarotImages();
+
   // Khởi tạo và xáo trộn câu hỏi/đáp án cho lượt chơi này
   prepareActiveQuestions();
   
@@ -333,6 +438,9 @@ function selectAnswer(answerIndex) {
   // Lưu đáp án
   userAnswers[currentQuestionIndex] = answerIndex;
 
+  // Rung nhẹ xác nhận đã chọn
+  haptic(15);
+
   // Áp dụng ngay hiệu ứng tan biến ma mị
   const questionBox = document.querySelector(".question-box");
   if (questionBox) {
@@ -458,6 +566,7 @@ function calculateAndShowTarotCeremony() {
   // Chuyển màn hình sang Nghi lễ Tarot
   document.getElementById("quiz-screen").classList.add("hidden");
   document.getElementById("tarot-loading-screen").classList.remove("hidden");
+  scrollToTop();
 
   // Reset giao diện các lá bài
   const statusEl = document.getElementById("tarot-status");
@@ -498,7 +607,10 @@ function setupTarotCeremonyInteractivity() {
 function selectTarotCard(selectedCardElement) {
   const cardOptions = document.querySelectorAll(".tarot-card-option");
   const geometryCircle = document.querySelector(".sacred-geometry-circle");
-  
+
+  // Rung xác nhận đã chọn lá bài định mệnh
+  haptic(30);
+
   // Kích hoạt vòng tròn ma thuật hoạt động mạnh hơn
   if (geometryCircle) {
     geometryCircle.classList.add("magic-active");
@@ -563,17 +675,20 @@ function selectTarotCard(selectedCardElement) {
   setTimeout(() => {
     statusEl.textContent = "✨ Đang trích xuất mã DNA Tình Nguyện từ vũ trụ...";
     selectedCardElement.classList.add("stage-2"); // Tăng cường rung lắc và hào quang
+    haptic(25);
   }, 1500);
-  
+
   setTimeout(() => {
     statusEl.textContent = "🌌 Các vì sao định mệnh đang xếp thành chòm sao hộ mệnh...";
     selectedCardElement.classList.add("stage-3"); // Chuyển hào quang sang vàng gold chớp nháy
+    haptic([20, 40, 20]);
   }, 3000);
   
   setTimeout(() => {
     statusEl.textContent = "⚡ Luồng năng lượng tối thượng đang hội tụ! Lật mở lá bài...";
     flash.classList.add("flash-trigger"); // Kích hoạt hiệu ứng lóe sáng trắng
-    // Rung chấn màn hình khi năng lượng bùng nổ
+    // Rung chấn màn hình khi năng lượng bùng nổ (kèm rung máy dồn dập cho khớp cảm giác)
+    haptic([40, 30, 40, 30, 60]);
     const appWrapper = document.getElementById("app-wrapper");
     appWrapper.classList.add("screen-shake");
     setTimeout(() => appWrapper.classList.remove("screen-shake"), 700);
@@ -583,6 +698,7 @@ function selectTarotCard(selectedCardElement) {
     cardInner.classList.add("flipped");
     selectedCardElement.classList.add("revealed"); // Ngừng rung lắc, dịu hào quang
     spawnStarBurst(selectedCardElement); // Vụ nổ sao vàng tỏa ra từ lá bài
+    haptic(80); // Rung mạnh đúng khoảnh khắc lá bài lật mở
   }, 5000); // Lật bài ngay sau khi lóe sáng 200ms
   
   setTimeout(() => {
@@ -613,8 +729,13 @@ function spawnStarBurst(cardElement) {
 
 // Chuyển sang màn hình Kết quả cuối cùng
 function revealFinalResultScreen() {
+  haptic(20);
   document.getElementById("tarot-loading-screen").classList.add("hidden");
   document.getElementById("result-screen").classList.remove("hidden");
+  scrollToTop();
+
+  // Dựng thẻ hồ sơ chi tiết cho Ban Top 1
+  renderDeptShowcase(finalTop1);
 
   // Render bảng xếp hạng dạng thanh ngang
   renderRankings(finalRankedDepts);
@@ -647,7 +768,57 @@ function revealFinalResultScreen() {
       spawnStarBurst(cardStage);
     }
     triggerConfetti();
+    haptic([30, 50, 30, 50, 80]); // Rung ăn mừng khi pháo hoa nổ
   }, 550);
+}
+
+// Dựng thẻ hồ sơ ban Top 1 với biệt danh, slogan, công việc & quyền lợi
+function renderDeptShowcase(top1) {
+  const container = document.getElementById("dept-showcase");
+  if (!container || !top1) return;
+
+  const info = departmentInfo[top1.code];
+  if (!info) {
+    container.innerHTML = "";
+    return;
+  }
+
+  const tasksHTML = info.tasks.map(t => `
+    <li class="dept-task">
+      <span class="dept-task-icon">${t.icon}</span>
+      <span class="dept-task-text">${t.text}</span>
+    </li>
+  `).join("");
+
+  const skillsHTML = info.skills.map(s => `<span class="dept-skill-tag">${s}</span>`).join("");
+
+  container.innerHTML = `
+    <span class="dept-metaphor">✦ ${info.metaphor} ✦</span>
+    <h3 class="dept-showcase-name">${top1.name}</h3>
+    <p class="dept-showcase-slogan">“${info.slogan}”</p>
+    <p class="dept-showcase-desc">${info.desc}</p>
+
+    <div class="dept-block">
+      <h4 class="dept-block-title"><span aria-hidden="true">⚙️</span> Công việc bạn sẽ làm</h4>
+      <ul class="dept-task-list">${tasksHTML}</ul>
+    </div>
+
+    <div class="dept-block">
+      <h4 class="dept-block-title"><span aria-hidden="true">🎁</span> Bạn sẽ nhận được</h4>
+      <div class="dept-skill-tags">${skillsHTML}</div>
+    </div>
+
+    <a class="dept-explore-link" href="${info.url}" target="_blank" rel="noopener">
+      <span>Khám phá chi tiết ${top1.name}</span>
+      <span class="dept-explore-arrow" aria-hidden="true">→</span>
+    </a>
+  `;
+
+  // Đặt màu nhấn theo bản sắc riêng của ban
+  container.style.setProperty("--accent", `hsl(${info.accent})`);
+  container.style.setProperty("--accent-soft", `hsla(${info.accent}, 0.14)`);
+  container.style.setProperty("--accent-glow", `hsla(${info.accent}, 0.4)`);
+  container.style.setProperty("--accent-line", `hsla(${info.accent}, 0.35)`);
 }
 
 // Vẽ bảng xếp hạng trực quan
@@ -702,9 +873,11 @@ function renderRankings(rankedDepts) {
 
 // Chạy lại trắc nghiệm
 function restartQuiz() {
+  haptic(15);
   document.getElementById("result-screen").classList.add("hidden");
   document.getElementById("welcome-screen").classList.remove("hidden");
-  
+  scrollToTop();
+
   // Reset trạng thái vòng tròn ma thuật
   const geometryCircle = document.querySelector(".sacred-geometry-circle");
   if (geometryCircle) {

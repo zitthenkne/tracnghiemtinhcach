@@ -43,12 +43,15 @@ body {
   background-color: var(--bg-color);
   color: var(--text-main);
   min-height: 100vh;
+  min-height: 100dvh; /* Chiều cao động: không bị thanh địa chỉ trình duyệt di động che khuất */
   display: flex;
   justify-content: center;
   align-items: center;
   overflow-x: hidden;
   position: relative;
   line-height: 1.6;
+  /* Chừa lề an toàn cho máy có tai thỏ / thanh gạt dưới (iPhone X trở lên) */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 /* Background tinh vân và các hạt phát sáng mờ ảo */
@@ -666,6 +669,19 @@ body::after {
   padding: 0;
   cursor: pointer;
   transition: var(--transition);
+  position: relative;
+}
+
+/* Mở rộng vùng chạm quanh chấm nhỏ để dễ bấm trên điện thoại (không đổi phần nhìn thấy).
+   Nới rộng chủ yếu theo chiều dọc để không chồng lấn sang chấm bên cạnh. */
+.indicator-dot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 15px;
+  height: 30px;
 }
 
 .indicator-dot.active {
@@ -2565,5 +2581,274 @@ a,
   .welcome-art-card {
     width: 150px;
     height: 240px;
+  }
+}
+
+/* ============================================================
+   THẺ HỒ SƠ BAN TOP 1 (dữ liệu từ website chính thức của CLB)
+   Biệt danh, slogan, công việc, quyền lợi + màu nhấn riêng mỗi ban
+   ============================================================ */
+
+.dept-showcase {
+  /* Giá trị mặc định, sẽ được JS ghi đè theo bản sắc từng ban */
+  --accent: var(--gold);
+  --accent-soft: hsla(45, 100%, 50%, 0.14);
+  --accent-glow: var(--gold-glow);
+  --accent-line: hsla(45, 80%, 55%, 0.35);
+
+  position: relative;
+  margin-bottom: 35px;
+  padding: 34px 28px 28px;
+  border-radius: 18px;
+  text-align: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% -10%, var(--accent-soft), transparent 62%),
+    linear-gradient(180deg, hsla(232, 26%, 12%, 0.72), hsla(232, 26%, 8%, 0.42));
+  border: 1px solid var(--accent-line);
+  box-shadow:
+    inset 0 0 42px rgba(0, 0, 0, 0.35),
+    0 12px 32px rgba(0, 0, 0, 0.3),
+    0 0 22px var(--accent-glow);
+  /* Nhịp trồi lên khớp với chuỗi nghi lễ kết quả (nằm giữa lá bài và bảng xếp hạng) */
+  animation-delay: 0.32s !important;
+}
+
+/* Dải sáng mảnh chạy dọc mép trên thẻ */
+.dept-showcase::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.dept-metaphor {
+  display: inline-block;
+  font-family: var(--font-title);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-shadow: 0 0 14px var(--accent-glow);
+  padding: 6px 16px;
+  border: 1px solid var(--accent-line);
+  border-radius: 30px;
+  background: var(--accent-soft);
+  margin-bottom: 14px;
+}
+
+.dept-showcase-name {
+  font-family: var(--font-title);
+  font-size: 1.55rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #ffffff 35%, var(--accent) 120%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dept-showcase-slogan {
+  font-family: var(--font-family);
+  font-style: italic;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--accent);
+  line-height: 1.5;
+  max-width: 90%;
+  margin: 0 auto 16px;
+  opacity: 0.95;
+}
+
+.dept-showcase-desc {
+  font-size: 1.08rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* Khối "Công việc" và "Quyền lợi" */
+.dept-block {
+  margin-top: 24px;
+  text-align: left;
+}
+
+.dept-block-title {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-main);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--accent-line);
+}
+
+/* Danh sách công việc: lưới 2 cột trên màn rộng, 1 cột trên di động */
+.dept-task-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.dept-task {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: hsla(230, 20%, 14%, 0.5);
+  border: 1px solid var(--card-border);
+  transition: var(--transition);
+}
+
+.dept-task:hover {
+  border-color: var(--accent-line);
+  background: hsla(230, 20%, 17%, 0.7);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.dept-task-icon {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.dept-task-text {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* Thẻ kỹ năng/quyền lợi dạng viên thuốc */
+.dept-skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.dept-skill-tag {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+  padding: 8px 16px;
+  border-radius: 30px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  transition: var(--transition);
+}
+
+.dept-skill-tag:hover {
+  box-shadow: 0 0 14px var(--accent-glow);
+  transform: translateY(-2px);
+}
+
+/* Nút dẫn tới trang chi tiết ban */
+.dept-explore-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 26px;
+  padding: 13px 30px;
+  font-family: var(--font-title);
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+  text-decoration: none;
+  border: 1.5px solid var(--accent);
+  border-radius: 32px;
+  background: var(--accent-soft);
+  transition: var(--transition);
+}
+
+.dept-explore-link:hover {
+  color: #ffffff;
+  background: var(--accent);
+  box-shadow: 0 8px 24px var(--accent-glow), 0 0 18px var(--accent-glow);
+  transform: translateY(-3px);
+}
+
+.dept-explore-arrow {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dept-explore-link:hover .dept-explore-arrow {
+  transform: translateX(5px);
+}
+
+/* Responsive di động cho thẻ hồ sơ ban */
+@media (max-width: 580px) {
+  .dept-showcase {
+    padding: 28px 16px 24px;
+    border-radius: 14px;
+  }
+
+  .dept-showcase-name {
+    font-size: 1.35rem;
+  }
+
+  .dept-showcase-slogan {
+    font-size: 1.08rem;
+    max-width: 100%;
+  }
+
+  .dept-showcase-desc {
+    font-size: 1rem;
+  }
+
+  .dept-metaphor {
+    font-size: 0.74rem;
+    letter-spacing: 3px;
+  }
+
+  /* Trên điện thoại chuyển danh sách công việc về 1 cột cho dễ đọc */
+  .dept-task-list {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .dept-task-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 1.05rem;
+  }
+
+  .dept-task-text {
+    font-size: 0.96rem;
+  }
+
+  .dept-skill-tag {
+    font-size: 0.84rem;
+    padding: 7px 13px;
+  }
+
+  .dept-explore-link {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 20px;
+    font-size: 0.96rem;
   }
 }
