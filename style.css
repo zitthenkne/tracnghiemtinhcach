@@ -1,213 +1,189 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&display=swap');
+/* ============================================================
+   ETHEREAL GLASS TAROT DNA — Design System
+   Tokens theo web_assets/DESIGN.md.
+   Motion: chỉ transform/opacity, spring easing, cấm linear.
+   ============================================================ */
 
 :root {
-  /* Bảng màu chính (Theme Đỏ - Xanh dương của CLB lồng ghép Vàng Gold Tarot) */
-  --bg-color: hsl(230, 25%, 4%);
-  --card-bg: hsla(230, 20%, 9%, 0.75);
-  --card-border: hsla(230, 20%, 22%, 0.5);
-  
-  --primary: hsl(355, 85%, 52%); /* Đỏ ruby tình nguyện */
-  --primary-glow: hsla(355, 85%, 52%, 0.4);
-  --primary-hover: hsl(355, 95%, 60%);
-  
-  --secondary: hsl(215, 90%, 50%); /* Xanh dương CLB */
-  --secondary-glow: hsla(215, 90%, 50%, 0.35);
-  --secondary-hover: hsl(215, 95%, 58%);
-  
-  --gold: hsl(45, 100%, 50%); /* Màu vàng ánh kim của Tarot */
-  --gold-glow: hsla(45, 100%, 50%, 0.35);
-  --gold-dark: hsl(45, 75%, 35%);
-  
-  --text-main: hsl(0, 0%, 100%);
-  --text-muted: hsl(220, 14%, 80%);
-  
-  --success: hsl(145, 85%, 45%);
-  --success-glow: hsla(145, 85%, 45%, 0.3);
-  
-  --font-family: 'Cormorant Garamond', serif;
-  --font-title: 'Playfair Display', serif;
-  --font-sans: 'Be Vietnam Pro', sans-serif;
-  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  --border-radius: 24px;
+  /* Màu — vai trò theo DESIGN.md (bản cập nhật: Crimson / Cyan / White trên void ấm) */
+  --canvas-void: #0A0505;
+  --glass-surface: rgba(255, 255, 255, 0.05);
+  --glass-surface-strong: rgba(255, 255, 255, 0.08);
+  --text-moonlight: #E2E8F0;
+  --text-stardust: #94A3B8;
+  --border-whisper: rgba(255, 255, 255, 0.15);
+  --pure-white: #FFFFFF;
+  --white-glow: rgba(255, 255, 255, 0.35);
+  --club-crimson: #E11D48;
+  --crimson-soft: rgba(225, 29, 72, 0.16);
+  --crimson-glow: rgba(225, 29, 72, 0.32);
+  --crimson-border: rgba(225, 29, 72, 0.5);
+  --mystic-cyan: #06B6D4;
+  --cyan-soft: rgba(6, 182, 212, 0.14);
+  --cyan-glow: rgba(6, 182, 212, 0.28);
+  --cyan-border: rgba(6, 182, 212, 0.4);
+
+  /* Chữ */
+  --font-display: "Fraunces", serif;
+  --font-body: "Be Vietnam Pro", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Chuyển động */
+  --ease-spring: cubic-bezier(0.19, 1, 0.22, 1);
+  --dur-fast: 0.35s;
+  --dur-slow: 0.7s;
+
+  /* Hình khối */
+  --radius-card: 1.5rem;
+  --radius-pill: 999px;
+  --blur-glass: 24px;
+  --shadow-levitate: 0 24px 60px rgba(7, 9, 15, 0.65);
 }
 
-/* Reset CSS */
+/* Reset */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
 body {
-  font-family: var(--font-family);
-  background-color: var(--bg-color);
-  color: var(--text-main);
+  font-family: var(--font-body);
+  font-weight: 300;
+  background-color: var(--canvas-void);
+  color: var(--text-moonlight);
   min-height: 100vh;
-  min-height: 100dvh; /* Chiều cao động: không bị thanh địa chỉ trình duyệt di động che khuất */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  min-height: 100dvh;
+  line-height: 1.7;
   overflow-x: hidden;
-  position: relative;
-  line-height: 1.6;
-  /* Chừa lề an toàn cho máy có tai thỏ / thanh gạt dưới (iPhone X trở lên) */
+  -webkit-font-smoothing: antialiased;
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
-/* Background tinh vân và các hạt phát sáng mờ ảo */
-body::before, body::after {
-  content: '';
-  position: absolute;
-  width: 55vw;
-  height: 55vw;
-  max-width: 600px;
-  max-height: 600px;
-  border-radius: 50%;
-  filter: blur(150px);
-  z-index: -4; /* Đẩy xuống dưới canvas nền tinh vân động */
-  opacity: 0.32;
+::selection {
+  background: var(--crimson-glow);
+  color: var(--pure-white);
 }
 
-body::before {
-  background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
-  top: -15%;
-  left: -15%;
-  animation: float-nebula 25s infinite alternate ease-in-out;
+::-webkit-scrollbar {
+  width: 10px;
 }
 
-body::after {
-  background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
-  bottom: -15%;
-  right: -15%;
-  animation: float-nebula 30s infinite alternate-reverse ease-in-out;
+::-webkit-scrollbar-track {
+  background: var(--canvas-void);
 }
 
-/* Canvas nền tinh vân động 3D tương tác */
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 5px;
+  border: 2px solid var(--canvas-void);
+}
+
+/* Bỏ vệt xám khi chạm trên thiết bị cảm ứng */
+button,
+a,
+.answer-card,
+.tarot-card-option,
+.indicator-dot {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* ------------------------------------------------------------
+   Nền vũ trụ: canvas sương động + màn sương tĩnh
+   ------------------------------------------------------------ */
 #nebula-canvas {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100vw;
   height: 100vh;
   z-index: -3;
   pointer-events: none;
-  background-color: hsl(230, 25%, 4%);
+  background-color: var(--canvas-void);
 }
 
-/* Luồng ánh sáng vũ trụ chiếu từ trên đỉnh đầu xuống */
-.cosmic-light-rays {
+.fog-veil {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: 
-    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.12) 0%, transparent 60%),
-    linear-gradient(170deg, transparent 35%, rgba(230, 57, 70, 0.04) 48%, rgba(0, 180, 216, 0.04) 55%, transparent 68%);
+  inset: 0;
   z-index: -2;
   pointer-events: none;
-  mix-blend-mode: screen;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255, 255, 255, 0.08), transparent 65%),
+    radial-gradient(ellipse 60% 45% at 15% 85%, rgba(6, 182, 212, 0.05), transparent 70%),
+    radial-gradient(ellipse 55% 40% at 85% 20%, rgba(225, 29, 72, 0.06), transparent 70%),
+    radial-gradient(ellipse at center, transparent 55%, rgba(10, 5, 5, 0.78) 100%);
 }
 
-/* Tạo hạt trôi lơ lửng đa sắc */
-.bg-particles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.particle-logo {
-  position: absolute;
-  background-image: url('logo_clb.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  opacity: 0;
-  pointer-events: none;
-  animation-name: float-particle-logos;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-}
-
-@keyframes float-nebula {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(80px, 50px) scale(1.15); }
-  100% { transform: translate(-40px, 80px) scale(0.9); }
-}
-
-@keyframes float-particle-logos {
-  0% { transform: translateY(105vh) rotate(0deg) rotateX(0deg) rotateY(0deg); opacity: 0; }
-  10% { opacity: 0.15; }
-  90% { opacity: 0.15; }
-  100% { transform: translateY(-15vh) rotate(360deg) rotateX(180deg) rotateY(360deg); opacity: 0; }
-}
-
-/* Hộp bọc chính với hiệu ứng Glassmorphism */
-.app-container {
-  width: 100%;
-  max-width: 680px;
-  margin: 20px;
-  padding: 45px 35px;
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: var(--border-radius);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  box-shadow: 
-    0 30px 60px rgba(0, 0, 0, 0.5),
-    inset 0 0 0 2px var(--gold-dark),
-    inset 0 0 0 3.5px rgba(255, 215, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 0 40px rgba(255, 215, 0, 0.03); /* Viền mạ vàng kép tinh xảo và ánh sáng gold */
-  position: relative;
-  z-index: 10;
-  overflow: hidden;
-}
-
-@media (min-width: 769px) {
-  .app-container {
-    max-width: 920px;
-    padding: 55px 50px;
-  }
-}
-
-.app-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -50%;
-  width: 200%;
-  height: 100%;
-  background: linear-gradient(
-    90deg, 
-    transparent 0%, 
-    rgba(255, 215, 0, 0.02) 50%, 
-    transparent 100%
-  );
-  transform: rotate(25deg);
-  pointer-events: none;
-  animation: sweep 12s infinite linear;
-}
-
-@keyframes sweep {
-  0% { transform: translate(-30%, -30%) rotate(25deg); }
-  100% { transform: translate(30%, 30%) rotate(25deg); }
-}
-
-/* Canvas pháo hoa giấy */
 #confetti-canvas {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
   z-index: 999;
+}
+
+/* ------------------------------------------------------------
+   Khung trang
+   ------------------------------------------------------------ */
+.app-shell {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: clamp(20px, 4vw, 56px);
+}
+
+/* ------------------------------------------------------------
+   LOGO CROWN — viên ngọc đỉnh trang: cô lập giữa khoảng trống lớn,
+   phát sáng ánh trắng thuần khiết
+   ------------------------------------------------------------ */
+.logo-crown {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: clamp(40px, 9vh, 110px) 0 clamp(36px, 7vh, 90px);
+}
+
+.logo-crown-img {
+  position: relative;
+  width: clamp(88px, 12vw, 132px);
+  height: auto;
+  z-index: 2;
+  filter:
+    drop-shadow(0 0 18px var(--white-glow))
+    drop-shadow(0 0 54px rgba(255, 255, 255, 0.18));
+  animation: levitate 4s ease-in-out infinite;
+}
+
+/* Vầng hào quang trắng thở chậm phía sau logo */
+.logo-crown-halo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(240px, 34vw, 380px);
+  aspect-ratio: 1 / 1;
+  margin-top: clamp(-190px, -17vw, -120px);
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.04) 45%, transparent 68%);
+  pointer-events: none;
+  z-index: 1;
+  animation: halo-breathe 4s ease-in-out infinite;
+}
+
+@keyframes halo-breathe {
+  0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+  50%      { opacity: 1;   transform: translateX(-50%) scale(1.08); }
 }
 
 .hidden {
@@ -218,441 +194,439 @@ body::after {
   visibility: hidden;
 }
 
-/* MÀN HÌNH WELCOME */
-.welcome-screen {
-  animation: scaleUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  z-index: 5;
+.screen {
+  animation: screen-in var(--dur-slow) var(--ease-spring);
 }
 
-/* Bố cục căn giữa trang chủ (1 cột) */
-.welcome-center-layout {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  max-width: 620px;
-  margin: 0 auto;
-  position: relative;
+@keyframes screen-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Lá bài Tarot nghệ thuật lơ lửng trang Welcome */
-.welcome-art-card {
-  margin: 25px auto 35px auto;
-  width: 220px;
-  height: 352px;
-  perspective: 1200px;
-  animation: float-welcome-art 5s infinite ease-in-out;
-  transform: rotate(-2deg);
-  transition: var(--transition);
-  position: relative;
-  transform-style: preserve-3d;
+/* Rung chấn khi năng lượng bùng nổ */
+.screen-shake {
+  animation: screen-shake 0.6s var(--ease-spring);
 }
 
-.welcome-art-card::after {
-  content: '';
-  position: absolute;
-  bottom: -25px;
-  left: 10%;
-  width: 80%;
-  height: 12px;
-  background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.35) 0%, transparent 70%);
-  filter: blur(5px);
-  border-radius: 50%;
-  z-index: -1;
-  opacity: 0.8;
-  transition: var(--transition);
-  animation: welcome-card-shadow-pulse 5s infinite ease-in-out;
+@keyframes screen-shake {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-5px, 3px); }
+  40% { transform: translate(5px, -3px); }
+  60% { transform: translate(-4px, -2px); }
+  80% { transform: translate(3px, 2px); }
 }
 
-.welcome-art-card:hover {
-  transform: rotateY(12deg) rotateX(8deg) scale(1.05) translateY(-8px);
+/* ------------------------------------------------------------
+   Kính mờ — bề mặt chuẩn của toàn hệ
+   ------------------------------------------------------------ */
+.glass {
+  background: var(--glass-surface);
+  border: 1px solid var(--border-whisper);
+  border-radius: var(--radius-card);
+  backdrop-filter: blur(var(--blur-glass));
+  -webkit-backdrop-filter: blur(var(--blur-glass));
+  box-shadow: var(--shadow-levitate);
 }
 
-.welcome-art-card:hover::after {
-  transform: scale(0.8) translateY(4px);
-  opacity: 0.4;
-  filter: blur(7px);
-}
-
-.welcome-art-card-inner {
-  width: 100%;
-  height: 100%;
-  border-radius: 16px;
-  border: 2px solid var(--gold);
-  box-shadow: 
-    0 15px 35px rgba(0, 0, 0, 0.6), 
-    0 0 25px var(--gold-glow);
-  overflow: hidden;
-  background: var(--card-bg);
-  transition: var(--transition);
-  position: relative;
-  z-index: 10;
-}
-
-.welcome-art-card-inner::after {
-  content: '';
-  position: absolute;
-  top: -150%;
-  left: -150%;
-  width: 300%;
-  height: 300%;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0) 40%,
-    rgba(255, 255, 255, 0.08) 45%,
-    rgba(255, 255, 255, 0.2) 50%,
-    rgba(255, 255, 255, 0.08) 55%,
-    rgba(255, 255, 255, 0) 60%
-  );
-  transform: rotate(-25deg);
-  pointer-events: none;
-  animation: welcome-card-shimmer 6s infinite ease-in-out;
-}
-
-.welcome-art-card-inner img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.logo-overlay {
-  position: absolute;
-  top: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 44px;
-  height: 44px;
-  background: #ffffff;
-  border-radius: 50%;
-  border: 2px solid var(--gold);
-  box-shadow: 
-    0 4px 12px rgba(0,0,0,0.5), 
-    0 0 12px var(--gold-glow);
-  z-index: 15;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  transition: var(--transition);
-}
-
-.welcome-art-card:hover .logo-overlay {
-  transform: translateX(-50%) translateY(-2px) scale(1.05);
-  box-shadow: 
-    0 6px 15px rgba(0,0,0,0.6), 
-    0 0 18px var(--gold-glow);
-}
-
-.logo-img-overlay {
-  width: 90%;
-  height: 90%;
-  object-fit: contain;
-}
-
-@keyframes float-welcome-art {
-  0% { transform: translateY(0) rotate(-2deg); }
-  50% { transform: translateY(-12px) rotate(-0.5deg); }
-  100% { transform: translateY(0) rotate(-2deg); }
-}
-
-@keyframes welcome-card-shadow-pulse {
-  0% { transform: scale(1); opacity: 0.8; filter: blur(5px); }
-  50% { transform: scale(0.8); opacity: 0.35; filter: blur(7px); }
-  100% { transform: scale(1); opacity: 0.8; filter: blur(5px); }
-}
-
-@keyframes welcome-card-shimmer {
-  0% { transform: translate(-30%, -30%) rotate(-25deg); }
-  35% { transform: translate(30%, 30%) rotate(-25deg); }
-  100% { transform: translate(30%, 30%) rotate(-25deg); }
-}
-
-.welcome-title {
-  font-family: var(--font-title);
-  font-size: 2.8rem;
-  font-weight: 800;
-  margin-bottom: 10px;
-  line-height: 1.2;
-  background: linear-gradient(to bottom, #ffe893 0%, #d4af37 50%, #9a7b1c 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: 1px;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
-}
-
-.welcome-subtitle {
-  font-family: var(--font-title);
-  font-size: 1.2rem;
-  color: #ffffff;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  margin-bottom: 25px;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-}
-
-.welcome-desc {
-  font-size: 1.15rem;
-  font-weight: 400;
-  color: var(--text-muted);
-  margin-bottom: 30px;
-  padding: 0 10px;
-  line-height: 1.7;
-}
-
-/* Button bắt đầu (Magic Dual Glow & Glassmorphism) */
-.btn-primary-magic {
-  font-family: var(--font-title);
-  background-image: linear-gradient(rgba(15, 22, 42, 0.75), rgba(15, 22, 42, 0.75)), linear-gradient(90deg, var(--primary), var(--secondary));
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
-  color: #ffffff;
-  border: 2px solid transparent;
-  padding: 16px 42px;
-  font-size: 1.15rem;
-  font-weight: 700;
-  border-radius: 40px;
-  cursor: pointer;
-  box-shadow: 
-    -18px 0 35px hsla(355, 85%, 52%, 0.45), 
-    18px 0 35px hsla(215, 90%, 50%, 0.45);
-  transition: var(--transition);
+/* ------------------------------------------------------------
+   Nút — viên kính bo tròn, đẩy nhẹ + inner glow cyan khi tương tác
+   ------------------------------------------------------------ */
+.btn {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  position: relative;
-  overflow: hidden;
-  letter-spacing: 1.5px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 36px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  color: var(--text-moonlight);
+  background: var(--glass-surface);
+  border: 1px solid var(--border-whisper);
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(var(--blur-glass));
+  -webkit-backdrop-filter: blur(var(--blur-glass));
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    transform var(--dur-fast) var(--ease-spring),
+    box-shadow var(--dur-fast) var(--ease-spring),
+    border-color var(--dur-fast) var(--ease-spring),
+    background-color var(--dur-fast) var(--ease-spring);
 }
 
-.btn-primary-magic::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -150%;
-  width: 80%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    rgba(255, 255, 255, 0.4),
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  transform: skewX(-30deg);
-  animation: button-shimmer 3.5s infinite ease-in-out;
+.btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--cyan-border);
+  box-shadow: inset 0 0 24px var(--cyan-soft), var(--shadow-levitate);
 }
 
-.btn-primary-magic:hover {
-  transform: translateY(-4px) scale(1.03);
-  box-shadow: 
-    -22px 0 45px hsla(355, 85%, 52%, 0.6), 
-    22px 0 45px hsla(215, 90%, 50%, 0.6),
-    0 0 15px rgba(255, 255, 255, 0.1);
-}
-
-.btn-primary-magic:hover .btn-icon {
-  animation: rotate-crystal 1.5s infinite linear;
-}
-
-.btn-primary-magic:active {
+.btn:active {
   transform: translateY(-1px);
 }
 
-@keyframes button-shimmer {
-  0% { left: -150%; }
-  35% { left: 150%; }
-  100% { left: 150%; }
+.btn:focus-visible {
+  outline: 2px solid var(--mystic-cyan);
+  outline-offset: 3px;
 }
 
-@keyframes rotate-crystal {
-  0% { transform: rotate(0deg) scale(1.2); }
-  100% { transform: rotate(360deg) scale(1.2); }
+/* Nút dẫn hành động chính: Club Crimson thúc đẩy hành động */
+.btn-accent {
+  border-color: var(--crimson-border);
+  box-shadow: inset 0 0 18px var(--crimson-soft), var(--shadow-levitate);
 }
 
-/* MÀN HÌNH CÂU HỎI */
+.btn-accent:hover {
+  border-color: var(--club-crimson);
+  box-shadow: inset 0 0 32px var(--crimson-glow), var(--shadow-levitate);
+}
+
+.btn-accent:focus-visible {
+  outline-color: var(--club-crimson);
+}
+
+.btn-ghost {
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-stardust);
+  padding: 12px 26px;
+  font-size: 0.9rem;
+}
+
+.btn-ghost:hover {
+  color: var(--text-moonlight);
+}
+
+.btn .icon {
+  width: 14px;
+  height: 14px;
+}
+
+/* ------------------------------------------------------------
+   1. WELCOME — bàn thờ trung tâm: art 1:1 + panel kính phủ lên
+   ------------------------------------------------------------ */
+.hero {
+  display: grid;
+  place-items: center;
+  padding-top: clamp(12px, 4vh, 48px);
+}
+
+.hero-art {
+  width: min(560px, 92vw);
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  border: 1px solid var(--border-whisper);
+  box-shadow: var(--shadow-levitate);
+  /* Vòng lặp vi mô vĩnh viễn: lơ lửng 5px / 4s */
+  animation: levitate 4s ease-in-out infinite;
+}
+
+.hero-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes levitate {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+
+.hero-panel {
+  width: min(660px, 96%);
+  margin-top: clamp(-140px, -12vw, -72px);
+  position: relative;
+  z-index: 2;
+  padding: clamp(28px, 5vw, 56px);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Thác đổ hiện dần từng phần tử của panel */
+.hero-panel > * {
+  animation: rise-in 0.9s var(--ease-spring) backwards;
+}
+
+.hero-panel > *:nth-child(1) { animation-delay: 0.10s; }
+.hero-panel > *:nth-child(2) { animation-delay: 0.18s; }
+.hero-panel > *:nth-child(3) { animation-delay: 0.26s; }
+.hero-panel > *:nth-child(4) { animation-delay: 0.34s; }
+.hero-panel > *:nth-child(5) { animation-delay: 0.42s; }
+.hero-panel > *:nth-child(6) { animation-delay: 0.50s; }
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--text-stardust);
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.4rem, 7vw, 4.2rem);
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  color: var(--text-moonlight);
+  margin-bottom: 10px;
+}
+
+.hero-sub {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+  color: var(--text-stardust);
+  margin-bottom: 24px;
+}
+
+.hero-desc {
+  max-width: 65ch;
+  color: var(--text-stardust);
+  font-size: 1.02rem;
+  margin-bottom: 32px;
+}
+
+/* Đường kẻ thiên thể */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: min(320px, 80%);
+  margin: 0 auto 24px auto;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-whisper));
+}
+
+.divider .divider-line:last-child {
+  background: linear-gradient(90deg, var(--border-whisper), transparent);
+}
+
+.divider-symbol {
+  color: var(--text-stardust);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+}
+
+/* ------------------------------------------------------------
+   2. QUIZ
+   ------------------------------------------------------------ */
 .quiz-screen {
-  animation: slideInRight 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  max-width: 760px;
+  margin-inline: auto;
 }
 
-/* Progress bar */
 .progress-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 35px;
+  gap: 18px;
+  margin-bottom: 32px;
 }
 
 .progress-bar-bg {
-  flex-grow: 1;
-  height: 10px;
-  background-color: hsla(230, 20%, 20%, 0.8);
-  border-radius: 6px;
-  margin-right: 20px;
+  flex: 1;
+  height: 4px;
+  background: var(--glass-surface);
+  border: 1px solid var(--border-whisper);
+  border-radius: var(--radius-pill);
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .progress-bar-fill {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
-  border-radius: 6px;
-  transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 0 10px var(--secondary-glow);
+  background: var(--club-crimson);
+  border-radius: var(--radius-pill);
+  transition: width var(--dur-slow) var(--ease-spring);
 }
 
 .progress-text {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--gold);
-  text-shadow: 0 0 8px var(--gold-glow);
-  min-width: 50px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-stardust);
+  min-width: 52px;
   text-align: right;
 }
 
 .question-box {
-  margin-bottom: 35px;
+  padding: clamp(24px, 4vw, 40px);
+  margin-bottom: 28px;
+  /* Hộp câu hỏi cũng animate liên tục — bỏ blur, giữ chất kính bằng gradient */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.04));
+  will-change: transform, opacity;
 }
 
 .question-number {
-  font-family: var(--font-title);
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--gold);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 10px;
   display: block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--mystic-cyan);
+  margin-bottom: 12px;
 }
 
 .question-text {
-  font-size: 1.55rem;
+  font-family: var(--font-display);
   font-weight: 500;
-  line-height: 1.55;
-  color: var(--text-main);
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--text-moonlight);
 }
 
-/* Thẻ đáp án */
 .answers-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 40px;
+  display: grid;
+  gap: 14px;
+  margin-bottom: 36px;
 }
 
 .answer-card {
-  background: hsla(230, 20%, 14%, 0.45);
-  border: 1px solid var(--card-border);
-  border-radius: 14px;
-  padding: 18px 22px;
-  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 18px;
-  transition: var(--transition);
-  position: relative;
-  overflow: hidden;
+  padding: 18px 22px;
+  /* Không backdrop-filter: 4 thẻ này animate mỗi câu, blur real-time gây giật.
+     Nền sau là void phẳng nên bỏ blur không đổi cảm quan kính. */
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--border-whisper);
+  border-radius: 1rem;
+  will-change: transform, opacity;
+  cursor: pointer;
+  transition:
+    transform var(--dur-fast) var(--ease-spring),
+    box-shadow var(--dur-fast) var(--ease-spring),
+    border-color var(--dur-fast) var(--ease-spring),
+    opacity var(--dur-fast) var(--ease-spring);
 }
 
 .answer-card:hover {
-  background: hsla(230, 20%, 18%, 0.85);
-  border-color: hsla(46, 100%, 50%, 0.55);
-  transform: translateY(-2px) translateX(4px);
-  box-shadow: 
-    0 8px 20px rgba(0,0,0,0.3),
-    0 0 15px rgba(255, 215, 0, 0.1);
+  transform: translateY(-2px);
+  border-color: var(--cyan-border);
+  box-shadow: inset 0 0 22px var(--cyan-soft), var(--shadow-levitate);
 }
 
 .answer-card.selected {
-  background: hsla(46, 100%, 50%, 0.12);
-  border-color: var(--gold);
-  box-shadow: 
-    0 0 20px var(--gold-glow),
-    inset 0 0 8px rgba(255, 215, 0, 0.05);
+  border-color: var(--club-crimson);
+  box-shadow: inset 0 0 28px var(--crimson-glow), var(--shadow-levitate);
 }
 
 .answer-key {
-  font-family: var(--font-title);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
   width: 36px;
   height: 36px;
-  background: hsla(230, 20%, 22%, 0.6);
-  border: 1px solid var(--card-border);
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 700;
-  font-size: 1rem;
-  transition: var(--transition);
   flex-shrink: 0;
-  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-whisper);
+  border-radius: 10px;
+  color: var(--text-stardust);
+  background: var(--glass-surface-strong);
+  transition:
+    border-color var(--dur-fast) var(--ease-spring),
+    color var(--dur-fast) var(--ease-spring);
 }
 
 .answer-card:hover .answer-key {
-  background: var(--gold);
-  color: var(--bg-color);
-  border-color: var(--gold);
-  transform: scale(1.1);
-  box-shadow: 0 0 10px var(--gold-glow);
+  border-color: var(--mystic-cyan);
+  color: var(--mystic-cyan);
 }
 
 .answer-card.selected .answer-key {
-  background: var(--gold);
-  color: var(--bg-color);
-  border-color: var(--gold);
-  box-shadow: 0 0 12px var(--gold-glow);
+  border-color: var(--club-crimson);
+  color: var(--club-crimson);
 }
 
 .answer-text {
-  font-size: 1.25rem;
-  font-weight: 400;
-  color: var(--text-muted);
-  transition: var(--transition);
+  font-size: 1rem;
+  color: var(--text-stardust);
+  transition: color var(--dur-fast) var(--ease-spring);
 }
 
 .answer-card:hover .answer-text,
 .answer-card.selected .answer-text {
-  color: var(--text-main);
+  color: var(--text-moonlight);
 }
 
-/* Footer điều hướng */
+/* Chuyển cảnh huyền bí giữa các câu hỏi */
+.question-box.mystic-exit-question {
+  opacity: 0;
+  transform: translateY(-16px);
+  pointer-events: none;
+  transition:
+    opacity var(--dur-fast) var(--ease-spring),
+    transform var(--dur-fast) var(--ease-spring);
+}
+
+.answer-card.mystic-exit-unselected {
+  opacity: 0;
+  transform: translateX(-24px);
+  pointer-events: none;
+}
+
+.answer-card.mystic-exit-selected {
+  border-color: var(--club-crimson);
+  box-shadow: inset 0 0 32px var(--crimson-glow), var(--shadow-levitate);
+  transform: scale(1.02);
+  pointer-events: none;
+}
+
+.answer-card.mystic-exit-selected-fade {
+  opacity: 0;
+  transform: translateY(16px) scale(1.02);
+}
+
+.question-box.mystic-enter,
+.answer-card.mystic-enter {
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: none;
+}
+
+.question-box.mystic-enter-active,
+.answer-card.mystic-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.4s var(--ease-spring),
+    transform 0.4s var(--ease-spring);
+}
+
+/* Thác đổ: từng đáp án hiện lệch nhịp, không bao giờ mount tức thời */
+.answer-card.mystic-enter-active:nth-child(1) { transition-delay: 0.00s; }
+.answer-card.mystic-enter-active:nth-child(2) { transition-delay: 0.04s; }
+.answer-card.mystic-enter-active:nth-child(3) { transition-delay: 0.08s; }
+.answer-card.mystic-enter-active:nth-child(4) { transition-delay: 0.12s; }
+
 .quiz-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid var(--card-border);
-  padding-top: 30px;
-}
-
-.btn-secondary {
-  font-family: var(--font-title);
-  background: transparent;
-  color: var(--text-muted);
-  border: 1px solid var(--card-border);
-  padding: 12px 24px;
-  font-size: 0.95rem;
-  font-weight: 700;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: var(--transition);
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  letter-spacing: 1px;
-}
-
-.btn-secondary:hover {
-  background: hsla(230, 20%, 22%, 0.5);
-  color: var(--text-main);
-  border-color: var(--text-muted);
-  transform: translateY(-2px);
+  gap: 16px;
+  border-top: 1px solid var(--border-whisper);
+  padding-top: 24px;
 }
 
 .question-indicators {
@@ -661,1426 +635,302 @@ body::after {
 }
 
 .indicator-dot {
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background-color: hsla(230, 20%, 22%, 0.8);
   border: none;
   padding: 0;
+  background: var(--border-whisper);
   cursor: pointer;
-  transition: var(--transition);
   position: relative;
+  transition:
+    transform var(--dur-fast) var(--ease-spring),
+    background-color var(--dur-fast) var(--ease-spring);
 }
 
-/* Mở rộng vùng chạm quanh chấm nhỏ để dễ bấm trên điện thoại (không đổi phần nhìn thấy).
-   Nới rộng chủ yếu theo chiều dọc để không chồng lấn sang chấm bên cạnh. */
+/* Nới vùng chạm cho ngón tay */
 .indicator-dot::after {
   content: '';
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 15px;
+  width: 16px;
   height: 30px;
 }
 
 .indicator-dot.active {
-  background-color: var(--gold);
+  background: var(--club-crimson);
   transform: scale(1.5);
-  box-shadow: 0 0 10px var(--gold-glow);
 }
 
 .indicator-dot.completed {
-  background-color: var(--primary);
-  box-shadow: 0 0 6px var(--primary-glow);
+  background: var(--text-stardust);
 }
 
-/* Hiệu ứng tan biến và xuất hiện huyền bí (Mystic Transition) cho câu hỏi & đáp án */
-.quiz-screen .question-box,
-.quiz-screen .answer-card {
-  transition: all 0.45s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-/* 1. Trạng thái tan biến (Exit) */
-.question-box.mystic-exit-question {
-  opacity: 0 !important;
-  transform: translateY(-20px) !important;
-  filter: blur(6px) !important;
-  pointer-events: none;
-}
-
-.answer-card.mystic-exit-unselected {
-  opacity: 0 !important;
-  transform: translateX(-30px) !important;
-  filter: blur(6px) !important;
-  pointer-events: none;
-}
-
-.answer-card.mystic-exit-selected {
-  border-color: var(--gold) !important;
-  box-shadow: 
-    0 0 35px var(--gold-glow),
-    inset 0 0 15px rgba(255, 215, 0, 0.15) !important;
-  transform: scale(1.04) !important;
-  z-index: 10;
-  pointer-events: none;
-}
-
-.answer-card.mystic-exit-selected-fade {
-  opacity: 0 !important;
-  transform: translateY(20px) !important;
-  filter: blur(8px) !important;
-  transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
-}
-
-/* 2. Trạng thái xuất hiện (Enter) */
-.question-box.mystic-enter,
-.answer-card.mystic-enter {
-  opacity: 0 !important;
-  filter: blur(8px) !important;
-  pointer-events: none;
-}
-
-.question-box.mystic-enter {
-  transform: translateY(15px) !important;
-}
-
-.answer-card.mystic-enter {
-  transform: translateY(20px) !important;
-}
-
-.question-box.mystic-enter-active,
-.answer-card.mystic-enter-active {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-  filter: blur(0) !important;
-  transition: all 0.55s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
-
-
-/* MÀN HÌNH CHUYỂN TIẾP NGHI THỨC LẬT BÀI TAROT */
+/* ------------------------------------------------------------
+   3. NGHI THỨC LẬT BÀI
+   ------------------------------------------------------------ */
 .tarot-loading-screen {
-  text-align: center;
-  animation: fadeIn 0.6s ease-out;
-  padding: 20px 0;
   position: relative;
+  text-align: center;
+  padding: 24px 0;
 }
 
-/* Vòng tròn hình học thiêng liêng ở nền */
 .sacred-geometry-circle {
   position: absolute;
-  top: 45%;
+  top: 46%;
   left: 50%;
-  width: 480px;
-  height: 480px;
-  transform: translate(-50%, -50%) rotate(0deg);
-  border: 1px dashed rgba(255, 215, 0, 0.12);
+  width: min(480px, 92vw);
+  aspect-ratio: 1 / 1;
+  border: 1px dashed var(--border-whisper);
   border-radius: 50%;
-  z-index: 1;
   pointer-events: none;
-  animation: rotate-sacred 50s infinite linear;
+  animation: rotate-sacred 60s var(--ease-spring) infinite;
 }
 
 .sacred-geometry-circle::before {
   content: '';
   position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
-  border: 1.5px solid rgba(255, 215, 0, 0.06);
-  border-radius: 50%;
-}
-
-.sacred-geometry-circle::after {
-  content: '';
-  position: absolute;
-  top: -25px;
-  left: -25px;
-  right: -25px;
-  bottom: -25px;
-  border: 1px double rgba(255, 215, 0, 0.04);
+  inset: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 50%;
 }
 
 @keyframes rotate-sacred {
   from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.sacred-geometry-circle.magic-active {
+  border-color: var(--crimson-border);
+  animation-duration: 18s;
+}
+
+.sacred-geometry-circle.magic-active::before {
+  border-color: rgba(225, 29, 72, 0.2);
 }
 
 .tarot-ceremony {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 25px;
-  position: relative;
-  z-index: 5;
+  gap: 22px;
 }
 
 .tarot-celestial-symbol {
-  font-size: 2.2rem;
-  color: var(--gold);
-  animation: rotate-celestial 15s infinite linear;
-  text-shadow: 0 0 15px var(--gold-glow);
+  font-size: 1.8rem;
+  color: var(--text-stardust);
+  animation: rotate-symbol 16s var(--ease-spring) infinite;
 }
 
-@keyframes rotate-celestial {
-  0% { transform: rotate(0deg) scale(1); }
-  50% { transform: rotate(180deg) scale(1.1); }
-  100% { transform: rotate(360deg) scale(1); }
+@keyframes rotate-symbol {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
 .tarot-status {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--gold);
-  min-height: 48px;
-  text-shadow: 0 0 10px var(--gold-glow);
-  letter-spacing: 0.5px;
-  max-width: 500px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+  color: var(--text-moonlight);
+  max-width: 46ch;
+  min-height: 52px;
   line-height: 1.5;
-  transition: all 0.5s ease;
+  animation: status-breathe 2.6s ease-in-out infinite;
 }
 
-/* Bố cục 4 lá bài úp mặt xếp hình quạt/hàng ngang */
+@keyframes status-breathe {
+  0%, 100% { opacity: 0.8; }
+  50%      { opacity: 1; }
+}
+
 .tarot-cards-spread {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 16px;
-  perspective: 1000px;
-  margin: 25px auto;
+  perspective: 1200px;
+  margin: 16px auto;
   min-height: 340px;
   width: 100%;
-  transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .tarot-card-option {
-  width: 110px;
-  height: 176px;
-  transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+  width: 112px;
+  height: 179px;
   cursor: pointer;
-  perspective: 1000px;
+  perspective: 1200px;
   position: relative;
-  border-radius: 12px;
+  border-radius: 14px;
+  transition:
+    transform var(--dur-slow) var(--ease-spring),
+    opacity var(--dur-slow) var(--ease-spring),
+    width var(--dur-slow) var(--ease-spring),
+    height var(--dur-slow) var(--ease-spring),
+    margin var(--dur-slow) var(--ease-spring);
+  /* Thác đổ chia bài */
+  animation: deal-in 0.8s var(--ease-spring) backwards;
+}
+
+.tarot-card-option:nth-child(1) { animation-delay: 0.08s; }
+.tarot-card-option:nth-child(2) { animation-delay: 0.18s; }
+.tarot-card-option:nth-child(3) { animation-delay: 0.28s; }
+.tarot-card-option:nth-child(4) { animation-delay: 0.38s; }
+
+@keyframes deal-in {
+  from { opacity: 0; transform: translateY(36px) rotate(2deg); }
+  to   { opacity: 1; transform: translateY(0) rotate(0deg); }
 }
 
 .tarot-card-option:hover {
-  transform: translateY(-16px) scale(1.08) rotate(1.5deg);
-  z-index: 15;
+  transform: translateY(-12px);
+  z-index: 5;
 }
 
-.tarot-card-option:hover .tarot-card-inner {
-  box-shadow: 
-    0 15px 30px rgba(0, 0, 0, 0.6),
-    0 0 25px var(--gold-glow);
-}
-
-.tarot-card-option .tarot-card-inner {
+.tarot-card-inner {
   width: 100%;
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
-  transition: transform 1.3s cubic-bezier(0.25, 1, 0.5, 1);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-  border-radius: 12px;
+  border-radius: 14px;
+  box-shadow: var(--shadow-levitate);
+  transition:
+    transform 1.2s var(--ease-spring),
+    box-shadow var(--dur-fast) var(--ease-spring);
 }
 
-.tarot-card-option .tarot-card-inner.flipped {
+.tarot-card-option:hover .tarot-card-inner {
+  box-shadow: inset 0 0 20px var(--cyan-soft), var(--shadow-levitate);
+}
+
+.tarot-card-inner.flipped {
   transform: rotateY(180deg);
 }
 
-/* Thiết kế mặt sau và mặt trước */
-.tarot-card-option .tarot-card-back, 
-.tarot-card-option .tarot-card-front {
+.tarot-card-back,
+.tarot-card-front {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   backface-visibility: hidden;
-  border-radius: 12px;
+  -webkit-backface-visibility: hidden;
+  border-radius: 14px;
   overflow: hidden;
-  border: 3.5px double var(--gold);
+  border: 1px solid var(--border-whisper);
+  background: var(--canvas-void);
 }
 
-.tarot-card-option .tarot-card-back {
-  background: var(--bg-color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.tarot-card-option .tarot-card-back img {
+.tarot-card-back img,
+.tarot-card-front img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
 }
 
-.tarot-card-option .tarot-card-front {
+.tarot-card-front {
   transform: rotateY(180deg);
-  background: var(--bg-color);
 }
 
-.tarot-card-option .tarot-card-front img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Khi một lá bài được chọn */
+/* Lá bài được chọn: phóng lớn, thở nhẹ giữa hào quang */
 .tarot-card-option.selected {
   width: 200px;
   height: 320px;
-  z-index: 100;
+  z-index: 10;
   cursor: default;
   pointer-events: none;
-  transform: translateY(-5px);
-  animation: energy-vibrate-mild 1.5s infinite linear;
-}
-
-.tarot-card-option.selected.stage-2 {
-  animation: energy-vibrate-medium 1s infinite linear;
-}
-
-.tarot-card-option.selected.stage-3 {
-  animation: energy-vibrate-intense 0.8s infinite linear;
+  animation: levitate 4s ease-in-out infinite;
 }
 
 .tarot-card-option.selected .tarot-card-inner {
-  box-shadow: 
-    0 20px 45px rgba(0, 0, 0, 0.75),
-    0 0 40px var(--gold-glow);
-  animation: energy-glow-pulse 3s infinite ease-in-out;
+  box-shadow: inset 0 0 24px var(--crimson-soft), var(--shadow-levitate);
 }
 
 .tarot-card-option.selected.stage-2 .tarot-card-inner {
-  animation: energy-glow-pulse-fast 1.5s infinite ease-in-out;
+  box-shadow: inset 0 0 40px var(--crimson-glow), var(--shadow-levitate);
+}
+
+.tarot-card-option.selected.stage-3 {
+  animation: levitate 1.6s ease-in-out infinite;
 }
 
 .tarot-card-option.selected.stage-3 .tarot-card-inner {
-  animation: energy-glow-pulse-super 0.8s infinite ease-in-out;
+  box-shadow: inset 0 0 56px var(--crimson-glow), var(--shadow-levitate);
 }
 
-/* Hiệu ứng chớp sáng trắng */
+.tarot-card-option.selected.revealed {
+  animation: levitate 4s ease-in-out infinite;
+}
+
+/* Lá không được chọn tan vào sương */
+.tarot-card-option.fade-out {
+  width: 0;
+  height: 0;
+  margin: 0 -8px;
+  opacity: 0;
+  transform: scale(0.6) translateY(24px);
+  pointer-events: none;
+}
+
+/* Chớp sáng khoảnh khắc lật bài */
 .magic-flash {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: #ffffff;
-  z-index: 200;
+  border-radius: 14px;
   opacity: 0;
   pointer-events: none;
-  border-radius: 8px;
+  z-index: 20;
 }
 
 .magic-flash.flash-trigger {
-  animation: magic-flash-anim 0.6s ease-out forwards;
-}
-
-/* Vòng tròn ma thuật hoạt động mạnh */
-.sacred-geometry-circle.magic-active {
-  animation: rotate-sacred-active 10s infinite linear, circle-pulse 3s infinite ease-in-out;
-  border-color: var(--secondary) !important;
-  box-shadow: 
-    0 0 35px var(--secondary-glow),
-    inset 0 0 35px var(--primary-glow);
-}
-
-.sacred-geometry-circle.magic-active::before {
-  border-color: rgba(230, 57, 70, 0.3) !important;
-}
-
-.sacred-geometry-circle.magic-active::after {
-  border-color: rgba(255, 215, 0, 0.15) !important;
-}
-
-@keyframes rotate-sacred-active {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-@keyframes circle-pulse {
-  0% { transform: translate(-50%, -50%) scale(1); }
-  50% { transform: translate(-50%, -50%) scale(1.05); }
-  100% { transform: translate(-50%, -50%) scale(1); }
-}
-
-@keyframes energy-vibrate-mild {
-  0% { transform: translateY(-5px) rotate(0deg); }
-  25% { transform: translateY(-5px) rotate(0.5deg); }
-  75% { transform: translateY(-5px) rotate(-0.5deg); }
-  100% { transform: translateY(-5px) rotate(0deg); }
-}
-
-@keyframes energy-vibrate-medium {
-  0% { transform: translateY(-5px) rotate(0deg) scale(1.02); }
-  20% { transform: translateY(-7px) rotate(1deg) scale(1.02); }
-  40% { transform: translateY(-3px) rotate(-1deg) scale(1.02); }
-  60% { transform: translateY(-6px) rotate(0.5deg) scale(1.02); }
-  80% { transform: translateY(-4px) rotate(-0.5deg) scale(1.02); }
-  100% { transform: translateY(-5px) rotate(0deg) scale(1.02); }
-}
-
-@keyframes energy-vibrate-intense {
-  0% { transform: translateY(-5px) rotate(0deg) scale(1.05); }
-  10% { transform: translateY(-8px) rotate(1.5deg) scale(1.05); }
-  20% { transform: translateY(-3px) rotate(-1.5deg) scale(1.05); }
-  30% { transform: translateY(-7px) rotate(1deg) scale(1.05); }
-  40% { transform: translateY(-4px) rotate(-1deg) scale(1.05); }
-  50% { transform: translateY(-8px) rotate(2deg) scale(1.05); }
-  60% { transform: translateY(-2px) rotate(-2deg) scale(1.05); }
-  70% { transform: translateY(-7px) rotate(1deg) scale(1.05); }
-  80% { transform: translateY(-3px) rotate(-1deg) scale(1.05); }
-  90% { transform: translateY(-6px) rotate(1.5deg) scale(1.05); }
-  100% { transform: translateY(-5px) rotate(0deg) scale(1.05); }
-}
-
-@keyframes energy-glow-pulse {
-  0% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.75), 0 0 30px var(--gold-glow); }
-  50% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.75), 0 0 50px var(--primary-glow); }
-  100% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.75), 0 0 30px var(--gold-glow); }
-}
-
-@keyframes energy-glow-pulse-fast {
-  0% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 40px var(--primary-glow); }
-  50% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 60px var(--secondary-glow); }
-  100% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 40px var(--primary-glow); }
-}
-
-@keyframes energy-glow-pulse-super {
-  0% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 50px var(--secondary-glow); }
-  25% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 70px var(--gold-glow); }
-  50% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 80px var(--primary-glow); }
-  75% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 70px var(--secondary-glow); }
-  100% { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 50px var(--secondary-glow); }
+  animation: magic-flash-anim 0.6s var(--ease-spring) forwards;
 }
 
 @keyframes magic-flash-anim {
-  0% { opacity: 0; }
-  30% { opacity: 0.95; }
+  0%   { opacity: 0; }
+  30%  { opacity: 0.85; }
   100% { opacity: 0; }
 }
 
-/* Các lá bài khác biến mất */
-.tarot-card-option.fade-out {
-  width: 0;
-  margin: 0;
-  padding: 0;
-  opacity: 0;
-  transform: scale(0.6) translateY(30px);
-  pointer-events: none;
-  gap: 0;
-  border-width: 0;
-}
-
-/* Nút Giải Mã Lời Tiên Tri */
-.btn-reveal-destiny {
-  font-family: var(--font-title);
-  background: linear-gradient(135deg, var(--gold) 0%, var(--primary) 100%);
-  color: #ffffff;
-  border: 2px solid var(--gold);
-  padding: 16px 42px;
-  font-size: 1.15rem;
-  font-weight: 700;
-  border-radius: 35px;
-  cursor: pointer;
-  box-shadow: 
-    0 8px 25px var(--gold-glow),
-    0 0 15px rgba(255, 215, 0, 0.2);
-  transition: var(--transition);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  position: relative;
-  overflow: hidden;
-  z-index: 20;
-  animation: pulse-gold-glow 2.5s infinite;
-  letter-spacing: 1.5px;
-}
-
-.btn-reveal-destiny:hover {
-  transform: translateY(-4px) scale(1.03);
-  box-shadow: 
-    0 15px 35px rgba(255, 215, 0, 0.45),
-    0 0 25px var(--gold-glow);
-}
-
-.btn-reveal-destiny:active {
-  transform: translateY(-1px);
-}
-
-@keyframes pulse-gold-glow {
-  0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.6); }
-  70% { box-shadow: 0 0 0 18px rgba(255, 215, 0, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
-}
-
-/* MÀN HÌNH KẾT QUẢ */
-.result-screen {
-  animation: scaleUp 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.result-header {
-  text-align: center;
-  margin-bottom: 25px;
-}
-
-.result-title-small {
-  font-family: var(--font-title);
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--gold);
-  text-transform: uppercase;
-  letter-spacing: 3.5px;
-  margin-bottom: 8px;
-  text-shadow: 0 0 10px var(--gold-glow);
-}
-
-.result-title-main {
-  font-family: var(--font-title);
-  font-size: 2.1rem;
-  font-weight: 900;
-  letter-spacing: 0.5px;
-  background: linear-gradient(135deg, #ffffff 40%, var(--gold) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Khung trưng bày lá bài kết quả */
-.result-tarot-display {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 35px;
-}
-
-.tarot-frame-container {
-  width: 190px;
-  height: 304px;
-  border-radius: 14px;
-  overflow: hidden;
-  border: 4px double var(--gold);
-  box-shadow: 
-    0 15px 40px rgba(0,0,0,0.6),
-    0 0 30px var(--gold-glow);
-  transform: rotate(-1deg);
-  transition: var(--transition);
-}
-
-.tarot-frame-container:hover {
-  transform: rotate(0deg) scale(1.05);
-  box-shadow: 
-    0 20px 45px rgba(0,0,0,0.7),
-    0 0 40px var(--gold-glow);
-}
-
-.tarot-frame-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Bảng xếp hạng % các ban */
-.rankings-box {
-  background: hsla(230, 20%, 7%, 0.85);
-  border: 1px solid var(--card-border);
-  border-radius: 18px;
-  padding: 28px;
-  margin-bottom: 35px;
-  box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
-}
-
-.rankings-box-title {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.rank-row {
-  margin-bottom: 20px;
-}
-
-.rank-row:last-child {
-  margin-bottom: 0;
-}
-
-.rank-info {
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-  font-size: 1rem;
-}
-
-.rank-badge {
-  width: 24px;
-  height: 24px;
-  background: hsla(230, 20%, 25%, 0.8);
-  border-radius: 8px;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 800;
-  font-size: 0.85rem;
-  margin-right: 12px;
-  color: var(--text-muted);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.top-1-row .rank-badge {
-  background: linear-gradient(135deg, var(--gold), var(--primary));
-  color: #ffffff;
-  box-shadow: 0 0 10px var(--gold-glow);
-  border: none;
-}
-
-.rank-name {
-  font-weight: 600;
-  color: var(--text-muted);
-  flex-grow: 1;
-}
-
-.top-1-row .rank-name {
-  color: var(--text-main);
-  font-weight: 800;
-  font-size: 1.05rem;
-}
-
-.rank-percentage {
-  font-weight: 800;
-  color: var(--gold);
-  font-size: 1.05rem;
-}
-
-.top-1-row .rank-percentage {
-  color: var(--gold);
-  text-shadow: 0 0 8px var(--gold-glow);
-  font-size: 1.15rem;
-}
-
-.rank-bar-bg {
-  width: 100%;
-  height: 12px;
-  background-color: hsla(230, 20%, 20%, 0.5);
-  border-radius: 6px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.rank-bar-fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, hsla(230, 20%, 40%, 0.8), hsla(230, 20%, 55%, 0.8));
-  border-radius: 6px;
-  transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.top-1-row .rank-bar-fill {
-  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
-  box-shadow: 0 0 12px var(--secondary-glow);
-}
-
-/* Các box diễn giải văn bản */
-.result-details {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  margin-bottom: 40px;
-}
-
-.detail-card {
-  background: hsla(230, 20%, 14%, 0.5);
-  border-left: 5px solid var(--gold);
-  border-radius: 0 16px 16px 0;
-  padding: 25px;
-  box-shadow: 
-    0 10px 25px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  transition: var(--transition);
-  animation: slideInUp 0.5s ease-out;
-}
-
-.detail-card:hover {
-  transform: translateX(4px);
-  background: hsla(230, 20%, 17%, 0.7);
-}
-
-.detail-card.secondary-card {
-  border-left-color: var(--secondary);
-  background: hsla(230, 20%, 12%, 0.4);
-}
-
-.detail-card.message-card {
-  border-left-color: var(--success);
-  background: hsla(145, 85%, 45%, 0.03);
-  box-shadow: 
-    0 10px 30px rgba(0,0,0,0.25),
-    0 0 20px rgba(142, 230, 150, 0.05);
-  border: 1px solid hsla(145, 85%, 45%, 0.25);
-  border-left-width: 5px;
-  border-radius: 16px;
-}
-
-.card-icon {
-  font-size: 1.5rem;
-  margin-bottom: 12px;
-  display: inline-block;
-  animation: float-icon 3s infinite ease-in-out;
-}
-
-@keyframes float-icon {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-  100% { transform: translateY(0); }
-}
-
-.detail-card h3 {
-  font-family: var(--font-title);
-  font-size: 1.15rem;
-  font-weight: 700;
-  margin-bottom: 12px;
-  color: var(--text-main);
-  letter-spacing: 0.5px;
-}
-
-.detail-card p {
-  font-size: 1.15rem;
-  font-weight: 400;
-  color: var(--text-muted);
-  line-height: 1.75;
-}
-
-.detail-card p strong {
-  color: var(--text-main);
-  font-weight: 700;
-}
-
-/* Nút CTA và Chơi lại */
-.result-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-  border-top: 1px solid var(--card-border);
-  padding-top: 35px;
-}
-
-.cta-button {
-  width: 100%;
-  text-align: center;
-  font-family: var(--font-title);
-  background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
-  color: #ffffff;
-  border: none;
-  padding: 20px 30px;
-  font-size: 1.1rem;
-  font-weight: 700;
-  border-radius: 35px;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(0, 180, 216, 0.4);
-  transition: var(--transition);
-  text-decoration: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  animation: pulse-glow-blue 2.5s infinite;
-  letter-spacing: 0.5px;
-}
-
-.cta-button:hover {
-  transform: translateY(-4px);
-  box-shadow: 
-    0 15px 35px rgba(0, 180, 216, 0.65),
-    0 0 20px rgba(0, 180, 216, 0.3);
-  background: linear-gradient(135deg, #00c4ec 0%, #0096d6 100%);
-}
-
-@keyframes pulse-glow-blue {
-  0% { box-shadow: 0 0 0 0 rgba(0, 180, 216, 0.6); }
-  70% { box-shadow: 0 0 0 15px rgba(0, 180, 216, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(0, 180, 216, 0); }
-}
-
-.result-footer-links {
-  display: flex;
-  gap: 20px;
-  margin-top: 5px;
-}
-
-/* Các hoạt ảnh mượt mà */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideInRight {
-  from { opacity: 0; transform: translateX(30px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes slideInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes scaleUp {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-/* Responsive cho máy tính bảng và thiết bị tầm trung */
-@media (max-width: 768px) {
-  .welcome-title {
-    font-size: 2.4rem;
-  }
-  .welcome-subtitle {
-    font-size: 1.1rem;
-    letter-spacing: 2.5px;
-    margin-bottom: 20px;
-  }
-  .welcome-desc {
-    font-size: 1.1rem;
-    line-height: 1.65;
-    margin-bottom: 25px;
-  }
-  .welcome-art-card {
-    width: 190px;
-    height: 304px;
-    margin: 20px auto 30px auto;
-  }
-  .logo-overlay {
-    width: 40px;
-    height: 40px;
-    top: -18px;
-  }
-}
-
-/* Responsive di động */
-@media (max-width: 580px) {
-  .app-container {
-    padding: 28px 16px;
-    margin: 12px;
-    border-radius: 20px;
-  }
-
-  .welcome-title {
-    font-size: 1.95rem;
-    margin-bottom: 8px;
-  }
-  
-  .welcome-subtitle {
-    font-size: 0.95rem;
-    letter-spacing: 2px;
-    margin-bottom: 18px;
-  }
-
-  .welcome-desc {
-    font-size: 1rem;
-    padding: 0 5px;
-    line-height: 1.55;
-    margin-bottom: 22px;
-  }
-
-  .welcome-art-card {
-    width: 170px;
-    height: 272px;
-    margin: 15px auto 25px auto;
-  }
-  
-  .logo-overlay {
-    width: 36px;
-    height: 36px;
-    top: -16px;
-  }
-
-  .btn-primary-magic {
-    padding: 14px 36px;
-    font-size: 1.05rem;
-  }
-  
-  .question-text {
-    font-size: 1.4rem;
-    line-height: 1.45;
-  }
-  
-  .answer-card {
-    padding: 14px 16px;
-    gap: 12px;
-    border-radius: 12px;
-  }
-  
-  .answer-key {
-    width: 28px;
-    height: 28px;
-    font-size: 0.85rem;
-    border-radius: 8px;
-  }
-  
-  .answer-text {
-    font-size: 1.1rem;
-    line-height: 1.4;
-  }
-  
-  .result-title-main {
-    font-size: 1.7rem;
-  }
-  
-  .tarot-loading-screen {
-    padding: 10px 0;
-  }
-
-  .sacred-geometry-circle {
-    width: 310px;
-    height: 310px;
-  }
-
-  .tarot-cards-spread {
-    gap: 6px;
-    min-height: 240px;
-    margin: 10px auto;
-  }
-  
-  .tarot-card-option {
-    width: 70px;
-    height: 112px;
-  }
-  
-  .tarot-card-option.selected {
-    width: 140px;
-    height: 224px;
-  }
-  
-  .tarot-card-option .tarot-card-back,
-  .tarot-card-option .tarot-card-front {
-    border-width: 2px;
-  }
-  
-  .btn-reveal-destiny {
-    padding: 14px 30px;
-    font-size: 1rem;
-  }
-  
-  .tarot-frame-container {
-    width: 160px;
-    height: 256px;
-  }
-  
-  .rankings-box {
-    padding: 20px;
-  }
-  
-  .detail-card {
-    padding: 18px;
-  }
-
-  .detail-card h3 {
-    font-size: 1.05rem;
-  }
-
-  .detail-card p {
-    font-size: 1.05rem;
-    line-height: 1.6;
-  }
-  
-  .cta-button {
-    font-size: 0.95rem;
-    padding: 16px 18px;
-  }
-
-  .particle-logo {
-    opacity: 0.05 !important; /* Giảm độ đậm hạt nền để chữ serif dễ đọc hơn */
-  }
-
-  .quiz-footer {
-    padding-top: 20px;
-    flex-direction: column-reverse;
-    gap: 16px;
-    align-items: center;
-  }
-
-  .question-indicators {
-    width: 100%;
-    justify-content: center;
-    gap: 6px;
-  }
-
-  .btn-secondary {
-    padding: 10px 20px;
-    font-size: 0.85rem;
-  }
-}
-
-/* ============================================================
-   NÂNG CẤP GIAO DIỆN TAROT HUYỀN BÍ
-   Bầu trời sao, khung hoa văn mạ vàng, triện sao, con dấu đáp án
-   ============================================================ */
-
-/* --- Bầu trời sao lấp lánh 2 lớp --- */
-.star-field {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  background-image:
-    radial-gradient(1.5px 1.5px at 22px 34px, rgba(255, 255, 255, 0.9) 50%, transparent 100%),
-    radial-gradient(1px 1px at 88px 132px, rgba(255, 235, 180, 0.8) 50%, transparent 100%),
-    radial-gradient(1px 1px at 158px 58px, rgba(255, 255, 255, 0.65) 50%, transparent 100%),
-    radial-gradient(2px 2px at 232px 192px, rgba(255, 215, 0, 0.5) 50%, transparent 100%),
-    radial-gradient(1px 1px at 302px 92px, rgba(255, 255, 255, 0.6) 50%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 352px 248px, rgba(190, 210, 255, 0.7) 50%, transparent 100%),
-    radial-gradient(1px 1px at 60px 260px, rgba(255, 255, 255, 0.5) 50%, transparent 100%);
-  background-size: 400px 300px;
-  background-repeat: repeat;
-  animation: star-twinkle 7s ease-in-out infinite alternate;
-}
-
-.star-field.layer-2 {
-  background-size: 620px 470px;
-  animation-duration: 11s;
-  animation-delay: 3s;
-}
-
-@keyframes star-twinkle {
-  0% { opacity: 0.4; }
-  50% { opacity: 1; }
-  100% { opacity: 0.55; }
-}
-
-/* --- Vignette tối rìa màn hình, tạo cảm giác soi bài dưới ánh nến --- */
-.cosmic-vignette {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: radial-gradient(ellipse at center, transparent 50%, rgba(4, 6, 14, 0.6) 100%);
-}
-
-/* --- Hoa văn 4 góc khung app kiểu viền lá bài Tarot --- */
-.frame-corner {
-  position: absolute;
-  width: 52px;
-  height: 52px;
-  z-index: 30;
-  pointer-events: none;
-}
-
-.frame-corner::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 0 solid hsla(45, 85%, 55%, 0.6);
-}
-
-.frame-corner::after {
-  content: '✦';
-  position: absolute;
-  font-size: 0.72rem;
-  color: var(--gold);
-  text-shadow: 0 0 8px var(--gold-glow);
-}
-
-.corner-tl { top: 13px; left: 13px; }
-.corner-tl::before { border-top-width: 1.5px; border-left-width: 1.5px; border-top-left-radius: 16px; }
-.corner-tl::after { top: -5px; left: -4px; }
-
-.corner-tr { top: 13px; right: 13px; }
-.corner-tr::before { border-top-width: 1.5px; border-right-width: 1.5px; border-top-right-radius: 16px; }
-.corner-tr::after { top: -5px; right: -4px; }
-
-.corner-bl { bottom: 13px; left: 13px; }
-.corner-bl::before { border-bottom-width: 1.5px; border-left-width: 1.5px; border-bottom-left-radius: 16px; }
-.corner-bl::after { bottom: -5px; left: -4px; }
-
-.corner-br { bottom: 13px; right: 13px; }
-.corner-br::before { border-bottom-width: 1.5px; border-right-width: 1.5px; border-bottom-right-radius: 16px; }
-.corner-br::after { bottom: -5px; right: -4px; }
-
-/* --- Dòng chữ dẫn nhập nghi thức phía trên tiêu đề --- */
-.mystic-eyebrow {
-  font-family: var(--font-title);
-  color: var(--gold);
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  margin-bottom: 14px;
-  opacity: 0.9;
-  text-shadow: 0 0 12px var(--gold-glow);
-}
-
-/* --- Đường kẻ trang trí thiên thể (dùng chung Welcome & Kết quả) --- */
-.celestial-divider {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  width: min(340px, 82%);
-  margin: 0 auto 26px auto;
-}
-
-.divider-line {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, hsla(45, 85%, 60%, 0.55));
-}
-
-.celestial-divider .divider-line:last-child {
-  background: linear-gradient(90deg, hsla(45, 85%, 60%, 0.55), transparent);
-}
-
-.divider-symbol {
-  color: var(--gold);
-  font-size: 0.9rem;
-  text-shadow: 0 0 10px var(--gold-glow);
-  animation: divider-breathe 4s ease-in-out infinite;
-}
-
-@keyframes divider-breathe {
-  0%, 100% { opacity: 0.7; text-shadow: 0 0 8px var(--gold-glow); }
-  50% { opacity: 1; text-shadow: 0 0 16px var(--gold-glow); }
-}
-
-.welcome-subtitle {
-  margin-bottom: 16px;
-}
-
-.result-divider {
-  margin-top: 18px;
-  margin-bottom: 0;
-}
-
-/* --- Tiêu đề Welcome ánh kim chảy lấp lánh --- */
-.welcome-title {
-  background: linear-gradient(
-    110deg,
-    #9a7b1c 0%, #ffe893 22%, #fff6d8 38%,
-    #d4af37 55%, #9a7b1c 75%, #ffe893 100%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: title-gold-flow 7s linear infinite;
-}
-
-@keyframes title-gold-flow {
-  to { background-position: 200% center; }
-}
-
-/* --- Hộp câu hỏi kiểu tấm bùa cổ với triện sao ở đỉnh --- */
-.question-box {
-  position: relative;
-  padding: 30px 28px 24px 28px;
-  margin-bottom: 30px;
-  background: linear-gradient(180deg, hsla(232, 26%, 12%, 0.6), hsla(232, 26%, 8%, 0.3));
-  border: 1px solid hsla(45, 80%, 55%, 0.22);
-  border-radius: 16px;
-  box-shadow:
-    inset 0 0 35px rgba(0, 0, 0, 0.35),
-    0 6px 24px rgba(0, 0, 0, 0.25),
-    0 0 18px rgba(255, 215, 0, 0.04);
-}
-
-.question-box::before,
-.question-box::after {
-  content: '';
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border: 1.5px solid hsla(45, 85%, 55%, 0.45);
-  pointer-events: none;
-}
-
-.question-box::before {
-  top: 8px;
-  left: 8px;
-  border-right: none;
-  border-bottom: none;
-  border-top-left-radius: 8px;
-}
-
-.question-box::after {
-  bottom: 8px;
-  right: 8px;
-  border-left: none;
-  border-top: none;
-  border-bottom-right-radius: 8px;
-}
-
-/* Triện logo CLB lồng trên viền hộp câu hỏi */
-.question-ornament {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, -52%);
-  width: 34px;
-  height: 34px;
-  background: #ffffff;
-  border: 1.5px solid var(--gold);
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  box-shadow:
-    0 0 14px var(--gold-glow),
-    0 3px 8px rgba(0, 0, 0, 0.45);
-  animation: ornament-glow 3.2s ease-in-out infinite;
-}
-
-.question-ornament img {
-  width: 88%;
-  height: 88%;
-  object-fit: contain;
-  display: block;
-}
-
-@keyframes ornament-glow {
-  0%, 100% { box-shadow: 0 0 10px var(--gold-glow), 0 3px 8px rgba(0, 0, 0, 0.45); }
-  50% { box-shadow: 0 0 22px var(--gold-glow), 0 3px 8px rgba(0, 0, 0, 0.45); }
-}
-
-/* --- Chữ cái đáp án thành con dấu tròn mạ vàng --- */
-.answer-key {
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, hsla(45, 90%, 60%, 0.18), hsla(230, 20%, 14%, 0.9) 72%);
-  border: 1px solid hsla(45, 80%, 55%, 0.35);
-  color: var(--gold);
-}
-
-/* Vệt sáng vàng bên trái thẻ đáp án khi hover/chọn */
-.answer-card::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: linear-gradient(180deg, transparent, var(--gold), transparent);
-  opacity: 0;
-  transition: var(--transition);
-}
-
-.answer-card:hover::before,
-.answer-card.selected::before {
-  opacity: 0.9;
-}
-
-/* --- Progress bar viền vàng nhẹ + đốm sáng ở đầu thanh --- */
-.progress-bar-bg {
-  border-color: hsla(45, 80%, 55%, 0.18);
-}
-
-.progress-bar-fill {
-  position: relative;
-}
-
-.progress-bar-fill::after {
-  content: '';
-  position: absolute;
-  right: 2px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #ffffff;
-  box-shadow: 0 0 8px 2px var(--gold-glow);
-}
-
-.progress-text::before {
-  content: '✦ ';
-  font-size: 0.8em;
-  opacity: 0.8;
-}
-
-/* --- 4 ngôi sao góc khung lá bài kết quả --- */
-.tarot-frame-container {
-  position: relative;
-}
-
-.tarot-corner {
-  position: absolute;
-  color: var(--gold);
-  font-size: 0.72rem;
-  z-index: 5;
-  text-shadow: 0 0 8px var(--gold-glow), 0 1px 3px rgba(0, 0, 0, 0.8);
-  animation: divider-breathe 3.5s ease-in-out infinite;
-}
-
-.tc-tl { top: 7px; left: 9px; }
-.tc-tr { top: 7px; right: 9px; animation-delay: 0.8s; }
-.tc-bl { bottom: 7px; left: 9px; animation-delay: 1.6s; }
-.tc-br { bottom: 7px; right: 9px; animation-delay: 2.4s; }
-
-.rankings-icon {
-  filter: drop-shadow(0 0 6px var(--gold-glow));
-}
-
-/* --- Trải nghiệm chọn văn bản và thanh cuộn đồng bộ theme --- */
-::selection {
-  background: hsla(45, 100%, 50%, 0.3);
-  color: #ffffff;
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: hsl(230, 25%, 5%);
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--gold-dark), hsl(230, 20%, 25%));
-  border-radius: 5px;
-  border: 2px solid hsl(230, 25%, 5%);
-}
-
-/* --- Tôn trọng người dùng giảm chuyển động --- */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.15s !important;
-  }
-}
-
-/* --- Responsive cho các chi tiết trang trí mới --- */
-@media (max-width: 580px) {
-  .frame-corner {
-    width: 34px;
-    height: 34px;
-  }
-
-  .corner-tl, .corner-tr { top: 9px; }
-  .corner-bl, .corner-br { bottom: 9px; }
-  .corner-tl, .corner-bl { left: 9px; }
-  .corner-tr, .corner-br { right: 9px; }
-
-  .mystic-eyebrow {
-    font-size: 0.72rem;
-    letter-spacing: 3.5px;
-    margin-bottom: 10px;
-  }
-
-  .celestial-divider {
-    margin-bottom: 20px;
-  }
-
-  .question-box {
-    padding: 26px 18px 18px 18px;
-  }
-
-  .question-ornament {
-    width: 30px;
-    height: 30px;
-  }
-}
-
-/* ============================================================
-   NGHI THỨC KHUI BÀI PHIÊN BẢN MA THUẬT
-   Vòng ấn ma pháp, hào quang, hạt năng lượng, rung chấn, nổ sao
-   ============================================================ */
-
-/* --- Vòng ấn ma pháp xoay quanh lá bài được chọn --- */
+/* Vòng ấn xoay quanh lá bài */
 .rune-ring {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 320px;
-  height: 320px;
-  margin: -160px 0 0 -160px;
-  z-index: -1;
+  width: 300px;
+  height: 300px;
+  margin: -150px 0 0 -150px;
   pointer-events: none;
+  z-index: -1;
   opacity: 0;
-  animation: rune-appear 1s ease-out 0.3s forwards;
-}
-
-.rune-ring::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 1.5px dashed hsla(45, 90%, 60%, 0.5);
-  border-radius: 50%;
-  box-shadow:
-    0 0 30px rgba(255, 215, 0, 0.12),
-    inset 0 0 30px rgba(255, 215, 0, 0.08);
-  animation: ring-spin 10s linear infinite;
-}
-
-.rune-ring::after {
-  content: '';
-  position: absolute;
-  inset: 24px;
-  border: 1px double hsla(45, 90%, 60%, 0.3);
-  border-radius: 50%;
-  animation: ring-spin-reverse 16s linear infinite;
-}
-
-/* Các ký tự thiên thể gắn trên vòng xoay ngược */
-.rune-ring-inner {
-  position: absolute;
-  inset: -14px;
-  animation: ring-spin-reverse 12s linear infinite;
-}
-
-.rune-ring-inner::before,
-.rune-ring-inner::after {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--gold);
-  font-size: 1rem;
-  text-shadow: 0 0 10px var(--gold-glow);
-}
-
-.rune-ring-inner::before {
-  content: '✦';
-  top: -8px;
-}
-
-.rune-ring-inner::after {
-  content: '☾';
-  bottom: -8px;
+  animation: rune-appear 1s var(--ease-spring) 0.3s forwards;
 }
 
 @keyframes rune-appear {
   from { opacity: 0; transform: scale(0.6) rotate(-40deg); }
-  to { opacity: 1; transform: scale(1) rotate(0deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0deg); }
 }
 
-@keyframes ring-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.rune-ring-inner {
+  width: 100%;
+  height: 100%;
+  border: 1px dashed rgba(225, 29, 72, 0.45);
+  border-radius: 50%;
+  animation: rotate-symbol 12s var(--ease-spring) infinite;
 }
 
-@keyframes ring-spin-reverse {
-  from { transform: rotate(360deg); }
-  to { transform: rotate(0deg); }
+.tarot-card-option.stage-3 .rune-ring-inner {
+  animation-duration: 4s;
+  border-color: rgba(225, 29, 72, 0.7);
 }
 
-/* Vòng ấn tăng tốc theo từng giai đoạn truyền năng lượng */
-.tarot-card-option.stage-2 .rune-ring::before { animation-duration: 5s; border-color: hsla(45, 95%, 62%, 0.7); }
-.tarot-card-option.stage-3 .rune-ring::before {
-  animation-duration: 2s;
-  border-color: hsla(45, 100%, 65%, 0.9);
-  box-shadow:
-    0 0 45px rgba(255, 215, 0, 0.3),
-    inset 0 0 45px rgba(255, 215, 0, 0.15);
+.tarot-card-option.revealed .rune-ring {
+  opacity: 0.3;
 }
-.tarot-card-option.stage-3 .rune-ring-inner { animation-duration: 4s; }
 
-/* --- Hào quang năng lượng tỏa phía sau lá bài --- */
+/* Hào quang năng lượng khuếch tán phía sau */
 .energy-aura {
   position: absolute;
   top: 50%;
@@ -2089,41 +939,43 @@ body::after {
   height: 280px;
   margin: -140px 0 0 -140px;
   border-radius: 50%;
-  z-index: -2;
   pointer-events: none;
-  background: radial-gradient(circle, hsla(45, 100%, 60%, 0.25) 0%, hsla(355, 85%, 52%, 0.1) 42%, transparent 70%);
-  filter: blur(8px);
-  animation: aura-pulse 2.4s ease-in-out infinite;
+  z-index: -2;
+  background: radial-gradient(circle, var(--crimson-glow) 0%, rgba(255, 255, 255, 0.06) 45%, transparent 68%);
+  animation: aura-breathe 2.4s ease-in-out infinite;
 }
 
-@keyframes aura-pulse {
-  0%, 100% { transform: scale(0.82); opacity: 0.55; }
-  50% { transform: scale(1.18); opacity: 1; }
+@keyframes aura-breathe {
+  0%, 100% { transform: scale(0.85); opacity: 0.5; }
+  50%      { transform: scale(1.12); opacity: 0.9; }
 }
 
 .tarot-card-option.stage-3 .energy-aura {
   animation-duration: 1s;
-  background: radial-gradient(circle, hsla(45, 100%, 62%, 0.4) 0%, hsla(215, 90%, 55%, 0.18) 45%, transparent 72%);
 }
 
-/* --- Dòng hạt năng lượng hội tụ liên tục vào tâm lá bài --- */
+.tarot-card-option.revealed .energy-aura {
+  animation-duration: 3.5s;
+  opacity: 0.45;
+}
+
+/* Hạt năng lượng hội tụ về lá bài */
 .energy-particles {
   position: absolute;
   top: 50%;
   left: 50%;
   width: 0;
   height: 0;
-  z-index: 25;
   pointer-events: none;
+  z-index: 25;
 }
 
 .energy-particle {
   position: absolute;
-  width: 5px;
-  height: 5px;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
-  background: var(--pc, #ffd700);
-  box-shadow: 0 0 9px 2px var(--pc, #ffd700);
+  background: var(--pc, #67E8F9);
   opacity: 0;
   animation-name: particle-converge;
   animation-iteration-count: infinite;
@@ -2131,143 +983,483 @@ body::after {
 }
 
 @keyframes particle-converge {
-  0% { transform: translate(var(--sx), var(--sy)) scale(0.35); opacity: 0; }
-  25% { opacity: 1; }
-  85% { opacity: 0.9; }
+  0%   { transform: translate(var(--sx), var(--sy)) scale(0.4); opacity: 0; }
+  25%  { opacity: 0.9; }
+  85%  { opacity: 0.8; }
   100% { transform: translate(0, 0) scale(1.1); opacity: 0; }
-}
-
-/* --- Rung chấn màn hình khi năng lượng bùng nổ --- */
-.screen-shake {
-  animation: screen-shake 0.6s ease-in-out;
-}
-
-@keyframes screen-shake {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  15% { transform: translate(-7px, 4px) rotate(-0.35deg); }
-  30% { transform: translate(6px, -5px) rotate(0.35deg); }
-  45% { transform: translate(-5px, 3px) rotate(-0.25deg); }
-  60% { transform: translate(4px, -3px) rotate(0.2deg); }
-  75% { transform: translate(-3px, 2px) rotate(-0.1deg); }
-  90% { transform: translate(2px, -1px) rotate(0.05deg); }
-}
-
-/* --- Vụ nổ sao vàng khi lật mở lá bài --- */
-.star-burst {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  z-index: 60;
-  pointer-events: none;
-}
-
-.burst-star {
-  position: absolute;
-  color: var(--gold);
-  font-size: 0.95rem;
-  text-shadow: 0 0 12px var(--gold-glow), 0 0 4px #ffffff;
-  opacity: 0;
-  animation: star-burst-fly 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes star-burst-fly {
-  0% { transform: translate(0, 0) scale(0.4) rotate(0deg); opacity: 1; }
-  100% { transform: translate(var(--bx), var(--by)) scale(1.25) rotate(200deg); opacity: 0; }
-}
-
-/* --- Trạng thái đã lật mở: ngừng rung lắc, dịu năng lượng --- */
-.tarot-card-option.selected.revealed {
-  animation: none;
-  transform: translateY(-5px) scale(1.02);
-}
-
-.tarot-card-option.selected.revealed .tarot-card-inner {
-  animation: none;
-  box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.7),
-    0 0 45px var(--gold-glow);
 }
 
 .tarot-card-option.revealed .energy-particles {
   display: none;
 }
 
-.tarot-card-option.revealed .rune-ring {
-  opacity: 0.35;
-  transition: opacity 1.2s ease;
-}
-
-.tarot-card-option.revealed .energy-aura {
-  animation-duration: 3.5s;
-  opacity: 0.5;
-  transition: opacity 1.2s ease;
-}
-
-/* Mặt trước lá bài rực sáng rồi dịu lại lúc vừa lật mở */
-.tarot-card-option.revealed .tarot-card-front img {
-  animation: reveal-glow 1.6s ease-out;
-}
-
-@keyframes reveal-glow {
-  0% { filter: brightness(2.4) saturate(1.5); }
-  100% { filter: brightness(1) saturate(1); }
-}
-
-/* Nhịp thở nhẹ cho dòng trạng thái nghi thức */
-.tarot-status {
-  animation: status-breathe 2.6s ease-in-out infinite;
-}
-
-@keyframes status-breathe {
-  0%, 100% { opacity: 0.85; }
-  50% { opacity: 1; }
-}
-
-/* ============================================================
-   TỐI ƯU GIAO DIỆN DI ĐỘNG
-   ============================================================ */
-
-/* Bỏ vệt xám khi chạm và loại trễ 300ms trên thiết bị cảm ứng */
-button,
-a,
-.answer-card,
-.tarot-card-option,
-.indicator-dot {
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-
-/* Lá bài mờ dần thu cả chiều cao lẫn khoảng gap flex để lá được chọn nằm đúng tâm */
-.tarot-card-option.fade-out {
+/* Vụ nổ sao khi lật mở */
+.star-burst {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
   height: 0;
-  margin: 0 -8px;
+  pointer-events: none;
+  z-index: 30;
 }
 
-@media (max-width: 580px) {
-  /* Giảm độ nặng blur để máy yếu vẫn mượt */
-  .app-container {
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    padding: 32px 16px 26px 16px;
-    margin: 10px;
+.burst-star {
+  position: absolute;
+  color: var(--text-moonlight);
+  font-size: 0.85rem;
+  opacity: 0;
+  animation: burst-out 1.1s var(--ease-spring) forwards;
+}
+
+@keyframes burst-out {
+  0%   { transform: translate(0, 0) scale(0.4); opacity: 1; }
+  100% { transform: translate(var(--bx), var(--by)) scale(1); opacity: 0; }
+}
+
+.btn-reveal-destiny {
+  animation: rise-in 0.8s var(--ease-spring) backwards;
+}
+
+/* ------------------------------------------------------------
+   4. KẾT QUẢ
+   ------------------------------------------------------------ */
+.result-screen {
+  max-width: 820px;
+  margin-inline: auto;
+  display: grid;
+  gap: 32px;
+}
+
+/* Các khối lần lượt trồi lên theo nhịp nghi lễ */
+.result-screen > * {
+  animation: rise-in 0.7s var(--ease-spring) both;
+}
+
+.result-screen > .result-header        { animation-delay: 0.05s; }
+.result-screen > .result-tarot-display { animation-delay: 0.20s; }
+.result-screen > .dept-showcase        { animation-delay: 0.38s; }
+.result-screen > .rankings-box         { animation-delay: 0.55s; }
+.result-screen > .result-details       { animation-delay: 0.72s; }
+.result-screen > .result-actions       { animation-delay: 0.90s; }
+
+.result-header {
+  text-align: center;
+}
+
+.result-title-small {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  color: var(--mystic-cyan);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.result-title-main {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.7rem, 4.5vw, 2.6rem);
+  letter-spacing: -0.01em;
+  color: var(--text-moonlight);
+}
+
+.result-divider {
+  margin-top: 18px;
+  margin-bottom: 0;
+}
+
+.result-tarot-display {
+  display: flex;
+  justify-content: center;
+}
+
+.result-card-stage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: levitate 4s ease-in-out infinite;
+}
+
+.result-halo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 380px;
+  height: 380px;
+  margin: -190px 0 0 -190px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--crimson-soft) 0%, rgba(255, 255, 255, 0.04) 45%, transparent 62%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orbit-sparkles {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  margin: -150px 0 0 -150px;
+  animation: rotate-symbol 24s var(--ease-spring) infinite;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.orbit-sparkles span {
+  position: absolute;
+  color: var(--text-stardust);
+  font-size: 0.8rem;
+}
+
+.orbit-sparkles span:nth-child(1) { top: 4px; left: 50%; }
+.orbit-sparkles span:nth-child(2) { bottom: 22px; left: 13%; font-size: 0.68rem; opacity: 0.8; }
+.orbit-sparkles span:nth-child(3) { top: 38%; right: 2px; font-size: 0.75rem; opacity: 0.9; }
+
+.tarot-frame-container {
+  position: relative;
+  width: 200px;
+  height: 320px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border-whisper);
+  box-shadow: var(--shadow-levitate);
+  z-index: 2;
+}
+
+.tarot-frame-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ------------------------------------------------------------
+   Hồ sơ ban Top 1 — JS bơm --accent theo bản sắc từng ban
+   ------------------------------------------------------------ */
+.dept-showcase {
+  --accent: var(--mystic-cyan);
+  --accent-soft: var(--cyan-soft);
+  --accent-glow: var(--cyan-glow);
+  --accent-line: var(--cyan-border);
+
+  padding: clamp(26px, 4.5vw, 44px);
+  text-align: center;
+}
+
+.dept-metaphor {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 8px 18px;
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  margin-bottom: 16px;
+}
+
+.dept-showcase-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 3.6vw, 2.1rem);
+  color: var(--text-moonlight);
+  margin-bottom: 8px;
+}
+
+.dept-showcase-slogan {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--text-stardust);
+  margin-bottom: 16px;
+}
+
+.dept-showcase-desc {
+  max-width: 65ch;
+  margin: 0 auto 28px auto;
+  color: var(--text-stardust);
+}
+
+.dept-block {
+  text-align: left;
+  border-top: 1px solid var(--border-whisper);
+  padding-top: 22px;
+  margin-bottom: 24px;
+}
+
+.dept-block-title {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-stardust);
+  margin-bottom: 16px;
+}
+
+.dept-task-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.dept-task {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-whisper);
+  border-radius: 12px;
+  background: var(--glass-surface);
+  color: var(--text-moonlight);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  transition:
+    transform var(--dur-fast) var(--ease-spring),
+    border-color var(--dur-fast) var(--ease-spring);
+}
+
+.dept-task:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-line);
+}
+
+.dept-task-icon {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  margin-top: 8px;
+  border-radius: 2px;
+  transform: rotate(45deg);
+  background: var(--accent);
+}
+
+.dept-skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.dept-skill-tag {
+  font-size: 0.85rem;
+  color: var(--text-moonlight);
+  padding: 8px 16px;
+  border: 1px solid var(--border-whisper);
+  border-radius: var(--radius-pill);
+  background: var(--glass-surface);
+}
+
+.dept-explore-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+  padding: 13px 30px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  transition:
+    transform var(--dur-fast) var(--ease-spring),
+    box-shadow var(--dur-fast) var(--ease-spring);
+}
+
+.dept-explore-link:hover {
+  transform: translateY(-2px);
+  box-shadow: inset 0 0 22px var(--accent-soft), var(--shadow-levitate);
+}
+
+.dept-explore-arrow {
+  transition: transform var(--dur-fast) var(--ease-spring);
+}
+
+.dept-explore-link:hover .dept-explore-arrow {
+  transform: translateX(4px);
+}
+
+/* ------------------------------------------------------------
+   Bảng xếp hạng
+   ------------------------------------------------------------ */
+.rankings-box {
+  padding: clamp(24px, 4vw, 36px);
+}
+
+.rankings-box-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-stardust);
+  margin-bottom: 24px;
+}
+
+.rank-row {
+  margin-bottom: 20px;
+  animation: rise-in 0.55s var(--ease-spring) both;
+}
+
+.rank-row:nth-child(1) { animation-delay: 0.70s; }
+.rank-row:nth-child(2) { animation-delay: 0.85s; }
+.rank-row:nth-child(3) { animation-delay: 1.00s; }
+.rank-row:nth-child(4) { animation-delay: 1.15s; }
+
+.rank-row:last-child {
+  margin-bottom: 0;
+}
+
+.rank-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.rank-badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-whisper);
+  border-radius: 8px;
+  color: var(--text-stardust);
+  background: var(--glass-surface);
+}
+
+.top-1-row .rank-badge {
+  border-color: var(--club-crimson);
+  color: var(--club-crimson);
+}
+
+.rank-name {
+  flex: 1;
+  font-size: 0.95rem;
+  color: var(--text-stardust);
+}
+
+.top-1-row .rank-name {
+  color: var(--text-moonlight);
+  font-weight: 500;
+}
+
+.rank-percentage {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--text-stardust);
+}
+
+.top-1-row .rank-percentage {
+  color: var(--club-crimson);
+}
+
+.rank-bar-bg {
+  height: 4px;
+  background: var(--glass-surface);
+  border: 1px solid var(--border-whisper);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.rank-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--text-stardust);
+  border-radius: var(--radius-pill);
+  transition: width 1.5s var(--ease-spring);
+  opacity: 0.55;
+}
+
+.top-1-row .rank-bar-fill {
+  background: var(--club-crimson);
+  opacity: 1;
+}
+
+/* ------------------------------------------------------------
+   Diễn giải kết quả
+   ------------------------------------------------------------ */
+.result-details {
+  display: grid;
+  gap: 20px;
+}
+
+.detail-card {
+  padding: clamp(24px, 4vw, 36px);
+  color: var(--text-stardust);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.detail-card strong {
+  color: var(--text-moonlight);
+  font-weight: 600;
+}
+
+.detail-card.message-card {
+  border-color: rgba(6, 182, 212, 0.3);
+}
+
+.message-card-title {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--mystic-cyan);
+  margin-bottom: 14px;
+}
+
+/* ------------------------------------------------------------
+   Hành động cuối trang
+   ------------------------------------------------------------ */
+.result-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  border-top: 1px solid var(--border-whisper);
+  padding-top: 32px;
+}
+
+.cta-button {
+  width: 100%;
+  text-align: center;
+  font-size: clamp(0.85rem, 2.4vw, 1rem);
+  line-height: 1.5;
+  padding: 20px 24px;
+}
+
+/* ------------------------------------------------------------
+   Bố cục compact — cột app 480px nên áp dụng ở MỌI viewport
+   ------------------------------------------------------------ */
+  .hero-panel {
+    margin-top: -56px;
   }
 
-  /* Nút bắt đầu chiếm trọn chiều ngang cho dễ bấm */
-  .btn-primary-magic {
-    width: 100%;
-    max-width: 330px;
+  .quiz-footer {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .question-indicators {
     justify-content: center;
+    flex-wrap: wrap;
   }
 
-  /* Bàn trải bài chuyển thành lưới 2x2 — lá bài to, dễ chạm hơn hẳn */
+  /* Bàn trải bài: lưới 2x2, lá to dễ chạm */
   .tarot-cards-spread {
     flex-wrap: wrap;
     gap: 18px 16px;
     min-height: 0;
-    margin: 14px auto;
-    padding-bottom: 8px;
   }
 
   .tarot-card-option {
@@ -2276,27 +1468,10 @@ a,
   }
 
   .tarot-card-option.selected {
-    width: 172px;
-    height: 275px;
+    width: 168px;
+    height: 269px;
   }
 
-  .tarot-status {
-    font-size: 1.05rem;
-    min-height: 40px;
-    padding: 0 8px;
-  }
-
-  .tarot-celestial-symbol {
-    font-size: 1.7rem;
-  }
-
-  .sacred-geometry-circle {
-    width: 290px;
-    height: 290px;
-    top: 50%;
-  }
-
-  /* Thu gọn các hiệu ứng ma thuật cho vừa màn hình nhỏ */
   .rune-ring {
     width: 240px;
     height: 240px;
@@ -2309,246 +1484,6 @@ a,
     margin: -107px 0 0 -107px;
   }
 
-  .result-title-main {
-    font-size: 1.45rem;
-    line-height: 1.35;
-  }
-
-  .result-title-small {
-    font-size: 0.82rem;
-    letter-spacing: 2.5px;
-  }
-
-  .tarot-frame-container {
-    width: 176px;
-    height: 282px;
-  }
-
-  .rankings-box {
-    padding: 18px 14px;
-    border-radius: 14px;
-  }
-
-  .rankings-box-title {
-    font-size: 0.92rem;
-    letter-spacing: 1px;
-    margin-bottom: 16px;
-  }
-
-  .rank-info {
-    font-size: 0.92rem;
-  }
-
-  .detail-card {
-    border-radius: 0 14px 14px 0;
-  }
-
-  .detail-card.message-card {
-    border-radius: 14px;
-  }
-
-  .cta-button {
-    font-size: 0.88rem;
-    padding: 15px 14px;
-    border-radius: 26px;
-    line-height: 1.4;
-  }
-
-  .result-actions {
-    padding-top: 26px;
-  }
-
-  .welcome-desc {
-    font-size: 0.98rem;
-  }
-
-  .btn-reveal-destiny {
-    width: 100%;
-    max-width: 330px;
-    padding: 14px 20px;
-    font-size: 0.95rem;
-  }
-}
-
-/* ============================================================
-   NÂNG CẤP MÀN HÌNH TRẢ KẾT QUẢ
-   Dàn dựng xuất hiện tuần tự, hào quang xoay, sao quỹ đạo,
-   số % đếm chạy, huy hiệu vàng-bạc-đồng
-   ============================================================ */
-
-/* --- Các khối lần lượt trồi lên theo nhịp nghi lễ --- */
-.result-screen > * {
-  animation: result-rise 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.result-screen > .result-header { animation-delay: 0.05s; }
-.result-screen > .result-tarot-display { animation-delay: 0.2s; }
-.result-screen > .rankings-box { animation-delay: 0.45s; }
-.result-screen > .result-details { animation-delay: 0.65s; }
-.result-screen > .result-actions { animation-delay: 0.85s; }
-
-@keyframes result-rise {
-  from { opacity: 0; transform: translateY(26px); filter: blur(5px); }
-  to { opacity: 1; transform: translateY(0); filter: blur(0); }
-}
-
-/* --- Sân khấu lá bài: lơ lửng vĩnh viễn giữa hào quang --- */
-.result-card-stage {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: stage-float 6s ease-in-out infinite;
-}
-
-@keyframes stage-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-/* Vầng hào quang tia sáng vàng xoay chậm sau lá bài */
-.result-halo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 400px;
-  height: 400px;
-  margin: -200px 0 0 -200px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle, hsla(45, 100%, 60%, 0.16) 0%, transparent 58%),
-    repeating-conic-gradient(from 0deg, hsla(45, 100%, 65%, 0.09) 0deg 6deg, transparent 6deg 22.5deg);
-  -webkit-mask-image: radial-gradient(circle, #000 25%, transparent 70%);
-  mask-image: radial-gradient(circle, #000 25%, transparent 70%);
-  animation: ring-spin 36s linear infinite;
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* Các vì sao bay theo quỹ đạo tròn quanh lá bài */
-.orbit-sparkles {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 300px;
-  height: 300px;
-  margin: -150px 0 0 -150px;
-  animation: ring-spin 15s linear infinite;
-  z-index: 3;
-  pointer-events: none;
-}
-
-.orbit-sparkles span {
-  position: absolute;
-  color: var(--gold);
-  text-shadow: 0 0 10px var(--gold-glow);
-  font-size: 0.85rem;
-}
-
-.orbit-sparkles span:nth-child(1) { top: 4px; left: 50%; }
-.orbit-sparkles span:nth-child(2) { bottom: 22px; left: 13%; font-size: 0.68rem; opacity: 0.8; }
-.orbit-sparkles span:nth-child(3) { top: 38%; right: 2px; font-size: 0.75rem; opacity: 0.9; }
-
-/* Lá bài nổi trên hào quang + vệt sáng gương quét qua định kỳ */
-.tarot-frame-container {
-  z-index: 2;
-}
-
-.tarot-frame-container::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    120deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.12) 45%,
-    rgba(255, 255, 255, 0.28) 50%,
-    rgba(255, 255, 255, 0.12) 55%,
-    transparent 70%
-  );
-  transform: translateX(-130%);
-  animation: card-sheen 5.5s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes card-sheen {
-  0% { transform: translateX(-130%); }
-  40% { transform: translateX(130%); }
-  100% { transform: translateX(130%); }
-}
-
-/* --- Bảng xếp hạng: hàng trồi lên lần lượt --- */
-.rank-row {
-  animation: result-rise 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.rank-row:nth-child(1) { animation-delay: 0.6s; }
-.rank-row:nth-child(2) { animation-delay: 0.75s; }
-.rank-row:nth-child(3) { animation-delay: 0.9s; }
-.rank-row:nth-child(4) { animation-delay: 1.05s; }
-
-/* Huy hiệu hạng 2 bạc, hạng 3 đồng */
-.rank-row:nth-child(2) .rank-badge {
-  background: linear-gradient(135deg, hsl(220, 15%, 78%), hsl(220, 10%, 52%));
-  color: hsl(230, 25%, 12%);
-  border: none;
-}
-
-.rank-row:nth-child(3) .rank-badge {
-  background: linear-gradient(135deg, hsl(28, 62%, 58%), hsl(28, 52%, 36%));
-  color: hsl(28, 80%, 92%);
-  border: none;
-}
-
-/* Vương miện cho hạng nhất */
-.top-1-row .rank-name::after {
-  content: ' 👑';
-  font-size: 0.9em;
-}
-
-/* Thanh bar hạng nhất có vệt sáng chạy lấp lánh */
-.top-1-row .rank-bar-fill {
-  position: relative;
-  overflow: hidden;
-}
-
-.top-1-row .rank-bar-fill::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent 20%, rgba(255, 255, 255, 0.45) 50%, transparent 80%);
-  transform: translateX(-100%);
-  animation: bar-glint 2.8s ease-in-out 1.8s infinite;
-}
-
-@keyframes bar-glint {
-  0% { transform: translateX(-100%); }
-  55% { transform: translateX(100%); }
-  100% { transform: translateX(100%); }
-}
-
-/* --- Ngôi sao mờ điểm xuyết góc các thẻ diễn giải --- */
-.detail-card {
-  position: relative;
-}
-
-.detail-card::after {
-  content: '✦';
-  position: absolute;
-  top: 14px;
-  right: 16px;
-  color: hsla(45, 90%, 60%, 0.35);
-  font-size: 0.8rem;
-  pointer-events: none;
-}
-
-/* Thẻ diễn giải trồi lên theo nhịp riêng */
-.result-details .detail-card:nth-child(1) { animation: result-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s both; }
-.result-details .detail-card:nth-child(2) { animation: result-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.95s both; }
-.result-details .detail-card:nth-child(3) { animation: result-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) 1.1s both; }
-
-/* Responsive hào quang trên di động */
-@media (max-width: 580px) {
   .result-halo {
     width: 300px;
     height: 300px;
@@ -2560,295 +1495,229 @@ a,
     height: 232px;
     margin: -116px 0 0 -116px;
   }
-}
 
-/* Màn hình cực nhỏ (iPhone SE và tương đương) */
-@media (max-width: 374px) {
-  .tarot-card-option {
-    width: 100px;
-    height: 160px;
+  .tarot-frame-container {
+    width: 176px;
+    height: 282px;
   }
 
-  .tarot-card-option.selected {
-    width: 156px;
-    height: 250px;
-  }
-
-  .welcome-title {
-    font-size: 1.7rem;
-  }
-
-  .welcome-art-card {
-    width: 150px;
-    height: 240px;
-  }
-}
-
-/* ============================================================
-   THẺ HỒ SƠ BAN TOP 1 (dữ liệu từ website chính thức của CLB)
-   Biệt danh, slogan, công việc, quyền lợi + màu nhấn riêng mỗi ban
-   ============================================================ */
-
-.dept-showcase {
-  /* Giá trị mặc định, sẽ được JS ghi đè theo bản sắc từng ban */
-  --accent: var(--gold);
-  --accent-soft: hsla(45, 100%, 50%, 0.14);
-  --accent-glow: var(--gold-glow);
-  --accent-line: hsla(45, 80%, 55%, 0.35);
-
-  position: relative;
-  margin-bottom: 35px;
-  padding: 34px 28px 28px;
-  border-radius: 18px;
-  text-align: center;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 50% -10%, var(--accent-soft), transparent 62%),
-    linear-gradient(180deg, hsla(232, 26%, 12%, 0.72), hsla(232, 26%, 8%, 0.42));
-  border: 1px solid var(--accent-line);
-  box-shadow:
-    inset 0 0 42px rgba(0, 0, 0, 0.35),
-    0 12px 32px rgba(0, 0, 0, 0.3),
-    0 0 22px var(--accent-glow);
-  /* Nhịp trồi lên khớp với chuỗi nghi lễ kết quả (nằm giữa lá bài và bảng xếp hạng) */
-  animation-delay: 0.32s !important;
-}
-
-/* Dải sáng mảnh chạy dọc mép trên thẻ */
-.dept-showcase::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 12%;
-  right: 12%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  box-shadow: 0 0 12px var(--accent-glow);
-}
-
-.dept-metaphor {
-  display: inline-block;
-  font-family: var(--font-title);
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--accent);
-  text-shadow: 0 0 14px var(--accent-glow);
-  padding: 6px 16px;
-  border: 1px solid var(--accent-line);
-  border-radius: 30px;
-  background: var(--accent-soft);
-  margin-bottom: 14px;
-}
-
-.dept-showcase-name {
-  font-family: var(--font-title);
-  font-size: 1.55rem;
-  font-weight: 800;
-  line-height: 1.25;
-  margin-bottom: 10px;
-  background: linear-gradient(135deg, #ffffff 35%, var(--accent) 120%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.dept-showcase-slogan {
-  font-family: var(--font-family);
-  font-style: italic;
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: var(--accent);
-  line-height: 1.5;
-  max-width: 90%;
-  margin: 0 auto 16px;
-  opacity: 0.95;
-}
-
-.dept-showcase-desc {
-  font-size: 1.08rem;
-  color: var(--text-muted);
-  line-height: 1.65;
-  max-width: 560px;
-  margin: 0 auto;
-}
-
-/* Khối "Công việc" và "Quyền lợi" */
-.dept-block {
-  margin-top: 24px;
-  text-align: left;
-}
-
-.dept-block-title {
-  font-family: var(--font-sans);
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--text-main);
-  margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding-bottom: 10px;
-  border-bottom: 1px dashed var(--accent-line);
-}
-
-/* Danh sách công việc: lưới 2 cột trên màn rộng, 1 cột trên di động */
-.dept-task-list {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-.dept-task {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  border-radius: 12px;
-  background: hsla(230, 20%, 14%, 0.5);
-  border: 1px solid var(--card-border);
-  transition: var(--transition);
-}
-
-.dept-task:hover {
-  border-color: var(--accent-line);
-  background: hsla(230, 20%, 17%, 0.7);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-}
-
-.dept-task-icon {
-  flex-shrink: 0;
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.15rem;
-  border-radius: 50%;
-  background: var(--accent-soft);
-  border: 1px solid var(--accent-line);
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-.dept-task-text {
-  font-size: 1rem;
-  color: var(--text-muted);
-  line-height: 1.4;
-}
-
-/* Thẻ kỹ năng/quyền lợi dạng viên thuốc */
-.dept-skill-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.dept-skill-tag {
-  font-family: var(--font-sans);
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text-main);
-  padding: 8px 16px;
-  border-radius: 30px;
-  background: var(--accent-soft);
-  border: 1px solid var(--accent-line);
-  transition: var(--transition);
-}
-
-.dept-skill-tag:hover {
-  box-shadow: 0 0 14px var(--accent-glow);
-  transform: translateY(-2px);
-}
-
-/* Nút dẫn tới trang chi tiết ban */
-.dept-explore-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 26px;
-  padding: 13px 30px;
-  font-family: var(--font-title);
-  font-size: 1.02rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  color: var(--accent);
-  text-decoration: none;
-  border: 1.5px solid var(--accent);
-  border-radius: 32px;
-  background: var(--accent-soft);
-  transition: var(--transition);
-}
-
-.dept-explore-link:hover {
-  color: #ffffff;
-  background: var(--accent);
-  box-shadow: 0 8px 24px var(--accent-glow), 0 0 18px var(--accent-glow);
-  transform: translateY(-3px);
-}
-
-.dept-explore-arrow {
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.dept-explore-link:hover .dept-explore-arrow {
-  transform: translateX(5px);
-}
-
-/* Responsive di động cho thẻ hồ sơ ban */
-@media (max-width: 580px) {
-  .dept-showcase {
-    padding: 28px 16px 24px;
-    border-radius: 14px;
-  }
-
-  .dept-showcase-name {
-    font-size: 1.35rem;
-  }
-
-  .dept-showcase-slogan {
-    font-size: 1.08rem;
-    max-width: 100%;
-  }
-
-  .dept-showcase-desc {
-    font-size: 1rem;
-  }
-
-  .dept-metaphor {
-    font-size: 0.74rem;
-    letter-spacing: 3px;
-  }
-
-  /* Trên điện thoại chuyển danh sách công việc về 1 cột cho dễ đọc */
   .dept-task-list {
     grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .dept-task-icon {
-    width: 34px;
-    height: 34px;
-    font-size: 1.05rem;
-  }
-
-  .dept-task-text {
-    font-size: 0.96rem;
-  }
-
-  .dept-skill-tag {
-    font-size: 0.84rem;
-    padding: 7px 13px;
   }
 
   .dept-explore-link {
     width: 100%;
     justify-content: center;
-    padding: 14px 20px;
-    font-size: 0.96rem;
+  }
+
+/* ============================================================
+   MOBILE SHRINE — điện thờ dọc: cột app 480px giữa khoảng void,
+   CTA neo đáy tầm ngón cái, câu hỏi như xấp bài vật lý
+   ============================================================ */
+.app-shell {
+  max-width: 480px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px calc(28px + env(safe-area-inset-bottom));
+}
+
+/* Desktop: cột app nổi giữa void tối, viền kính mảnh hai bên */
+@media (min-width: 520px) {
+  .app-shell {
+    border-inline: 1px solid rgba(255, 255, 255, 0.07);
+    background: rgba(10, 5, 5, 0.35);
+  }
+}
+
+.logo-crown {
+  padding: clamp(28px, 6vh, 56px) 0 clamp(22px, 5vh, 44px);
+}
+
+.hero-art {
+  width: 100%;
+}
+
+.hero-panel {
+  width: 94%;
+}
+
+/* --- Thumb-zone: CTA chính dính đáy màn hình --- */
+#btn-start,
+.btn-reveal-destiny {
+  position: sticky;
+  bottom: calc(14px + env(safe-area-inset-bottom));
+  z-index: 30;
+  width: 100%;
+}
+
+.quiz-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 30;
+  background: linear-gradient(180deg, transparent, rgba(10, 5, 5, 0.9) 35%);
+  padding-bottom: calc(14px + env(safe-area-inset-bottom));
+}
+
+/* --- Xấp bài vật lý: 2 lá bài ma nằm lệch phía sau hộp câu hỏi --- */
+.question-box {
+  position: relative;
+}
+
+.question-box::before,
+.question-box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: var(--radius-card);
+  background: var(--glass-surface);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
+.question-box::before {
+  transform: rotate(-2.2deg) translateY(7px);
+}
+
+.question-box::after {
+  transform: rotate(1.6deg) translateY(13px);
+  opacity: 0.6;
+}
+
+/* Lá mới rút ra từ xấp bài: vào lệch góc nhẹ như chia bài thật */
+.question-box.mystic-enter {
+  transform: translateY(20px) rotate(2deg);
+}
+
+/* --- Huyền học nền: cổng vòm trắng sau logo --- */
+.mystic-arch {
+  position: fixed;
+  top: -14vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(520px, 96vw);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 0 70px rgba(6, 182, 212, 0.06),
+    inset 0 0 70px rgba(225, 29, 72, 0.05);
+  pointer-events: none;
+  z-index: -2;
+}
+
+.mystic-arch::before {
+  content: '';
+  position: absolute;
+  inset: 26px;
+  border-radius: 50%;
+  border: 1px dashed rgba(6, 182, 212, 0.12);
+}
+
+/* --- Bánh xe hoàng đạo xoay chậm giữa void --- */
+.mystic-wheel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: min(760px, 170vw);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 1px dashed rgba(6, 182, 212, 0.10);
+  pointer-events: none;
+  z-index: -2;
+  animation: rotate-sacred 140s var(--ease-spring) infinite;
+}
+
+.mystic-wheel::before {
+  content: '';
+  position: absolute;
+  inset: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(225, 29, 72, 0.10);
+}
+
+/* Vành 12 nan hoàng đạo: các vạch chia 30 độ phát sáng mờ */
+.mystic-wheel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(255, 255, 255, 0.10) 0deg 0.7deg,
+    transparent 0.7deg 30deg
+  );
+  -webkit-mask-image: radial-gradient(circle, transparent 60%, #000 61%, #000 71%, transparent 72%);
+  mask-image: radial-gradient(circle, transparent 60%, #000 61%, #000 71%, transparent 72%);
+}
+
+/* ============================================================
+   DESKTOP ENHANCEMENT — vẫn ưu tiên mobile, nhưng màn rộng
+   được cột thoáng hơn và bàn bài trải hàng ngang
+   ============================================================ */
+@media (min-width: 900px) {
+  .app-shell {
+    max-width: 720px;
+    padding-inline: 44px;
+  }
+
+  .hero-panel {
+    margin-top: -100px;
+  }
+
+  .quiz-footer {
+    flex-direction: row;
+  }
+
+  .question-indicators {
+    justify-content: flex-end;
+  }
+
+  .tarot-cards-spread {
+    flex-wrap: nowrap;
+    gap: 16px;
+    min-height: 340px;
+  }
+
+  .tarot-card-option {
+    width: 128px;
+    height: 205px;
+  }
+
+  .tarot-card-option.selected {
+    width: 200px;
+    height: 320px;
+  }
+
+  .tarot-frame-container {
+    width: 200px;
+    height: 320px;
+  }
+
+  .dept-task-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dept-explore-link {
+    width: auto;
+  }
+
+  #btn-start,
+  .btn-reveal-destiny {
+    width: auto;
+    min-width: 340px;
+  }
+}
+
+/* Tôn trọng người dùng giảm chuyển động */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.15s !important;
   }
 }

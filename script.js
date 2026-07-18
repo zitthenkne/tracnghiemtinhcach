@@ -130,7 +130,7 @@ const tarotImages = {
 // Dùng để dựng "thẻ hồ sơ ban" trực quan trên màn hình kết quả.
 const departmentInfo = {
   HCNS: {
-    accent: "45, 100%, 50%", // Vàng gold
+    accent: "45, 60%, 62%", // Vàng dịu (tránh màu quá bão hòa theo DESIGN.md)
     metaphor: "HỆ XƯƠNG SỐNG",
     slogan: "Việc gì ra việc nấy, chơi gì ra chơi nấy",
     desc: "Những \"kiến trúc sư\" đứng sau cánh gà, thiết kế và xây dựng quy trình để cỗ máy CLB vận hành trơn tru.",
@@ -145,7 +145,7 @@ const departmentInfo = {
     url: "https://sites.google.com/view/tinhnguyentruongy/tuy%E1%BB%83n-th%C3%A0nh-vi%C3%AAn/h%C3%A0nh-ch%C3%ADnh-nh%C3%A2n-s%E1%BB%B1"
   },
   TC: {
-    accent: "145, 85%, 45%", // Xanh lá tài lộc
+    accent: "160, 45%, 55%", // Xanh lá dịu
     metaphor: "NGUỒN NHIÊN LIỆU",
     slogan: "Làm hết sức, chơi hết mình — không ai bị bỏ lại phía sau",
     desc: "Nguồn nhiên liệu và tấm bản đồ chiến lược cho mọi chương trình: gây quỹ, quản lý và tiếp sức tài chính cho CLB.",
@@ -159,7 +159,7 @@ const departmentInfo = {
     url: "https://sites.google.com/view/tinhnguyentruongy/tuy%E1%BB%83n-th%C3%A0nh-vi%C3%AAn/ban-t%C3%A0i-ch%C3%ADnh"
   },
   ND: {
-    accent: "355, 85%, 52%", // Đỏ ruby trái tim
+    accent: "355, 55%, 64%", // Đỏ ruby dịu
     metaphor: "TRÁI TIM",
     slogan: "Nếu PR-IT là BỘ MẶT thì Nội Dung chính là TRÁI TIM",
     desc: "Người đặt những viên gạch đầu tiên, đi đến những vùng đất mới để tìm ra lý do cho mỗi chuyến xe tình nguyện.",
@@ -173,7 +173,7 @@ const departmentInfo = {
     url: "https://sites.google.com/view/tinhnguyentruongy/tuy%E1%BB%83n-th%C3%A0nh-vi%C3%AAn/ban-n%E1%BB%99i-dung"
   },
   PR: {
-    accent: "215, 90%, 50%", // Xanh dương sáng tạo
+    accent: "199, 60%, 58%", // Xanh dương dịu
     metaphor: "BỘ MẶT",
     slogan: "Nơi chữa lành, trau dồi kỹ năng & thể hiện cá tính — một gia đình nhỏ trong gia đình to",
     desc: "Bộ mặt của CLB, biến mọi câu chuyện trở nên sống động và lan tỏa qua hình ảnh, truyền thông và công nghệ.",
@@ -191,18 +191,18 @@ const departmentInfo = {
 
 // Module 1: Lời tiên tri cho TOP 1 (Ban cao % nhất)
 const module1Texts = {
-  HCNS: `🥇 HỆ TƯ TƯỞNG CHỦ ĐẠO: XƯƠNG SỐNG QUYỀN LỰC (BAN HCNS)<br><br>Xét nghiệm DNA tâm lý cho thấy bạn sở hữu một bộ não cực kỳ ngăn nắp, chỉn chu và kỷ luật. Vũ trụ "khẳng định" bạn sinh ra để thuộc về Ban Hành Chính Nhân Sự. Bạn là người ghét sự mơ hồ, thích làm việc có quy trình rõ ràng và có khả năng cứu vớt một tập thể khỏi sự lộn xộn. Bạn chính là bộ khung xương sống vững chắc để Câu lạc bộ dựa vào mỗi mùa chạy sự kiện!`,
-  TC: `🥇 HỆ TƯ TƯỞNG CHỦ ĐẠO: TƯ BẢN THỰC DỤNG (BAN TÀI CHÍNH)<br><br>Trải bài Tarot y khoa chỉ ra bạn có một cái đầu lạnh, nảy số cực nhạy và tư duy tối ưu hóa nguồn lực đỉnh cao. Chúc mừng, bạn chính là "tay hòm chìa khóa" đích thực của Ban Tài Chính! Bạn không dễ bị thao túng tâm lý, luôn biết điều gì sinh ra giá trị thực sự. Da thịt của CLB có "đầy đặn" hay không là nhờ vào tư duy sắc bén của bạn đó.`,
-  ND: `🥇 HỆ TƯ TƯỞNG CHỦ ĐẠO: TRÁI TIM XÊ DỊCH (BAN NỘI DUNG)<br><br>Tần số của bạn phát ra sự phóng khoáng, linh hoạt và một cái nhìn cực kỳ bao quát. Chào mừng đến với Ban Nội Dung! Bạn không thích bị nhốt trong khuôn khổ mà đam mê xê dịch, thích trải nghiệm thực tế để tự mình "phá băng" các vấn đề. CLB rất cần một trái tim dũng cảm như bạn để đi tiền trạm và mang yêu thương đến đúng nơi cần đến.`,
-  PR: `🥇 HỆ TƯ TƯỞNG CHỦ ĐẠO: KẺ MỘNG MƠ BỨT PHÁ (BAN PR-IT)<br><br>Chúc mừng! Vũ trụ ghi nhận bạn có một trí tưởng tượng phong phú, nhạy bén với cái đẹp và một tư duy dám thử nghiệm cái mới. Bạn chính là "gương mặt thương hiệu" mà Ban PR-IT đang tìm kiếm. Bạn biết cách nhân hóa sự khô khan thành những câu chuyện truyền cảm hứng. Thiếu bạn, CLB sẽ mất đi sự bùng nổ và sức sáng tạo kịch trần!`
+  HCNS: `HỆ TƯ TƯỞNG CHỦ ĐẠO: XƯƠNG SỐNG QUYỀN LỰC (BAN HCNS)<br><br>Xét nghiệm DNA tâm lý cho thấy bạn sở hữu một bộ não cực kỳ ngăn nắp, chỉn chu và kỷ luật. Vũ trụ "khẳng định" bạn sinh ra để thuộc về Ban Hành Chính Nhân Sự. Bạn là người ghét sự mơ hồ, thích làm việc có quy trình rõ ràng và có khả năng cứu vớt một tập thể khỏi sự lộn xộn. Bạn chính là bộ khung xương sống vững chắc để Câu lạc bộ dựa vào mỗi mùa chạy sự kiện!`,
+  TC: `HỆ TƯ TƯỞNG CHỦ ĐẠO: TƯ BẢN THỰC DỤNG (BAN TÀI CHÍNH)<br><br>Trải bài Tarot y khoa chỉ ra bạn có một cái đầu lạnh, nảy số cực nhạy và tư duy tối ưu hóa nguồn lực đỉnh cao. Chúc mừng, bạn chính là "tay hòm chìa khóa" đích thực của Ban Tài Chính! Bạn không dễ bị thao túng tâm lý, luôn biết điều gì sinh ra giá trị thực sự. Da thịt của CLB có "đầy đặn" hay không là nhờ vào tư duy sắc bén của bạn đó.`,
+  ND: `HỆ TƯ TƯỞNG CHỦ ĐẠO: TRÁI TIM XÊ DỊCH (BAN NỘI DUNG)<br><br>Tần số của bạn phát ra sự phóng khoáng, linh hoạt và một cái nhìn cực kỳ bao quát. Chào mừng đến với Ban Nội Dung! Bạn không thích bị nhốt trong khuôn khổ mà đam mê xê dịch, thích trải nghiệm thực tế để tự mình "phá băng" các vấn đề. CLB rất cần một trái tim dũng cảm như bạn để đi tiền trạm và mang yêu thương đến đúng nơi cần đến.`,
+  PR: `HỆ TƯ TƯỞNG CHỦ ĐẠO: KẺ MỘNG MƠ BỨT PHÁ (BAN PR-IT)<br><br>Chúc mừng! Vũ trụ ghi nhận bạn có một trí tưởng tượng phong phú, nhạy bén với cái đẹp và một tư duy dám thử nghiệm cái mới. Bạn chính là "gương mặt thương hiệu" mà Ban PR-IT đang tìm kiếm. Bạn biết cách nhân hóa sự khô khan thành những câu chuyện truyền cảm hứng. Thiếu bạn, CLB sẽ mất đi sự bùng nổ và sức sáng tạo kịch trần!`
 };
 
 // Module 2: Đoạn chuyển ngữ giải thích sự "Lai tạp" (Dành cho TOP 2, có placeholder cho phần trăm)
 const module2Texts = {
-  HCNS: `🥈 Tuy nhiên, bạn có độ tương thích <strong>[X]%</strong> với Ban HCNS. Bởi vì thẳm sâu bên trong sự phá cách của bạn, vẫn có một "DNA sinh viên Y" ngầm yêu cầu mọi thứ phải có trật tự. Đôi lúc bạn vẫn cần một cái checklist rõ ràng để thấy an tâm, và sự cẩn trọng này giúp bạn không bao giờ bị chệch đường ray!`,
-  TC: `🥈 Đồng thời, bạn cũng "lai" <strong>[X]%</strong> với Ban Tài Chính. Dù bạn có bay bổng hay phóng khoáng cỡ nào, bạn vẫn giữ lại cho mình sự thực tế. Bạn biết cân đo đong đếm thiệt hơn trong các quyết định và không bao giờ để tập thể phải "đổ vỏ" vì những quyết định thiếu tính toán chi phí.`,
-  ND: `🥈 Bất ngờ thay, bạn lại khớp <strong>[X]%</strong> với Ban Nội Dung. Nghĩa là bên cạnh sự nguyên tắc, bạn vẫn có một tâm hồn khao khát được chữa lành bằng những chuyến đi. Bạn sở hữu khả năng thích nghi và sự nhạy cảm với thế giới xung quanh, chỉ là bạn đang chờ đúng thời điểm để "xách balo lên và đi" thôi!`,
-  PR: `🥈 Thú vị hơn, hệ thống ghi nhận bạn có <strong>[X]%</strong> "máu" của Ban PR-IT. Dưới vẻ ngoài logic và khô khan kia, bạn thực chất là một người có tư duy hình ảnh và khát khao được đột phá. Đôi khi bạn giải quyết rắc rối bằng một góc nhìn cực kỳ "out of the box" (vượt khuôn khổ) mà người khác không ngờ tới!`
+  HCNS: `Tuy nhiên, bạn có độ tương thích <strong>[X]%</strong> với Ban HCNS. Bởi vì thẳm sâu bên trong sự phá cách của bạn, vẫn có một "DNA sinh viên Y" ngầm yêu cầu mọi thứ phải có trật tự. Đôi lúc bạn vẫn cần một cái checklist rõ ràng để thấy an tâm, và sự cẩn trọng này giúp bạn không bao giờ bị chệch đường ray!`,
+  TC: `Đồng thời, bạn cũng "lai" <strong>[X]%</strong> với Ban Tài Chính. Dù bạn có bay bổng hay phóng khoáng cỡ nào, bạn vẫn giữ lại cho mình sự thực tế. Bạn biết cân đo đong đếm thiệt hơn trong các quyết định và không bao giờ để tập thể phải "đổ vỏ" vì những quyết định thiếu tính toán chi phí.`,
+  ND: `Bất ngờ thay, bạn lại khớp <strong>[X]%</strong> với Ban Nội Dung. Nghĩa là bên cạnh sự nguyên tắc, bạn vẫn có một tâm hồn khao khát được chữa lành bằng những chuyến đi. Bạn sở hữu khả năng thích nghi và sự nhạy cảm với thế giới xung quanh, chỉ là bạn đang chờ đúng thời điểm để "xách balo lên và đi" thôi!`,
+  PR: `Thú vị hơn, hệ thống ghi nhận bạn có <strong>[X]%</strong> "máu" của Ban PR-IT. Dưới vẻ ngoài logic và khô khan kia, bạn thực chất là một người có tư duy hình ảnh và khát khao được đột phá. Đôi khi bạn giải quyết rắc rối bằng một góc nhìn cực kỳ "out of the box" (vượt khuôn khổ) mà người khác không ngờ tới!`
 };
 
 // Tổ hợp thông điệp từ Nhà Đỏ TNTY dựa trên Top 1 & Top 2
@@ -359,7 +359,7 @@ function renderQuestion() {
   // Kích hoạt class mystic-enter ban đầu cho câu hỏi mới
   const questionBox = document.querySelector(".question-box");
   if (questionBox) {
-    questionBox.className = "question-box mystic-enter";
+    questionBox.className = "question-box glass mystic-enter";
   }
   
   // Cập nhật text câu hỏi và số thứ tự
@@ -430,7 +430,7 @@ function renderQuestion() {
     cards.forEach(card => {
       card.classList.remove("mystic-enter", "mystic-enter-active");
     });
-  }, 600);
+  }, 560);
 }
 
 // Khi người dùng click chọn 1 đáp án
@@ -457,15 +457,15 @@ function selectAnswer(answerIndex) {
     }
   });
 
-  // Giai đoạn 2: Bắt đầu làm mờ dần card đáp án được chọn sau 300ms
+  // Giai đoạn 2: Bắt đầu làm mờ dần card đáp án được chọn sau 200ms
   setTimeout(() => {
     const selectedFinishedCard = document.querySelector(".answer-card.mystic-exit-selected");
     if (selectedFinishedCard) {
       selectedFinishedCard.classList.add("mystic-exit-selected-fade");
     }
-  }, 300);
+  }, 200);
 
-  // Giai đoạn 3: Thực sự chuyển đổi câu hỏi sau khi các hiệu ứng tan biến hoàn tất (650ms)
+  // Giai đoạn 3: Thực sự chuyển đổi câu hỏi sau khi các hiệu ứng tan biến hoàn tất (460ms)
   setTimeout(() => {
     if (currentQuestionIndex < activeQuestions.length - 1) {
       currentQuestionIndex++;
@@ -474,7 +474,7 @@ function selectAnswer(answerIndex) {
       // Đã trả lời hết 10 câu -> Bắt đầu Nghi lễ tính điểm và lật bài Tarot
       calculateAndShowTarotCeremony();
     }
-  }, 650);
+  }, 460);
 }
 
 // Quay lại câu trước
@@ -645,7 +645,7 @@ function selectTarotCard(selectedCardElement) {
   // Dòng hạt năng lượng từ vũ trụ hội tụ liên tục vào lá bài
   const particleField = document.createElement("div");
   particleField.className = "energy-particles";
-  const particleColors = ["#ffd700", "#ff6b7a", "#6bb7ff", "#ffffff"];
+  const particleColors = ["#E11D48", "#FB7185", "#67E8F9", "#FFFFFF"];
   for (let i = 0; i < 20; i++) {
     const p = document.createElement("span");
     p.className = "energy-particle";
@@ -670,22 +670,22 @@ function selectTarotCard(selectedCardElement) {
   document.getElementById("result-tarot-image").src = tarotImageFile;
   
   // Trình tự truyền năng lượng ma mị và kỳ ảo hơn (tổng cộng 6.5s)
-  statusEl.textContent = "🔮 Đang kết nối với tần số linh hồn của bạn... Hãy giữ sự tập trung...";
-  
+  statusEl.textContent = "Đang kết nối với tần số linh hồn của bạn... Hãy giữ sự tập trung...";
+
   setTimeout(() => {
-    statusEl.textContent = "✨ Đang trích xuất mã DNA Tình Nguyện từ vũ trụ...";
+    statusEl.textContent = "Đang trích xuất mã DNA Tình Nguyện từ vũ trụ...";
     selectedCardElement.classList.add("stage-2"); // Tăng cường rung lắc và hào quang
     haptic(25);
   }, 1500);
 
   setTimeout(() => {
-    statusEl.textContent = "🌌 Các vì sao định mệnh đang xếp thành chòm sao hộ mệnh...";
+    statusEl.textContent = "Các vì sao định mệnh đang xếp thành chòm sao hộ mệnh...";
     selectedCardElement.classList.add("stage-3"); // Chuyển hào quang sang vàng gold chớp nháy
     haptic([20, 40, 20]);
   }, 3000);
   
   setTimeout(() => {
-    statusEl.textContent = "⚡ Luồng năng lượng tối thượng đang hội tụ! Lật mở lá bài...";
+    statusEl.textContent = "Luồng năng lượng tối thượng đang hội tụ! Lật mở lá bài...";
     flash.classList.add("flash-trigger"); // Kích hoạt hiệu ứng lóe sáng trắng
     // Rung chấn màn hình khi năng lượng bùng nổ (kèm rung máy dồn dập cho khớp cảm giác)
     haptic([40, 30, 40, 30, 60]);
@@ -702,7 +702,7 @@ function selectTarotCard(selectedCardElement) {
   }, 5000); // Lật bài ngay sau khi lóe sáng 200ms
   
   setTimeout(() => {
-    statusEl.textContent = "👁️ Định mệnh đã an bài! Hãy giải mã lời tiên tri...";
+    statusEl.textContent = "Định mệnh đã an bài! Hãy giải mã lời tiên tri...";
     document.getElementById("btn-reveal-result").classList.remove("hidden");
   }, 6200);
 }
@@ -785,7 +785,7 @@ function renderDeptShowcase(top1) {
 
   const tasksHTML = info.tasks.map(t => `
     <li class="dept-task">
-      <span class="dept-task-icon">${t.icon}</span>
+      <span class="dept-task-icon" aria-hidden="true"></span>
       <span class="dept-task-text">${t.text}</span>
     </li>
   `).join("");
@@ -794,17 +794,18 @@ function renderDeptShowcase(top1) {
 
   container.innerHTML = `
     <span class="dept-metaphor">✦ ${info.metaphor} ✦</span>
+
     <h3 class="dept-showcase-name">${top1.name}</h3>
     <p class="dept-showcase-slogan">“${info.slogan}”</p>
     <p class="dept-showcase-desc">${info.desc}</p>
 
     <div class="dept-block">
-      <h4 class="dept-block-title"><span aria-hidden="true">⚙️</span> Công việc bạn sẽ làm</h4>
+      <h4 class="dept-block-title">Công việc bạn sẽ làm</h4>
       <ul class="dept-task-list">${tasksHTML}</ul>
     </div>
 
     <div class="dept-block">
-      <h4 class="dept-block-title"><span aria-hidden="true">🎁</span> Bạn sẽ nhận được</h4>
+      <h4 class="dept-block-title">Bạn sẽ nhận được</h4>
       <div class="dept-skill-tags">${skillsHTML}</div>
     </div>
 
@@ -899,7 +900,7 @@ function triggerConfetti() {
     canvas.height = window.innerHeight;
   });
 
-  const colors = ["#ffd700", "#e63946", "#ffb703", "#fb8500", "#219ebc", "#ffffff"];
+  const colors = ["#E11D48", "#FB7185", "#06B6D4", "#67E8F9", "#E2E8F0", "#FFFFFF"];
   const confettiCount = 150;
   const confettis = [];
 
@@ -1002,19 +1003,19 @@ function initNebulaCanvas() {
       this.angle = Math.random() * Math.PI * 2;
       this.angleSpeed = Math.random() * 0.015 - 0.0075;
       
-      // Phân bổ màu hạt bokeh theo theme CLB (Đỏ, Xanh dương, Vàng Gold, Trắng)
+      // Bảng màu Ethereal Glass: Club Crimson, Medical Cyan, ánh trắng thuần khiết
       const randColor = Math.random();
       if (randColor < 0.35) {
-        // Xanh dương CLB
-        this.colorChan = { r: 0, g: 180, b: 216 };
+        // Club Crimson
+        this.colorChan = { r: 225, g: 29, b: 72 };
       } else if (randColor < 0.65) {
-        // Đỏ ruby tình nguyện
-        this.colorChan = { r: 230, g: 57, b: 70 };
+        // Medical Cyan
+        this.colorChan = { r: 6, g: 182, b: 212 };
       } else if (randColor < 0.85) {
-        // Vàng gold cổ kính
-        this.colorChan = { r: 255, g: 215, b: 0 };
+        // Muted Stardust
+        this.colorChan = { r: 148, g: 163, b: 184 };
       } else {
-        // Trắng tinh khiết
+        // Pure White Light
         this.colorChan = { r: 255, g: 255, b: 255 };
       }
     }
@@ -1054,11 +1055,11 @@ function initNebulaCanvas() {
     }
   }
 
-  // Tọa độ và vận tốc của các luồng tinh vân xoay động (đỏ ruby CLB, xanh dương CLB, tím)
+  // Các luồng sương tinh vân xoay chậm (crimson ấm + cyan y khoa + sương trắng)
   const clouds = [
-    { x: 0.3, y: 0.3, r: 270, color: "rgba(230, 57, 70, 0.12)", angle: 0, speed: 0.0006 },
-    { x: 0.7, y: 0.7, r: 340, color: "rgba(0, 180, 216, 0.12)", angle: Math.PI, speed: 0.0004 },
-    { x: 0.5, y: 0.4, r: 300, color: "rgba(114, 9, 183, 0.09)", angle: Math.PI / 2, speed: -0.0005 }
+    { x: 0.3, y: 0.3, r: 300, color: "rgba(225, 29, 72, 0.08)", angle: 0, speed: 0.0005 },
+    { x: 0.7, y: 0.7, r: 360, color: "rgba(6, 182, 212, 0.07)", angle: Math.PI, speed: 0.0004 },
+    { x: 0.5, y: 0.4, r: 320, color: "rgba(255, 255, 255, 0.04)", angle: Math.PI / 2, speed: -0.0004 }
   ];
 
   function initParticles() {
@@ -1105,7 +1106,7 @@ function initNebulaCanvas() {
 
   function loop() {
     // Sử dụng lớp phủ trong suốt để tạo hiệu ứng vệt mờ mượt mà
-    ctx.fillStyle = "rgba(10, 10, 18, 0.18)";
+    ctx.fillStyle = "rgba(10, 5, 5, 0.18)";
     ctx.fillRect(0, 0, width, height);
 
     // 1. Vẽ các luồng khí tinh vân chuyển động
